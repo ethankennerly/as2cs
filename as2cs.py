@@ -14,6 +14,7 @@ from cs import codes
 
 ebnf_parser = Parser(declaration, 'declarationset')
 
+
 def merge_declarations(declarations):
     r"""
     B augments A.
@@ -77,6 +78,66 @@ def set_tags(tags, def_text):
             tags[name] = True
 
 
+common_tags = {}
+for source in SOURCES:
+    for key in source.keys():
+        common_tags[key] = True
+set_tags(common_tags, open('ecma.def').read())
+
+
+def find_text(text, name, parts):
+    """
+    >>> parts = [('name', 0, 6, []), ('seq_group', 9, 18, [('element_token', 10, 18, [('literal', 10, 17, [('CHARNOSNGLQUOTE', 11, 16, None)])])])]
+    >>> find_text("import := 'using'", 'digit', parts)
+    >>> find_text("import := 'using'", 'literal', parts)
+    "'using'"
+    >>> find_text('import := "using"', 'CHARNOSNGLQUOTE', parts)
+    'using'
+    """
+    found = None
+    if parts:
+        for tag, begin, end, part in parts:
+            if name == tag:
+                found = text[begin:end]
+                break
+            else:
+                found = find_text(text, name, part)
+    return found
+
+
+def find_literal_text(text, parts):
+    return find_text(text, 'CHARNOSNGLQUOTE', parts)
+
+
+def replace_literals(a_def, b_def):
+    """
+    >>> replaces = replace_literals(as_def, cs_def)
+    >>> replaces.get('import')
+    'using'
+    """
+    def replace_declaration(replaces, original_strings, def_text):
+        taglist = ebnf_parser.parse(def_text)
+        for tag, begin, end, parts in taglist[1]:
+            if tag == 'declaration':
+                name_begin, name_end = parts[0][1:3]
+                name = def_text[name_begin:name_end]
+                if name in original_strings:
+                    literal = find_literal_text(def_text, parts)
+                    if literal:
+                        replaces[name] = literal
+                original_strings[name] = True
+    replaces = {}
+    original_strings = {}
+    replace_declaration(replaces, original_strings, a_def)
+    replace_declaration(replaces, original_strings, b_def)
+    return replaces
+
+
+as_def = merge_declaration_paths(['ecma.def', 'as/as3.def'])
+cs_def = merge_declaration_paths(['ecma.def', 'cs/cs.def'])
+replaces = replace_literals(as_def, cs_def)
+
+
 def as2cs(input, definition = 'compilationUnit'):
     """
     Example of converting syntax from ActionScript to C#.
@@ -88,26 +149,13 @@ def as2cs(input, definition = 'compilationUnit'):
     https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
     """
     text = ''
-    as_def = merge_declaration_paths(['ecma.def', 'as/as3.def'])
     parser = Parser(as_def, definition)
     taglist = parser.parse(input)
     ## text += pformat(taglist) # debug
-    common_tags = {}
-    for source in SOURCES:
-        for key in source.keys():
-            common_tags[key] = True
-    set_tags(common_tags, open('ecma.def').read())
     for tag, begin, end, parts in taglist[1]:
         ## text += input[begin:end]
-        if tag == 'import':
-            if parts:
-                markup = parts[0]
-                mtag, mbegin, mend = markup[:3]
-                start = codes[mtag]
-                text += start + input[mbegin:mend]
-                ## text += pformat(input[begin:end])
-            else:
-                text += codes.get(tag)
+        if tag in replaces:
+            text += replaces.get(tag)
         elif tag in common_tags:
             text += input[begin:end]
         else:
