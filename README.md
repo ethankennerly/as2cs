@@ -2,6 +2,10 @@
 
 Tiny example of converting a bit of syntax from ActionScript to C#.  
 
+def.def from 
+
+http://simpleparse.sourceforge.net/simpleparse\_grammars.html
+
 Typographify example of using SimpleParse is from David Mertz' copyrighted article, cited in that directory.
 
 Installation
