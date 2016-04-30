@@ -94,14 +94,52 @@ def find_text(text, name, parts):
     >>> find_text('import := "using"', 'CHARNOSNGLQUOTE', parts)
     'using'
     """
-    found = None
+    found = ''
     if parts:
         for tag, begin, end, part in parts:
             if name == tag:
-                found = text[begin:end]
+                found += text[begin:end]
                 break
             else:
-                found = find_text(text, name, part)
+                found_part = find_text(text, name, part)
+                if found_part:
+                    found += found_part
+    if found:
+        return found
+
+
+def find_texts(text, name, parts):
+    """
+    >>> parts = [('variableDeclarationKeyword', 0, 3, None),
+    ...  ('whitespacechar', 3, 4, None),
+    ...  ('identifier',
+    ...   4,
+    ...   8,
+    ...   [('alphaunder', 4, 5, [('letter', 4, 5, None)]),
+    ...    ('alphanums',
+    ...     5,
+    ...     8,
+    ...     [('letter', 5, 6, None),
+    ...      ('letter', 6, 7, None),
+    ...      ('letter', 7, 8, None)])]),
+    ...  ('COLON', 8, 9, None),
+    ...  ('dataType', 9, 15, [('string', 9, 15, None)]),
+    ...  ('SEMI', 15, 16, None)]
+    >>> as_code = 'var path:String;';
+    >>> find_texts(as_code, 'digit', parts)
+    []
+    >>> find_texts(as_code, 'letter', parts)
+    ['p', 'a', 't', 'h']
+    """
+    found = []
+    if parts:
+        for tag, begin, end, part in parts:
+            if name == tag:
+                found.append(text[begin:end])
+            else:
+                found_part = find_texts(text, name, part)
+                if found_part:
+                    found.extend(found_part)
     return found
 
 
@@ -117,8 +155,8 @@ def replace_literals(a_def, b_def):
     >>> replaces.get('alphaunder')
     """
     def replace_declaration(replaces, original_strings, def_text):
-        taglist = ebnf_parser.parse(def_text)
-        for tag, begin, end, parts in taglist[1]:
+        taglist = ebnf_parser.parse(def_text)[1]
+        for tag, begin, end, parts in taglist:
             if tag == 'declaration':
                 name_begin, name_end = parts[0][1:3]
                 name = def_text[name_begin:name_end]
@@ -140,10 +178,86 @@ cs_def = merge_declaration_paths(['ecma.def', 'cs/cs.def'])
 replaces = replace_literals(as_def, cs_def)
 
 
-def taglist(input, definition):
-    parser = Parser(as_def, definition)
-    taglist = parser.parse(input)
-    return pformat(taglist)
+def tag_order(def_text):
+    """
+    >>> cs_var = 'variableDeclaration := dataType, whitespacechar+, identifier, whitespace*, SEMI'
+    >>> tag_order(cs_var)
+    ['dataType', 'whitespacechar', 'identifier', 'whitespace', 'SEMI']
+    >>> as_var = 'variableDeclaration := variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
+    >>> tag_order(as_var)
+    ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'whitespace', 'SEMI']
+    """
+    taglist = ebnf_parser.parse(def_text)[1]
+    order = find_texts(def_text, 'name', taglist)[1:]
+    return order
+
+
+def tags_to_reorder(a_def, b_def):
+    """
+    For grammar tags of the same name.
+    Order of tags in definition B where they differ from order in A
+    >>> cs_var = 'variableDeclaration := dataType, whitespacechar+, identifier, whitespace*, SEMI'
+    >>> as_var = 'variableDeclaration := variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
+    >>> reorder_tags = tags_to_reorder(as_var, cs_var)
+    >>> reorder_tags.get('variableDeclaration')
+    ['dataType', 'whitespacechar', 'identifier', 'whitespace', 'SEMI']
+    """
+    def reorder_declaration(reorders, original_strings, def_text):
+        taglist = ebnf_parser.parse(def_text)
+        ## print pformat(taglist)
+        for tag, begin, end, parts in taglist[1]:
+            if tag == 'declaration':
+                name_begin, name_end = parts[0][1:3]
+                name = def_text[name_begin:name_end]
+                text = def_text[begin:end]
+                if name in original_strings and text != original_strings[name]:
+                    order_tags = tag_order(text)
+                    reorders[name] = order_tags
+                original_strings[name] = text
+    reorders = {}
+    original_strings = {}
+    reorder_declaration(reorders, original_strings, a_def)
+    reorder_declaration(reorders, original_strings, b_def)
+    return reorders
+
+
+reorder_tags = tags_to_reorder(as_def, cs_def)
+
+
+def reorder_taglist(taglist, order_tags, input):
+    """
+    >>> input = 'var path:String;'
+    >>> variableDeclaration = ['dataType', 'whitespacechar', 'identifier', 
+    ...     'whitespace', 'SEMI']
+    >>> taglist = [('variableDeclarationKeyword', 0, 3, None),
+    ...  ('whitespacechar', 3, 4, None),
+    ...  ('identifier',
+    ...   4,
+    ...   8,
+    ...   [('alphaunder', 4, 5, [('letter', 4, 5, None)]),
+    ...    ('alphanums',
+    ...     5,
+    ...     8,
+    ...     [('letter', 5, 6, None),
+    ...      ('letter', 6, 7, None),
+    ...      ('letter', 7, 8, None)])]),
+    ...  ('COLON', 8, 9, None),
+    ...  ('dataType', 9, 15, [('string', 9, 15, None)]),
+    ...  ('SEMI', 15, 16, None)]
+    >>> reorder_taglist(taglist, variableDeclaration, input)
+    'string path;'
+    """
+    ordered = []
+    unordered = taglist[:]
+    used_indexes = {}
+    for order_tag in order_tags:
+        for r, row in enumerate(unordered):
+            tag = row[0]
+            if order_tag == tag:
+                ordered.append(unordered.pop(r))
+                break
+    text = _recurse_tags(ordered, input)
+    return text
 
 
 def _recurse_tags(taglist, input):
@@ -151,13 +265,15 @@ def _recurse_tags(taglist, input):
     for tag, begin, end, parts in taglist:
         if tag in replaces:
             text += replaces.get(tag)
+        elif tag in reorder_tags:
+            text += reorder_taglist(parts, reorder_tags[tag], input)
         elif tag in common_tags:
             if parts:
-                text += recurse_tags(parts, input)
+                text += _recurse_tags(parts, input)
             else:
                 text += input[begin:end]
-        else:
-            pass
+        elif parts:
+            text += _recurse_tags(parts, input)
     return text
 
     
@@ -173,8 +289,15 @@ def as2cs(input, definition = 'compilationUnit'):
     """
     parser = Parser(as_def, definition)
     taglist = parser.parse(input)
-    text = _recurse_tags(taglist[1], input)
+    taglist = [(definition, 0, taglist[-1], taglist[1])]
+    text = _recurse_tags(taglist, input)
     return text
+
+
+def format_taglist(input, definition):
+    parser = Parser(as_def, definition)
+    taglist = parser.parse(input)
+    return pformat(taglist)
 
 
 if '__main__' == __name__:

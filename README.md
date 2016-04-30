@@ -34,11 +34,11 @@ Features
  * Merge grammar declaration files.
  * Transcribe 'import' example of common base grammar.
  * Replace literal 'import' with 'using' by grammar.
+ * Reformat an example variable declaration by grammar.
 
 To-do
 =====
 
- * Reformat variable declaration by grammar.
  * Convert cs.def to formatter, analogous to a string template in ANTLR.
  * Example of as.def, cs.def package, import
 
