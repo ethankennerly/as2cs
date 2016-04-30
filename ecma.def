@@ -1,0 +1,14 @@
+## compilationUnit := sourceElements, EOF
+## sourceElements := sourceElement+
+## sourceElement := statement | functionDeclaration
+
+identifier := alphaunder, (PERIOD?, alphanums+)*
+# whitespace     := [ \t\r\n]+
+# alphanums      := [a-zA-Z0-9]+
+alphanums      := (letter / digit)+
+alphaunder     := (letter / '_')
+punctuation    := [!@#$%^&()+=|\{}:;<>,.?/"]
+PERIOD := '.'
+LCURLY := '{'
+RCURLY := '}'
+SEMI := ';'

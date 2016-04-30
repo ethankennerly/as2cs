@@ -5,29 +5,31 @@
 
 from simpleparse.parser import Parser
 from simpleparse.simpleparsegrammar import declaration
+from simpleparse.common import strings, comments, numbers, chartypes
 from sys import stdin, stdout, stderr
+from pprint import pformat
+
 from cs import codes
-import pprint
 
 
-def merge_declarations(a_def_text, b_def_text):
+def merge_declarations(declarations):
     r"""
     B augments A.
     Normalize whitespace before and after assignment.
     Expects definition fits on one line.
     >>> a = "whitespace     := [ \t\r\n]+"
     >>> b = "import := 'import'"
-    >>> merge_declarations(a, b)
+    >>> merge_declarations([a, b])
     "whitespace     := [ \t\r\n]+\nimport := 'import'"
 
     B overwrites A.
     >>> a = "import  \t := 'import'"
     >>> b = "import := \t 'using'"
-    >>> merge_declarations(a, b)
+    >>> merge_declarations([a, b])
     "import := \t 'using'"
     """
     names = {}
-    def parse_declaration(parser, input):
+    def new_declarations(parser, input):
         text = ''
         taglist = parser.parse(input)
         for tag, begin, end, parts in taglist[1]:
@@ -37,19 +39,25 @@ def merge_declarations(a_def_text, b_def_text):
                 if not name in names:
                     names[name] = True
                     text += input[begin:end]
-        ## text += pprint.pformat(taglist)
+        ## text += pformat(taglist)
         return text
     parser = Parser(declaration, 'declarationset')
-    b_overwrite = parse_declaration(parser, b_def_text)
-    a_unique = parse_declaration(parser, a_def_text)
-    if a_unique:
-        text = a_unique + '\n' + b_overwrite
-    else:
-        text = b_overwrite
-    return text
+    texts = []
+    for input in reversed(declarations):
+        text = new_declarations(parser, input)
+        if text:
+            texts.insert(0, text)
+    return '\n'.join(texts)
 
 
-def as2cs(input, definition = 'as3CompilationUnit'):
+def merge_declaration_paths(paths):
+    texts = []
+    for path in paths:
+        texts.append(open(path).read())
+    return merge_declarations(texts)
+
+
+def as2cs(input, definition = 'compilationUnit'):
     """
     Example of converting syntax from ActionScript to C#.
 
@@ -60,9 +68,10 @@ def as2cs(input, definition = 'as3CompilationUnit'):
     https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
     """
     text = ''
-    parser = Parser(open('as/as.def').read(), definition)
+    as_def = merge_declaration_paths(['ecma.def', 'as/as3.def'])
+    parser = Parser(as_def, definition)
     taglist = parser.parse(input)
-    # text += pprint.pformat(taglist)
+    # text += pformat(taglist)
     for tag, begin, end, parts in taglist[1]:
         # text += input[begin:end]
         if tag == 'import':

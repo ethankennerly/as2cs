@@ -16,9 +16,11 @@ Test discovery depends on Python 2.7 or higher.
 Documentation
 =============
 
+SimpleParse:
+http://www.ibm.com/developerworks/linux/library/l-simple/index.html
+http://blog.dowski.com/2007/12/19/simpleparse-plug/
 http://www.vrplumber.com/programming/simpleparse/simpleparse.html
 http://simpleparse.sourceforge.net/simpleparse\_grammars.html
-
 
 Features
 ========
@@ -29,11 +31,11 @@ Features
     # or
     python -m unittest discover
  * Grammar unit test format related to gUnit.
+ * Merge grammar declaration files.
 
 To-do
 =====
 
- * Merge grammar definition files.
  * Recognize identical grammar definition.
  * as.def, cs.def package, import
  * Convert cs.def to formatter, analogous to a string template in ANTLR.
@@ -47,9 +49,12 @@ Not supported
 Reference code
 ==============
 
- * ActionScript 3 grammar in ANTLR
+ * ActionScript 3 grammar in ANTLR3
   http://svn.badgers-in-foil.co.uk/metaas/trunk/src/main/antlr/org/asdt/core/internal/antlr/AS3.g
   http://stackoverflow.com/questions/1839146/as3-grammar-most-accurate
+ * ECMAScript grammar in ANTLR3
+  http://antlr3.org/grammar/1153976512034/ecmascriptA3.g
+  http://stackoverflow.com/questions/1786565/ebnf-for-ecmascript
  * ANTLR by Terrence Parr
   https://en.wikipedia.org/wiki/ANTLR
  * Meta AS for ANTLR

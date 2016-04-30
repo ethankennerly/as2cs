@@ -1,0 +1,2 @@
+importDefinition := import, whitespace, identifier, SEMI
+import := 'using'

@@ -1,4 +1,3 @@
-
 from simpleparse.parser import Parser
 from sys import stdin, stdout, stderr
 
