@@ -2,10 +2,6 @@
 
 Tiny example of converting a bit of syntax from ActionScript to C#.  
 
-def.def from 
-
-http://simpleparse.sourceforge.net/simpleparse\_grammars.html
-
 Typographify example of using SimpleParse is from David Mertz' copyrighted article, cited in that directory.
 
 Installation
@@ -16,6 +12,13 @@ Depends on Python SimpleParse 2.2.  You can install SimpleParse here:
 https://pypi.python.org/pypi/SimpleParse/
 
 Test discovery depends on Python 2.7 or higher.
+
+Documentation
+=============
+
+http://www.vrplumber.com/programming/simpleparse/simpleparse.html
+http://simpleparse.sourceforge.net/simpleparse\_grammars.html
+
 
 Features
 ========

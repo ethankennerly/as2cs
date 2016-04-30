@@ -4,39 +4,48 @@
 #   python as2cs.py
 
 from simpleparse.parser import Parser
+from simpleparse.simpleparsegrammar import declaration
 from sys import stdin, stdout, stderr
 from cs import codes
 import pprint
 
 
-def merge_definitions(a_def_text, b_def_text):
+def merge_declarations(a_def_text, b_def_text):
     r"""
     B augments A.
     Normalize whitespace before and after assignment.
     Expects definition fits on one line.
     >>> a = "whitespace     := [ \t\r\n]+"
     >>> b = "import := 'import'"
-    >>> merge_definitions(a, b)
+    >>> merge_declarations(a, b)
     "whitespace     := [ \t\r\n]+\nimport := 'import'"
 
     B overwrites A.
     >>> a = "import  \t := 'import'"
     >>> b = "import := \t 'using'"
-    >>> merge_definitions(a, b)
+    >>> merge_declarations(a, b)
     "import := \t 'using'"
     """
+    names = {}
     def parse_declaration(parser, input):
         text = ''
         taglist = parser.parse(input)
         for tag, begin, end, parts in taglist[1]:
             if tag == 'declaration':
-                text += input[begin:end]
+                name_begin, name_end = parts[0][1:3]
+                name = input[name_begin:name_end]
+                if not name in names:
+                    names[name] = True
+                    text += input[begin:end]
         ## text += pprint.pformat(taglist)
         return text
-    parser = Parser(open('def.def').read(), 'declarationset')
-    text = parse_declaration(parser, a_def_text)
-    text += "\n" + parse_declaration(parser, b_def_text)
-    ## text = a_def_text + "\n" + b_def_text
+    parser = Parser(declaration, 'declarationset')
+    b_overwrite = parse_declaration(parser, b_def_text)
+    a_unique = parse_declaration(parser, a_def_text)
+    if a_unique:
+        text = a_unique + '\n' + b_overwrite
+    else:
+        text = b_overwrite
     return text
 
 
