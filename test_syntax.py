@@ -6,8 +6,9 @@ definitions[definition]: [[input], [output]]
 Related to gUnit:  Grammar unit test for ANTLR
 https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
 """
+from glob import glob
 import unittest
-from as2cs import as2cs, format_taglist
+from as2cs import convert, convert_files, format_taglist, realpath
 
 
 definitions = {
@@ -39,7 +40,7 @@ class TestDefinitions(unittest.TestCase):
 
     def assertExample(self, definition, row):
         try:
-            self.assertEquals(row[1], as2cs(row[0], definition))
+            self.assertEquals(row[1], convert(row[0], definition))
         except:
             print
             print definition, row
@@ -53,6 +54,10 @@ class TestDefinitions(unittest.TestCase):
                 import pdb; pdb.set_trace()
             for row in rows:
                 self.assertExample(definition, row)
+
+    def test_files(self):
+        import pdb; pdb.set_trace()
+        convert_files(glob(realpath('test/*.as')))
 
 
 if '__main__' == __name__:

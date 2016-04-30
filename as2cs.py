@@ -1,13 +1,19 @@
-# Tests a trivial example.
-# Usage: 
-#   cd as2cs
-#   python as2cs.py
+"""
+Tests a trivial example.
+Usage: 
+    cd as2cs
+    python as2cs.py [file.as ...]
+"""
+
+
+import codecs
+from os import path
+from sys import stdin, stdout
+from pprint import pformat
 
 from simpleparse.parser import Parser
 from simpleparse.simpleparsegrammar import declaration
 from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
-from sys import stdin, stdout
-from pprint import pformat
 
 
 ebnf_parser = Parser(declaration, 'declarationset')
@@ -275,11 +281,11 @@ def _recurse_tags(taglist, input):
     return text
 
     
-def as2cs(input, definition = 'compilationUnit'):
+def convert(input, definition = 'compilationUnit'):
     """
     Example of converting syntax from ActionScript to C#.
 
-    >>> print as2cs('import com.finegamedesign.anagram.Model;', 'importDefinition')
+    >>> print convert('import com.finegamedesign.anagram.Model;', 'importDefinition')
     using com.finegamedesign.anagram.Model;
 
     Related to grammar unit testing specification (gUnit)
@@ -298,8 +304,32 @@ def format_taglist(input, definition):
     return pformat(taglist)
 
 
+def convert_file(asPath, csPath):
+    text = codecs.open(asPath, 'r', 'utf-8').read()
+    str = convert(text)
+    f = codecs.open(csPath, 'w', 'utf-8')
+    ## print(str)
+    f.write(str)
+    f.close()   
+
+
+def convert_files(asPaths):
+    for asPath in asPaths:
+        root, ext = path.splitext(asPath)
+        csPath = root + '.cs'
+        convert_file(asPath, csPath)
+
+
+def realpath(a_path):
+    """
+    http://stackoverflow.com/questions/4934806/python-how-to-find-scripts-directory
+    """
+    return path.join(path.dirname(path.realpath(__file__)), a_path)
+
+
 if '__main__' == __name__:
-    input = stdin.read()
-    stdout.write(as2cs(input))
-    import doctest
-    doctest.testmod()
+    import sys
+    if len(sys.argv) <= 1:
+        print __doc__
+    if 2 <= len(sys.argv) and '--test' != sys.argv[1]:
+        convert_files(sys.argv[1:])
