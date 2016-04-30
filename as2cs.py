@@ -6,10 +6,8 @@
 from simpleparse.parser import Parser
 from simpleparse.simpleparsegrammar import declaration
 from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
-from sys import stdin, stdout, stderr
+from sys import stdin, stdout
 from pprint import pformat
-
-from cs import codes
 
 
 ebnf_parser = Parser(declaration, 'declarationset')

@@ -20,6 +20,8 @@ SimpleParse:
 http://www.ibm.com/developerworks/linux/library/l-simple/index.html
 http://blog.dowski.com/2007/12/19/simpleparse-plug/
 http://www.vrplumber.com/programming/simpleparse/simpleparse.html
+
+EBNF:
 http://simpleparse.sourceforge.net/simpleparse\_grammars.html
 
 Features
@@ -39,8 +41,7 @@ Features
 To-do
 =====
 
- * Convert cs.def to formatter, analogous to a string template in ANTLR.
- * Example of as.def, cs.def package, import
+ * Convert trivial package with one import.
 
 Not supported
 =============
