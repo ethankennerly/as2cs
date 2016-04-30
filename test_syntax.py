@@ -7,7 +7,7 @@ Related to gUnit:  Grammar unit test for ANTLR
 https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
 """
 import unittest
-from as2cs import as2cs, parts
+from as2cs import as2cs, taglist
 
 
 definitions = {
@@ -21,9 +21,12 @@ definitions = {
         ['import A;',
          'using A;'],
      ],
+     'dataType': [
+        ['String', 'string']
+     ],
      'variableDeclaration': [
-        ['var _:String;',
-         'string _;'],
+        ['var path:String;',
+         'string path;'],
      ]
 }
 
@@ -37,7 +40,7 @@ class TestDefinitions(unittest.TestCase):
             print
             print definition, row
             print 'tag parts:'
-            print parts(row[0], definition)
+            print taglist(row[0], definition)
             raise
 
     def test_definitions(self):

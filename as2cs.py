@@ -114,6 +114,7 @@ def replace_literals(a_def, b_def):
     >>> replaces = replace_literals(as_def, cs_def)
     >>> replaces.get('import')
     'using'
+    >>> replaces.get('alphaunder')
     """
     def replace_declaration(replaces, original_strings, def_text):
         taglist = ebnf_parser.parse(def_text)
@@ -121,11 +122,12 @@ def replace_literals(a_def, b_def):
             if tag == 'declaration':
                 name_begin, name_end = parts[0][1:3]
                 name = def_text[name_begin:name_end]
-                if name in original_strings:
+                text = def_text[begin:end]
+                if name in original_strings and text != original_strings[name]:
                     literal = find_literal_text(def_text, parts)
                     if literal:
                         replaces[name] = literal
-                original_strings[name] = True
+                original_strings[name] = text
     replaces = {}
     original_strings = {}
     replace_declaration(replaces, original_strings, a_def)
@@ -138,13 +140,25 @@ cs_def = merge_declaration_paths(['ecma.def', 'cs/cs.def'])
 replaces = replace_literals(as_def, cs_def)
 
 
-def parts(input, definition):
-    texts = []
+def taglist(input, definition):
     parser = Parser(as_def, definition)
     taglist = parser.parse(input)
-    for tag, begin, end, parts in taglist[1]:
-        texts.append(pformat(parts))
-    return '\n'.join(texts)
+    return pformat(taglist)
+
+
+def _recurse_tags(taglist, input):
+    text = ''
+    for tag, begin, end, parts in taglist:
+        if tag in replaces:
+            text += replaces.get(tag)
+        elif tag in common_tags:
+            if parts:
+                text += recurse_tags(parts, input)
+            else:
+                text += input[begin:end]
+        else:
+            pass
+    return text
 
     
 def as2cs(input, definition = 'compilationUnit'):
@@ -157,16 +171,9 @@ def as2cs(input, definition = 'compilationUnit'):
     Related to grammar unit testing specification (gUnit)
     https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
     """
-    text = ''
     parser = Parser(as_def, definition)
     taglist = parser.parse(input)
-    for tag, begin, end, parts in taglist[1]:
-        if tag in replaces:
-            text += replaces.get(tag)
-        elif tag in common_tags:
-            text += input[begin:end]
-        else:
-            pass
+    text = _recurse_tags(taglist[1], input)
     return text
 
 
