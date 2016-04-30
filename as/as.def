@@ -1,0 +1,26 @@
+whitespace     := [ \t\r\n]+
+alphanums      := [a-zA-Z0-9]+
+alphaunder     := [a-zA-Z_]
+punctuation    := [!@#$%^&()+=|\{}:;<>,.?/"]
+
+any := whitespace / alphanums / punctuation
+
+as3CompilationUnit := packageDecl, packageBlock
+
+packageDecl := PACKAGE, (whitespace, identifier)?
+
+identifier := alphaunder, (PERIOD?, alphanums+)*
+
+packageBlock := whitespace?, LCURLY, packageBlockEntry, RCURLY, whitespace?
+
+packageBlockEntry := whitespace?, importDefinition*, whitespace?
+
+importDefinition := import, whitespace, identifier, SEMI
+
+import := 'import'
+
+PACKAGE := 'package'
+LCURLY := '{'
+RCURLY := '}'
+SEMI := ';'
+PERIOD := '.'

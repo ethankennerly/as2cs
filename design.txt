@@ -1,29 +1,19 @@
-# as2cs
-
-Tiny example of converting a bit of syntax from ActionScript to C#.  
-
-Depends on Python SimpleParse 2.2.  You can install SimpleParse here:
-
-https://pypi.python.org/pypi/SimpleParse/
-
-Typographify example of using SimpleParse is from David Mertz' copyrighted article, cited in that directory.
-
-Features
+FEATURES
 ========
 
-    * Example doctest of import.
+    * Trivial example doctest of import.
 
-Todo
+TODO
 ====
 
     * Grammar unit test format analogous to gUnit.
     * as.def, cs.def package, import
     * Convert cs.def to formatter, analogous to a string template in ANTLR.
 
-Not supported
+NOT SUPPORTED
 =============
 
-Reference code
+REFERENCE CODE
 ==============
 
     * ActionScript 3 grammar in ANTLR
