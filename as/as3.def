@@ -6,8 +6,14 @@ packageBlock := whitespace?, LCURLY, packageBlockEntry, RCURLY, whitespace?
 
 packageBlockEntry := whitespace?, importDefinition*, whitespace?
 
-importDefinition := import, whitespacechar+, identifier, SEMI
+variableDeclaration := variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI
+
+int := 'int'
+string := 'String'
+boolean := 'Boolean'
+float := 'number'
+object := 'Object'
+variableDeclarationKeyword := 'var'
 
 import := 'import'
-
 PACKAGE := 'package'

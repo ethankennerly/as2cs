@@ -39,8 +39,8 @@ To-do
 =====
 
  * Reformat variable declaration by grammar.
- * as.def, cs.def package, import
  * Convert cs.def to formatter, analogous to a string template in ANTLR.
+ * Example of as.def, cs.def package, import
 
 Not supported
 =============

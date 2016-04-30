@@ -1,3 +1,0 @@
-codes = {
-    'import': 'using'
-}

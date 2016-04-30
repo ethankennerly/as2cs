@@ -1,2 +1,9 @@
-importDefinition := import, whitespace, identifier, SEMI
 import := 'using'
+
+variableDeclaration := dataType, whitespacechar+, identifier, whitespace*, SEMI
+
+int := 'int'
+string := 'string'
+boolean := 'bool'
+float := 'float'
+object := 'object'

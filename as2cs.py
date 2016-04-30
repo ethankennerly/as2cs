@@ -138,6 +138,15 @@ cs_def = merge_declaration_paths(['ecma.def', 'cs/cs.def'])
 replaces = replace_literals(as_def, cs_def)
 
 
+def parts(input, definition):
+    texts = []
+    parser = Parser(as_def, definition)
+    taglist = parser.parse(input)
+    for tag, begin, end, parts in taglist[1]:
+        texts.append(pformat(parts))
+    return '\n'.join(texts)
+
+    
 def as2cs(input, definition = 'compilationUnit'):
     """
     Example of converting syntax from ActionScript to C#.
@@ -151,22 +160,18 @@ def as2cs(input, definition = 'compilationUnit'):
     text = ''
     parser = Parser(as_def, definition)
     taglist = parser.parse(input)
-    ## text += pformat(taglist) # debug
     for tag, begin, end, parts in taglist[1]:
-        ## text += input[begin:end]
         if tag in replaces:
             text += replaces.get(tag)
         elif tag in common_tags:
             text += input[begin:end]
         else:
             pass
-        # text += input[begin:end]
-    # text += 'parsed %s chars of %s\n' %  (taglist[-1], len(input))
     return text
 
 
 if '__main__' == __name__:
-    # input = stdin.read()
-    # stdout.write(as2cs(input))
+    input = stdin.read()
+    stdout.write(as2cs(input))
     import doctest
     doctest.testmod()

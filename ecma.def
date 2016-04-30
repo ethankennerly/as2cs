@@ -2,13 +2,18 @@
 ## sourceElements := sourceElement+
 ## sourceElement := statement | functionDeclaration
 
+importDefinition := import, whitespace, identifier, SEMI
+
 identifier := alphaunder, (PERIOD?, alphanums+)*
 # whitespace     := [ \t\r\n]+
 # alphanums      := [a-zA-Z0-9]+
 alphanums      := (letter / digit)+
 alphaunder     := (letter / '_')
+dataType := int / string / boolean / float / object
+
 punctuation    := [!@#$%^&()+=|\{}:;<>,.?/"]
 PERIOD := '.'
 LCURLY := '{'
 RCURLY := '}'
 SEMI := ';'
+COLON := ':'
