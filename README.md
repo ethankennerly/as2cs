@@ -32,11 +32,11 @@ Features
     python -m unittest discover
  * Grammar unit test format related to gUnit.
  * Merge grammar declaration files.
+ * Transcribe 'import' example of common base grammar.
 
 To-do
 =====
 
- * Recognize identical grammar definition.
  * as.def, cs.def package, import
  * Convert cs.def to formatter, analogous to a string template in ANTLR.
 

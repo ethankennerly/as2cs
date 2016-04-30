@@ -1,12 +1,12 @@
 compilationUnit := packageDecl, packageBlock
 
-packageDecl := PACKAGE, (whitespace, identifier)?
+packageDecl := PACKAGE, (whitespacechar+, identifier)?
 
 packageBlock := whitespace?, LCURLY, packageBlockEntry, RCURLY, whitespace?
 
 packageBlockEntry := whitespace?, importDefinition*, whitespace?
 
-importDefinition := import, whitespace, identifier, SEMI
+importDefinition := import, whitespacechar+, identifier, SEMI
 
 import := 'import'
 
