@@ -8,6 +8,7 @@ from sys import stdin, stdout, stderr
 from cs import codes
 import pprint
 
+
 def as2cs(input, definition = 'as3CompilationUnit'):
     """
     Example of converting syntax from ActionScript to C#.
@@ -39,6 +40,7 @@ def as2cs(input, definition = 'as3CompilationUnit'):
         # text += input[beg:end]
     # text += 'parsed %s chars of %s\n' %  (taglist[-1], len(input))
     return text
+
 
 if '__main__' == __name__:
     # input = stdin.read()

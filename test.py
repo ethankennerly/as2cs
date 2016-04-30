@@ -1,13 +1,9 @@
+"""
+Recursively unit test and doctest subdirectories.
+"""
 import doctest
 import pkgutil
-import types
 import unittest
-
-import as2cs
-# from typographify import typographify
-
-
-package = as2cs
 
 
 def find_modules(path = '.'):
@@ -26,15 +22,12 @@ class TestDocTests(unittest.TestCase):
     modules = find_modules()
 
     def doctest(self, mod):
-        if type(mod) is types.ModuleType:
-            self.assertTrue(
-                doctest.testmod(mod))
-
-    def test_doctests(self):
         """
         http://stackoverflow.com/questions/16982514/python-test-discovery-with-doctests-coverage-and-parallelism
-        http://stackoverflow.com/questions/1707709/list-all-the-modules-that-are-part-of-a-python-package
         """
+        self.assertTrue(doctest.testmod(mod))
+
+    def test_doctests(self):
         for module in self.modules:
             self.doctest(module)
 
@@ -49,6 +42,4 @@ def run_discovered_tests():
 
 
 if '__main__' == __name__:
-    # unittest.main()
     run_discovered_tests()
-

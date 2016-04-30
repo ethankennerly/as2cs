@@ -2,11 +2,16 @@
 
 Tiny example of converting a bit of syntax from ActionScript to C#.  
 
+Typographify example of using SimpleParse is from David Mertz' copyrighted article, cited in that directory.
+
+Installation
+============
+
 Depends on Python SimpleParse 2.2.  You can install SimpleParse here:
 
 https://pypi.python.org/pypi/SimpleParse/
 
-Typographify example of using SimpleParse is from David Mertz' copyrighted article, cited in that directory.
+Test discovery depends on Python 2.7 or higher.
 
 Features
 ========
@@ -16,11 +21,13 @@ Features
     python test.py
     # or
     python -m unittest discover
+ * Grammar unit test format related to gUnit.
 
 To-do
 =====
 
- * Grammar unit test format analogous to gUnit.
+ * Merge grammar definition files.
+ * Recognize identical grammar definition.
  * as.def, cs.def package, import
  * Convert cs.def to formatter, analogous to a string template in ANTLR.
 
