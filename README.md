@@ -38,11 +38,13 @@ Features
  * Replace literal 'import' with 'using' by grammar.
  * Reformat an example variable declaration by grammar.
  * Convert trivial package with one import.
+ * Convert empty base class declaration.
 
 To-do
 =====
 
- * Convert class declaration.
+ * Convert extended class declaration.
+ * Preserve comments.
  * Convert function declaration.
  * Convert local variable.
  * Convert member variable.
@@ -51,6 +53,9 @@ To-do
 Not supported
 =============
 
+ * Mixing literals and non-literals in grammar to be replaced.
+ * Multiple occurences of items that are reordered.  
+  Instead these can be grouped, like 'digits?' instead of 'digit\*'.
  * Callbacks and delegates.
  * Preprocessor directive 'include'
  * Everything else not explicitly mentioned as a feature.

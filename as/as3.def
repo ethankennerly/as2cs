@@ -1,14 +1,6 @@
-compilationUnit := namespace, (whitespace, identifier)?, whitespace?, LCURLY, EOL, importDefinitions?, RCURLY
+compilationUnit := namespace, (whitespace, identifier)?, whitespace?, LCURLY, importDefinitions?, classDefinition?, whitespace?, RCURLY
 
-compilationUnit := namespaceDecl, namespaceBlock
-
-namespaceDecl := namespace, (whitespacechar+, identifier)?
-
-namespaceBlock := whitespace?, LCURLY, namespaceBlockEntry, RCURLY, whitespace?
-
-namespaceBlockEntry := whitespace?, importDefinition*, whitespace?
-
-variableDeclaration := variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI
+variableDeclaration := variableDeclarationKeyword, whitespace+, identifier, (COLON, dataType)?, whitespace?, SEMI
 
 int := 'int'
 string := 'String'

@@ -293,6 +293,10 @@ def _recurse_tags(taglist, input):
             text += _recurse_tags(parts, input)
     return text
 
+
+def newline_after_braces(text):
+    return text.replace('{', '{\n').replace('}', '}\n').replace('\n\n', '\n')
+
     
 def convert(input, definition = 'compilationUnit'):
     """
@@ -309,6 +313,7 @@ def convert(input, definition = 'compilationUnit'):
     taglist = [(definition, 0, taglist[-1], taglist[1])]
     text = _recurse_tags(taglist, input)
     if 'compilationUnit' == definition:
+        text = newline_after_braces(text)
         text = format_text(text)
     return text
 

@@ -1,10 +1,10 @@
-compilationUnit := importDefinitions?, namespace, whitespace, identifier, whitespace?, LCURLY, EOL, RCURLY
+compilationUnit := (importDefinitions, whitespace)?, namespace, whitespace, identifier, whitespace?, LCURLY, classDefinition?, whitespace?, RCURLY
 
 import := 'using'
 
 namespace := 'namespace'
 
-variableDeclaration := dataType, whitespacechar+, identifier, whitespace*, SEMI
+variableDeclaration := dataType, whitespace+, identifier, whitespace?, SEMI
 
 int := 'int'
 string := 'string'

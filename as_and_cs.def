@@ -1,6 +1,16 @@
 importDefinitions := importDefinition+
 
-importDefinition := whitespace?, import, whitespace, identifier, SEMI, EOL
+importDefinition := whitespace?, import, whitespace, identifier, SEMI, EOL?
+
+classDefinition := whitespace?, (scope, whitespace)?, class, whitespace, identifier, whitespace?, LCURLY, whitespace?, RCURLY
+
+scope := public / internal / private
+
+class := 'class'
+
+public := 'public'
+internal := 'internal'
+private := 'private'
 
 identifier := alphaunder, (PERIOD?, alphanums+)*
 alphanums      := (letter / digit)+
