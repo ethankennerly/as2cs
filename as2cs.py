@@ -298,7 +298,7 @@ def newline_after_braces(text):
     return text.replace('{', '{\n').replace('}', '}\n').replace('\n\n', '\n')
 
     
-def convert(input, definition = 'compilationUnit'):
+def convert(input, definition = 'compilationUnit', is_disable_format = False):
     """
     Example of converting syntax from ActionScript to C#.
 
@@ -312,7 +312,7 @@ def convert(input, definition = 'compilationUnit'):
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
     text = _recurse_tags(taglist, input)
-    if 'compilationUnit' == definition:
+    if 'compilationUnit' == definition and not is_disable_format:
         text = newline_after_braces(text)
         text = format_text(text)
     return text

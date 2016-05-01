@@ -38,11 +38,16 @@ definitions = {
          'using A;'],
      ],
      'dataType': [
-        ['String', 'string']
+        ['int', 'int'],
+        ['String', 'string'],
+        ['Boolean', 'bool'],
+        ['Number', 'float'],
      ],
      'variableDeclaration': [
         ['var path:String;',
          'string path;'],
+        ['var index:int;',
+         'int index;'],
      ]
 }
 
@@ -56,7 +61,7 @@ class TestDefinitions(unittest.TestCase):
     def assertExample(self, definition, row):
         try:
             expected = row[1]
-            got = convert(row[0], definition)
+            got = convert(row[0], definition, is_disable_format = False)
             self.assertEqual(expected, got)
         except:
             print

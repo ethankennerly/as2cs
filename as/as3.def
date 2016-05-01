@@ -5,7 +5,7 @@ variableDeclaration := variableDeclarationKeyword, whitespace+, identifier, (COL
 int := 'int'
 string := 'String'
 boolean := 'Boolean'
-float := 'number'
+float := 'Number'
 object := 'Object'
 variableDeclarationKeyword := 'var'
 

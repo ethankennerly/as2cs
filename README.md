@@ -53,11 +53,16 @@ To-do
 Not supported
 =============
 
+ * Convert a sample of C# into ActionScript.
+ * Test regardless of format.
+ * typeof string format.
  * Mixing literals and non-literals in grammar to be replaced.
  * Multiple occurences of items that are reordered.  
   Instead these can be grouped, like 'digits?' instead of 'digit\*'.
  * Callbacks and delegates.
  * Preprocessor directive 'include'
+ * Consistent prettify format that trims whitespace.
+ * Prettify format from optional end of line and indentation in grammar.
  * Everything else not explicitly mentioned as a feature.
 
 Reference code
