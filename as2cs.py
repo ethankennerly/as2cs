@@ -92,7 +92,7 @@ common_tags = {}
 for source in SOURCES:
     for key in source.keys():
         common_tags[key] = True
-set_tags(common_tags, open('as_and_cs.def').read())
+set_tags(common_tags, open('as_and_cs.g').read())
 
 
 def find_text(text, name, parts):
@@ -170,19 +170,19 @@ def find_literals(def_text):
     return literals
 
 
-def replace_literals(a_def, b_def, literals = None):
+def replace_literals(a_grammar, b_grammar, literals = None):
     """
-    >>> replaces = replace_literals(as_def, cs_def, literals['cs'])
+    >>> replaces = replace_literals(as_grammar, cs_grammar, literals['cs'])
     >>> replaces.get('import')
     'using'
     >>> replaces.get('alphaunder')
-    >>> replaces = replace_literals(as_def, cs_def)
+    >>> replaces = replace_literals(as_grammar, cs_grammar)
     >>> replaces.get('import')
     'using'
     >>> replaces.get('alphaunder')
     """
     if literals is None:
-        literals = find_literals(b_def)
+        literals = find_literals(b_grammar)
     def replace_declaration(replaces, original_strings, def_text):
         taglist = ebnf_parser.parse(def_text)[1]
         for tag, begin, end, parts in taglist:
@@ -197,20 +197,20 @@ def replace_literals(a_def, b_def, literals = None):
                 original_strings[name] = text
     replaces = {}
     original_strings = {}
-    replace_declaration(replaces, original_strings, a_def)
-    replace_declaration(replaces, original_strings, b_def)
+    replace_declaration(replaces, original_strings, a_grammar)
+    replace_declaration(replaces, original_strings, b_grammar)
     return replaces
 
 
-as_def = merge_declaration_paths(['as_and_cs.def', 'as/as3.def'])
-cs_def = merge_declaration_paths(['as_and_cs.def', 'cs/cs.def'])
-defs = {'as': as_def, 'cs': cs_def}
+as_grammar = merge_declaration_paths(['as_and_cs.g', 'as.g'])
+cs_grammar = merge_declaration_paths(['as_and_cs.g', 'cs.g'])
+grammars = {'as': as_grammar, 'cs': cs_grammar}
 literals = {'as': {}, 'cs': {}}
-literals['as'] = find_literals(as_def)
-literals['cs'] = find_literals(cs_def)
+literals['as'] = find_literals(as_grammar)
+literals['cs'] = find_literals(cs_grammar)
 replace_tags = {'as': {}, 'cs': {}}
-replace_tags['as']['cs'] = replace_literals(as_def, cs_def, literals['cs'])
-replace_tags['cs']['as'] = replace_literals(cs_def, as_def, literals['as'])
+replace_tags['as']['cs'] = replace_literals(as_grammar, cs_grammar, literals['cs'])
+replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as'])
 
 
 def tag_order(def_text):
@@ -227,7 +227,7 @@ def tag_order(def_text):
     return order
 
 
-def tags_to_reorder(a_def, b_def):
+def tags_to_reorder(a_grammar, b_grammar):
     """
     For grammar tags of the same name.
     Order of tags in definition B where they differ from order in A
@@ -254,14 +254,14 @@ def tags_to_reorder(a_def, b_def):
                 original_strings[name] = text
     reorders = {}
     original_strings = {}
-    reorder_declaration(reorders, original_strings, a_def)
-    reorder_declaration(reorders, original_strings, b_def)
+    reorder_declaration(reorders, original_strings, a_grammar)
+    reorder_declaration(reorders, original_strings, b_grammar)
     return reorders
 
 
 reorder_tags = {'as': {}, 'cs': {}}
-reorder_tags['as']['cs'] = tags_to_reorder(as_def, cs_def)
-reorder_tags['cs']['as'] = tags_to_reorder(cs_def, as_def)
+reorder_tags['as']['cs'] = tags_to_reorder(as_grammar, cs_grammar)
+reorder_tags['cs']['as'] = tags_to_reorder(cs_grammar, as_grammar)
 
 
 def insert(source_str, insert_str, pos):
@@ -418,7 +418,7 @@ def convert(input, definition = 'compilationUnit'):
     """
     source = cfg['source']
     to = cfg['to']
-    parser = Parser(defs[source], definition)
+    parser = Parser(grammars[source], definition)
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
     text = _recurse_tags(taglist, input, source, to)
@@ -428,7 +428,7 @@ def convert(input, definition = 'compilationUnit'):
 
 def format_taglist(input, definition):
     source = cfg['source']
-    parser = Parser(defs[source], definition)
+    parser = Parser(grammars[source], definition)
     taglist = parser.parse(input)
     return pformat(taglist)
 

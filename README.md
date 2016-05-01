@@ -1,6 +1,6 @@
 # as2cs
 
-Tiny example of converting a bit of syntax from ActionScript to C# and back from C# to ActionScript.  Compares compatible grammars.
+Tiny example of converting a bit of syntax from ActionScript 3 to C# and back from C# to ActionScript 3.  Compares compatible grammars.
 
 Typographify example of using SimpleParse is from David Mertz' copyrighted article, cited in that directory.
 
