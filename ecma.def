@@ -1,19 +1,13 @@
-## compilationUnit := sourceElements, EOF
-## sourceElements := sourceElement+
-## sourceElement := statement | functionDeclaration
-
-importDefinition := import, whitespace, identifier, SEMI
+importDefinition := whitespace?, import, whitespace, identifier, SEMI, EOL
 
 identifier := alphaunder, (PERIOD?, alphanums+)*
-# whitespace     := [ \t\r\n]+
-# alphanums      := [a-zA-Z0-9]+
 alphanums      := (letter / digit)+
 alphaunder     := (letter / '_')
 dataType := int / string / boolean / float / object
 
-punctuation    := [!@#$%^&()+=|\{}:;<>,.?/"]
 PERIOD := '.'
 LCURLY := '{'
 RCURLY := '}'
 SEMI := ';'
 COLON := ':'
+EOL   := ('\r'?,'\n') / EOF

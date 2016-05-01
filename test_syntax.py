@@ -8,7 +8,7 @@ https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testi
 """
 from glob import glob
 import unittest
-from as2cs import convert, convert_files, format_taglist, realpath
+from as2cs import convert, compare_files, format_taglist, realpath
 
 
 definitions = {
@@ -40,7 +40,7 @@ class TestDefinitions(unittest.TestCase):
 
     def assertExample(self, definition, row):
         try:
-            self.assertEquals(row[1], convert(row[0], definition))
+            self.assertEqual(row[1], convert(row[0], definition))
         except:
             print
             print definition, row
@@ -56,8 +56,17 @@ class TestDefinitions(unittest.TestCase):
                 self.assertExample(definition, row)
 
     def test_files(self):
-        import pdb; pdb.set_trace()
-        convert_files(glob(realpath('test/*.as')))
+        expected_gots = compare_files(glob(realpath('test/*.as')))
+        for expected, got in expected_gots:
+            try:
+                self.assertEqual(expected, got)
+            except:
+                print
+                print 'Expected:'
+                print expected
+                print 'Got:'
+                print got
+                raise
 
 
 if '__main__' == __name__:

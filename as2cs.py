@@ -10,7 +10,7 @@ import codecs
 from os import path
 from sys import stdin, stdout
 from pprint import pformat
-
+from pretty_print_code.pretty_print_code import format_text
 from simpleparse.parser import Parser
 from simpleparse.simpleparsegrammar import declaration
 from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
@@ -295,6 +295,8 @@ def convert(input, definition = 'compilationUnit'):
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
     text = _recurse_tags(taglist, input)
+    if 'compilationUnit' == definition:
+        text = format_text(text)
     return text
 
 
@@ -304,20 +306,36 @@ def format_taglist(input, definition):
     return pformat(taglist)
 
 
-def convert_file(asPath, csPath):
-    text = codecs.open(asPath, 'r', 'utf-8').read()
+def convert_file(as_path, cs_path):
+    text = codecs.open(as_path, 'r', 'utf-8').read()
     str = convert(text)
-    f = codecs.open(csPath, 'w', 'utf-8')
+    f = codecs.open(cs_path, 'w', 'utf-8')
     ## print(str)
     f.write(str)
     f.close()   
 
 
-def convert_files(asPaths):
-    for asPath in asPaths:
-        root, ext = path.splitext(asPath)
-        csPath = root + '.cs'
-        convert_file(asPath, csPath)
+def convert_files(as_paths):
+    for as_path in as_paths:
+        root, ext = path.splitext(as_path)
+        cs_path = root + '.cs'
+        convert_file(as_path, cs_path)
+
+
+def compare_file(as_path, cs_path):
+    text = codecs.open(as_path, 'r', 'utf-8').read()
+    got = convert(text)
+    expected = codecs.open(cs_path, 'r', 'utf-8').read()
+    return [expected, got]
+
+
+def compare_files(as_paths):
+    expected_gots = []
+    for as_path in as_paths:
+        root, ext = path.splitext(as_path)
+        cs_path = root + '.cs'
+        expected_gots.append(compare_file(as_path, cs_path))
+    return expected_gots
 
 
 def realpath(a_path):
