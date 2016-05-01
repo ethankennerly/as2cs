@@ -1,27 +1,40 @@
-namespaceDeclaration := namespace, (whitespace, identifier)?, whitespace?
+namespaceDeclaration := ts?, namespace, (ts, identifier)?, ts?
 
-importDefinitions := importDefinition+
+ts := (whitespace+ / comment_area)+
 
-importDefinition := whitespace?, import, whitespace, identifier, SEMI, EOL?
+comment_area := comment_line / comment_block
+comment_block := comment_start, comment_middle*, comment_end
+comment_line := comment_line_start, comment_line_content*, EOL
+comment_middle := -comment_end
+comment_line_content := -EOL
+comment_line_start := "//"
+comment_start := "/*"
+comment_end := "*/"
 
-classDefinition := whitespace?, (scope, whitespace)?, class, whitespace, identifier, whitespace?, LCURLY, whitespace?, RCURLY
+
+importDefinitionPlace := importDefinition*
+
+importDefinition := ts?, import, ts, identifier, SEMI, EOL?
+
+classDefinitionPlace := classDefinition?
+classDefinition := ts?, (scope, ts)?, class, ts, identifier, ts?, LCURLY, ts?, RCURLY
 
 scope := public / internal / private
 
-class := 'class'
+class := "class"
 
-public := 'public'
-internal := 'internal'
-private := 'private'
+public := "public"
+internal := "internal"
+private := "private"
 
 identifier := alphaunder, (PERIOD?, alphanums+)*
 alphanums      := (letter / digit)+
-alphaunder     := (letter / '_')
-dataType := int / string / boolean / float / object
+alphaunder     := (letter / "_")
+dataType := integer / string / boolean / float / object
 
-PERIOD := '.'
-LCURLY := '{'
-RCURLY := '}'
-SEMI := ';'
-COLON := ':'
-EOL   := ('\r'?,'\n') / EOF
+PERIOD := "."
+LCURLY := "{"
+RCURLY := "}"
+SEMI := ";"
+COLON := ":"
+EOL   := ("\r"?,"\n") / EOF

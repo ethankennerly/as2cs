@@ -45,6 +45,11 @@ definitions = [
         ['var index:int;',
          'int index;'],
      ]),
+     ('ts', [
+        ['/*c*/', '/*c*/'],
+        ['//c', '//c'],
+        ['// var i:int;', '// var i:int;'],
+     ]),
      ('compilationUnit', [
         ['package{public class C{}}', 
          'namespace{\n    public class C{\n    }\n}'],
@@ -62,13 +67,25 @@ definitions = [
          'namespace{\n    public class C3{\n    }\n}'],
         ['package N\n{\npublic class C4{\n}\n}\n',
          'namespace N\n{\n    public class C4{\n    }\n}'],
+        ['//c\npackage N\n{\npublic class C5{\n}\n}\n',
+         '//c\nnamespace N\n{\n    public class C5{\n    }\n}'],
+        ['package N\n{\n//c\npublic class C7{\n}\n}\n',
+         'namespace N\n{\n    //c\n    public class C7{\n    }\n}'],
+        ['/*c*/\npackage N\n{\npublic class C6{\n}\n}\n',
+         '/*c*/\nnamespace N\n{\n    public class C6{\n    }\n}'],
      ]),
 ]
 
 
 debug_definitions = [
     # 'compilationUnit'
+    # 'importDefinition'
+    # 'ts'
     # 'variableDeclaration'
+]
+
+debug_indexes = [
+    # 9
 ]
 
 original_source = cfg['source']
@@ -78,11 +95,17 @@ original_to = cfg['to']
 class TestDefinitions(unittest.TestCase):
 
     def assertExample(self, definition, expected, input, index):
+        got = None
         try:
             expected = may_format(definition, expected)
+            if definition in debug_definitions:
+                if not debug_indexes or index in debug_indexes:
+                    import pdb; pdb.set_trace()
             got = convert(input, definition)
             self.assertEqual(expected, got)
-        except:
+        except Exception as err:
+            if got is None:
+                got = err.message
             print
             print definition, index, expected, got
             print 'Input:'
@@ -100,8 +123,6 @@ class TestDefinitions(unittest.TestCase):
             cfg['source'] = source
             cfg['to'] = to
             for definition, rows in definitions:
-                if definition in debug_definitions:
-                    import pdb; pdb.set_trace()
                 for r, row in enumerate(rows):
                     expected = row[t]
                     input = row[s]

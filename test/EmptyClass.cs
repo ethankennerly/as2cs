@@ -7,5 +7,4 @@ namespace com.finegamedesign.anagram {
     {
         
     }
-    
 }

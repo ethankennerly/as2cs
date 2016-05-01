@@ -41,16 +41,19 @@ Features
  * Convert empty base class declaration.
  * Convert basic example variables bi-directionally:  C# to ActionScript.
  * Convert simple namespace from C# to ActionScript.
+ * Comment grammar adapted from simpleparse.common.comments 
+  with literals extracted and no unreported or expanded definitions
 
 To-do
 =====
 
- * Convert extended class declaration.
  * Preserve comments.
+ * Convert extended class declaration.
  * Convert function declaration.
  * Convert local variable.
  * Convert member variable.
  * Convert static variable.
+ * Grammar names in snake_case matching simpleparsegrammar.
 
 Not supported
 =============
@@ -62,9 +65,11 @@ Not supported
  * Multiple occurences of items that are reordered.  
   Instead these can be grouped, like 'digits?' instead of 'digit\*'.
  * Callbacks and delegates.
+ * Whitespace between grammar element and occurrence indicator.
  * Preprocessor directive 'include'
  * Consistent prettify format that trims whitespace.
  * Prettify format from optional end of line and indentation in grammar.
+ * ActionScript only allows one public class per package and one package per file.
  * Everything else not explicitly mentioned as a feature.
 
 Reference code

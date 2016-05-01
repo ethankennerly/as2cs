@@ -25,6 +25,12 @@ cfg = {
 ebnf_parser = Parser(declaration, 'declarationset')
 
 
+source_keys = [key for source in SOURCES 
+    for key in source.keys()]
+source_keys.sort()
+## print pformat(source_keys)
+
+
 def merge_declarations(declarations):
     r"""
     B augments A.
@@ -69,56 +75,49 @@ def merge_declaration_paths(paths):
     return merge_declarations(texts)
 
 
-def set_tags(tags, def_text):
+def set_tags(tags, grammar_text, value):
     r"""
-    >>> def_text = "a := b\nb := '.'"
+    >>> grammar_text = "a := b\nb := '.'"
     >>> tags = {}
-    >>> set_tags(tags, def_text)
+    >>> set_tags(tags, grammar_text, True)
     >>> print pformat(tags)
     {'a': True, 'b': True}
-    >>> set_tags(tags, 'spacechar := " "')
+    >>> set_tags(tags, 'spacechar := " "', False)
     >>> print pformat(tags)
-    {'a': True, 'b': True, 'spacechar': True}
+    {'a': True, 'b': True, 'spacechar': False}
     """
-    taglist = ebnf_parser.parse(def_text)
+    taglist = ebnf_parser.parse(grammar_text)
     for tag, begin, end, parts in taglist[1]:
         if tag == 'declaration':
             name_begin, name_end = parts[0][1:3]
-            name = def_text[name_begin:name_end]
-            tags[name] = True
+            name = grammar_text[name_begin:name_end]
+            tags[name] = value
 
 
-common_tags = {}
-for source in SOURCES:
-    for key in source.keys():
-        common_tags[key] = True
-set_tags(common_tags, open('as_and_cs.g').read())
-
-
-def find_text(text, name, parts):
+def find_text(text, names, parts):
     """
     >>> parts = [('name', 0, 6, []), ('seq_group', 9, 18, [('element_token', 10, 18, [('literal', 10, 17, [('CHARNOSNGLQUOTE', 11, 16, None)])])])]
-    >>> find_text("import := 'using'", 'digit', parts)
-    >>> find_text("import := 'using'", 'literal', parts)
+    >>> find_text("import := 'using'", ['digit'], parts)
+    >>> find_text("import := 'using'", ['literal'], parts)
     "'using'"
-    >>> find_text('import := "using"', 'CHARNOSNGLQUOTE', parts)
+    >>> find_text('import := "using"', ['CHARNODBLQUOTE', 'CHARNOSNGLQUOTE'], parts)
     'using'
     """
     found = ''
     if parts:
         for tag, begin, end, part in parts:
-            if name == tag:
+            if tag in names:
                 found += text[begin:end]
                 break
             else:
-                found_part = find_text(text, name, part)
+                found_part = find_text(text, names, part)
                 if found_part:
                     found += found_part
     if found:
         return found
 
 
-def find_texts(text, name, parts):
+def find_texts(text, name, parts, not_followed_by = None):
     """
     >>> parts = [('variableDeclarationKeyword', 0, 3, None),
     ...  ('whitespacechar', 3, 4, None),
@@ -140,31 +139,43 @@ def find_texts(text, name, parts):
     []
     >>> find_texts(as_code, 'letter', parts)
     ['p', 'a', 't', 'h']
+    >>> find_texts(as_code, 'letter', parts, ':')
+    ['p', 'a', 't']
+    >>> find_texts(as_code, 'letter', parts, 't')
+    ['p', 't', 'h']
     """
     found = []
     if parts:
         for tag, begin, end, part in parts:
             if name == tag:
-                found.append(text[begin:end])
+                is_match = True
+                if not_followed_by is not None:
+                    following = text[end:]
+                    for not_followed in not_followed_by:
+                        if following.startswith(not_followed):
+                            is_match = False
+                            break
+                if is_match:
+                    found.append(text[begin:end])
             else:
-                found_part = find_texts(text, name, part)
+                found_part = find_texts(text, name, part, not_followed_by)
                 if found_part:
                     found.extend(found_part)
     return found
 
 
 def find_literal_text(text, parts):
-    return find_text(text, 'CHARNOSNGLQUOTE', parts)
+    return find_text(text, ['CHARNOSNGLQUOTE', 'CHARNODBLQUOTE'], parts)
 
 
-def find_literals(def_text):
+def find_literals(grammar_text):
     literals = {}
-    taglist = ebnf_parser.parse(def_text)[1]
+    taglist = ebnf_parser.parse(grammar_text)[1]
     for tag, begin, end, parts in taglist:
         if tag == 'declaration':
             name_begin, name_end = parts[0][1:3]
-            name = def_text[name_begin:name_end]
-            literal = find_literal_text(def_text, parts)
+            name = grammar_text[name_begin:name_end]
+            literal = find_literal_text(grammar_text, parts)
             if literal:
                 literals[name] = literal
     return literals
@@ -183,13 +194,13 @@ def replace_literals(a_grammar, b_grammar, literals = None):
     """
     if literals is None:
         literals = find_literals(b_grammar)
-    def replace_declaration(replaces, original_strings, def_text):
-        taglist = ebnf_parser.parse(def_text)[1]
+    def replace_declaration(replaces, original_strings, grammar_text):
+        taglist = ebnf_parser.parse(grammar_text)[1]
         for tag, begin, end, parts in taglist:
             if tag == 'declaration':
                 name_begin, name_end = parts[0][1:3]
-                name = def_text[name_begin:name_end]
-                text = def_text[begin:end]
+                name = grammar_text[name_begin:name_end]
+                text = grammar_text[begin:end]
                 if name in original_strings and text != original_strings[name]:
                     literal = literals.get(name)
                     if literal:
@@ -212,18 +223,26 @@ replace_tags = {'as': {}, 'cs': {}}
 replace_tags['as']['cs'] = replace_literals(as_grammar, cs_grammar, literals['cs'])
 replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as'])
 
+different_tags = {}
+set_tags(different_tags, open('as.g').read(), True)
+set_tags(different_tags, open('cs.g').read(), True)
+for key in source_keys:
+    different_tags[key] = False
+set_tags(different_tags, open('as_and_cs.g').read(), False)
 
-def tag_order(def_text):
+
+def tag_order(grammar_text):
     """
-    >>> cs_var = 'variableDeclaration := dataType, whitespacechar+, identifier, whitespace*, SEMI'
+    >>> cs_var = 'variableDeclaration := whitespace?, dataType, whitespacechar+, identifier, whitespace*, SEMI'
     >>> tag_order(cs_var)
-    ['dataType', 'whitespacechar', 'identifier', 'whitespace', 'SEMI']
-    >>> as_var = 'variableDeclaration := variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
+    ['dataType', 'whitespacechar', 'identifier', 'SEMI']
+    >>> as_var = 'variableDeclaration := whitespace?, variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
     >>> tag_order(as_var)
-    ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'whitespace', 'SEMI']
+    ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'SEMI']
     """
-    taglist = ebnf_parser.parse(def_text)[1]
-    order = find_texts(def_text, 'name', taglist)[1:]
+    taglist = ebnf_parser.parse(grammar_text)[1]
+    optional_occurences = ['*', '?']
+    order = find_texts(grammar_text, 'name', taglist, optional_occurences)[1:]
     return order
 
 
@@ -231,26 +250,29 @@ def tags_to_reorder(a_grammar, b_grammar):
     """
     For grammar tags of the same name.
     Order of tags in definition B where they differ from order in A
-    >>> cs_var = 'variableDeclaration := dataType, whitespacechar+, identifier, whitespace*, SEMI'
-    >>> as_var = 'variableDeclaration := variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
+    >>> cs_var = 'variableDeclaration := whitespace?, dataType, whitespacechar+, identifier, whitespace*, SEMI'
+    >>> as_var = 'variableDeclaration := whitespace?, variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
     >>> reorder_tags = tags_to_reorder(as_var, cs_var)
     >>> reorder_tags.get('variableDeclaration')
-    ['dataType', 'whitespacechar', 'identifier', 'whitespace', 'SEMI']
+    ['dataType', 'whitespacechar', 'identifier', 'SEMI']
     >>> reorder_tags = tags_to_reorder(cs_var, as_var)
     >>> reorder_tags.get('variableDeclaration')
-    ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'whitespace', 'SEMI']
+    ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'SEMI']
+    >>> tags_to_reorder('namespace := "package"', 'namespace := "namespace"')
+    {}
     """
-    def reorder_declaration(reorders, original_strings, def_text):
-        taglist = ebnf_parser.parse(def_text)
+    def reorder_declaration(reorders, original_strings, grammar_text):
+        taglist = ebnf_parser.parse(grammar_text)
         ## print pformat(taglist)
         for tag, begin, end, parts in taglist[1]:
             if tag == 'declaration':
                 name_begin, name_end = parts[0][1:3]
-                name = def_text[name_begin:name_end]
-                text = def_text[begin:end]
+                name = grammar_text[name_begin:name_end]
+                text = grammar_text[begin:end]
                 if name in original_strings and text != original_strings[name]:
                     order_tags = tag_order(text)
-                    reorders[name] = order_tags
+                    if order_tags:
+                        reorders[name] = order_tags
                 original_strings[name] = text
     reorders = {}
     original_strings = {}
@@ -274,25 +296,8 @@ def insert(source_str, insert_str, pos):
 
 def reorder_taglist(taglist, tag, input, source, to):
     """
-    >>> input = 'var path:String;'
-    >>> taglist = [('variableDeclarationKeyword', 0, 3, None),
-    ...  ('whitespace', 3, 4, None),
-    ...  ('identifier',
-    ...   4,
-    ...   8,
-    ...   [('alphaunder', 4, 5, [('letter', 4, 5, None)]),
-    ...    ('alphanums',
-    ...     5,
-    ...     8,
-    ...     [('letter', 5, 6, None),
-    ...      ('letter', 6, 7, None),
-    ...      ('letter', 7, 8, None)])]),
-    ...  ('COLON', 8, 9, None),
-    ...  ('dataType', 9, 15, [('string', 9, 15, None)]),
-    ...  ('SEMI', 15, 16, None)]
-    >>> reorder_taglist(taglist, 'variableDeclaration', input, 'as', 'cs')
-    'string path;'
-
+    Inserts tags of target grammar not found in the source grammar.
+    Example:  see test_syntax.py
     Does not handle multiple occurences.
     Instead group those together in the grammar, such as 'digits' instead of ('digit', 'digit')
     >>> input = 'b22'
@@ -304,24 +309,6 @@ def reorder_taglist(taglist, tag, input, source, to):
     >>> taglist = [('letter', 0, 1, None), ('digit', 1, 2, None), ('digit', 2, 3, None)]
     >>> reorder_taglist(taglist, order, input, 'as', 'cs')
     '2b'
-
-    Inserts tags not found in the source.
-    >>> taglist = [('dataType', 0, 6, [('string', 0, 6, None)]),
-    ...  ('whitespace', 6, 7, None),
-    ...  ('identifier',
-    ...   7,
-    ...   11,
-    ...   [('alphaunder', 7, 8, [('letter', 7, 8, None)]),
-    ...    ('alphanums',
-    ...     8,
-    ...     11,
-    ...     [('letter', 8, 9, None),
-    ...      ('letter', 9, 10, None),
-    ...      ('letter', 10, 11, None)])]),
-    ...  ('SEMI', 11, 12, None)]
-    >>> variableDeclaration = reorder_tags['cs']['as']['variableDeclaration']
-    >>> reorder_taglist(taglist, 'variableDeclaration', 'string path;', 'cs', 'as')
-    'var path:String;'
     """
     def add(unordered, r, length):
         row = unordered[r]
@@ -364,6 +351,32 @@ def reorder_taglist(taglist, tag, input, source, to):
     return text
 
 
+def _last(latest, parts, is_pre):
+    for t, b, e, sub in parts:
+        if sub:
+            latest = _last(latest, sub, is_pre)
+        elif is_pre:
+            latest = max(latest, b)
+        else:
+            latest = min(latest, e)
+    return latest
+
+
+def affix(begin, end, parts, input, is_pre):
+    if is_pre:
+        at = begin
+    else:
+        at = end
+    text = ''
+    latest = _last(at, parts, is_pre)
+    if begin < latest and latest < end:
+        if is_pre:
+            text = input[:latest]
+        else:
+            text = input[latest:]
+    return text
+
+
 def _recurse_tags(taglist, input, source, to):
     """
     Reorder tags.
@@ -376,15 +389,15 @@ def _recurse_tags(taglist, input, source, to):
     for tag, begin, end, parts in taglist:
         if tag in replaces:
             text += replaces.get(tag)
+        elif tag in literals[to]:
+            text += input[begin:end]
         elif tag in reorders:
             text += reorder_taglist(parts, tag, input, source, to)
-        elif tag in common_tags:
+        elif not different_tags.get(tag):
             if parts:
                 text += _recurse_tags(parts, input, source, to)
             else:
                 text += input[begin:end]
-        elif tag in literals[to]:
-            text += input[begin:end]
         elif parts:
             text += _recurse_tags(parts, input, source, to)
     return text

@@ -1,15 +1,15 @@
-compilationUnit := importDefinitions?, namespaceDeclaration, LCURLY, classDefinition?, whitespace?, RCURLY
+compilationUnit := importDefinitionPlace, namespaceDeclaration, LCURLY, classDefinitionPlace, ts?, RCURLY
 
-import := 'using'
+import := "using"
 
-namespace := 'namespace'
+namespace := "namespace"
 
-variableDeclaration := dataType, whitespace+, identifier, whitespace?, SEMI
+variableDeclaration := ts?, dataType, ts, identifier, ts?, SEMI
 
-int := 'int'
-string := 'string'
-boolean := 'bool'
-float := 'float'
-object := 'object'
+integer := "int"
+string := "string"
+boolean := "bool"
+float := "float"
+object := "object"
 
 

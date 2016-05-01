@@ -1,15 +1,14 @@
-compilationUnit := namespaceDeclaration, LCURLY, importDefinitions?, classDefinition?, whitespace?, RCURLY
+compilationUnit := namespaceDeclaration, LCURLY, importDefinitionPlace, classDefinitionPlace, ts?, RCURLY
 
-variableDeclaration := variableDeclarationKeyword, whitespace+, identifier, (COLON, dataType)?, whitespace?, SEMI
+variableDeclaration := ts?, variableDeclarationKeyword, ts, identifier, (COLON, dataType)?, ts?, SEMI
 
-int := 'int'
-string := 'String'
-boolean := 'Boolean'
-float := 'Number'
-object := 'Object'
-variableDeclarationKeyword := 'var'
+integer := "int"
+string := "String"
+boolean := "Boolean"
+float := "Number"
+object := "Object"
+variableDeclarationKeyword := "var"
 
-import := 'import'
+import := "import"
 
-namespace := 'package'
-
+namespace := "package"
