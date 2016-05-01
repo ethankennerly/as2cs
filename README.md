@@ -1,6 +1,6 @@
 # as2cs
 
-Tiny example of converting a bit of syntax from ActionScript to C#.  
+Tiny example of converting a bit of syntax from ActionScript to C# and back from C# to ActionScript.  Compares compatible grammars.
 
 Typographify example of using SimpleParse is from David Mertz' copyrighted article, cited in that directory.
 
@@ -40,11 +40,11 @@ Features
  * Convert trivial package with one import.
  * Convert empty base class declaration.
  * Convert basic example variables bi-directionally:  C# to ActionScript.
+ * Convert simple namespace from C# to ActionScript.
 
 To-do
 =====
 
- * Convert basic example namespace bi-directionally:  C# to ActionScript.
  * Convert extended class declaration.
  * Preserve comments.
  * Convert function declaration.

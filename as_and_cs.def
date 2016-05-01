@@ -1,3 +1,5 @@
+namespaceDeclaration := namespace, (whitespace, identifier)?, whitespace?
+
 importDefinitions := importDefinition+
 
 importDefinition := whitespace?, import, whitespace, identifier, SEMI, EOL?

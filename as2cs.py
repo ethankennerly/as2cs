@@ -17,7 +17,8 @@ from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
 
 cfg = {
     'source': 'as',
-    'to': 'cs'
+    'to': 'cs',
+    'is_formats': ['compilationUnit'],
 }
 
 
@@ -319,7 +320,7 @@ def reorder_taglist(taglist, tag, input, source, to):
     ...      ('letter', 10, 11, None)])]),
     ...  ('SEMI', 11, 12, None)]
     >>> variableDeclaration = reorder_tags['cs']['as']['variableDeclaration']
-    >>> import pdb; pdb.set_trace(); reorder_taglist(taglist, 'variableDeclaration', 'string path;', 'cs', 'as')
+    >>> reorder_taglist(taglist, 'variableDeclaration', 'string path;', 'cs', 'as')
     'var path:String;'
     """
     def add(unordered, r, length):
@@ -392,8 +393,20 @@ def _recurse_tags(taglist, input, source, to):
 def newline_after_braces(text):
     return text.replace('{', '{\n').replace('}', '}\n').replace('\n\n', '\n')
 
-    
-def convert(input, definition = 'compilationUnit', is_disable_format = False):
+
+def format(text):
+    text = newline_after_braces(text)
+    text = format_text(text)
+    return text
+
+
+def may_format(definition, text):
+    if definition in cfg['is_formats']:
+        text = format(text)
+    return text
+
+
+def convert(input, definition = 'compilationUnit'):
     """
     Example of converting syntax from ActionScript to C#.
 
@@ -409,9 +422,7 @@ def convert(input, definition = 'compilationUnit', is_disable_format = False):
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
     text = _recurse_tags(taglist, input, source, to)
-    if 'compilationUnit' == definition and not is_disable_format:
-        text = newline_after_braces(text)
-        text = format_text(text)
+    text = may_format(definition, text)
     return text
 
 
@@ -426,7 +437,6 @@ def convert_file(source_path, to_path):
     text = codecs.open(source_path, 'r', 'utf-8').read()
     str = convert(text)
     f = codecs.open(to_path, 'w', 'utf-8')
-    ## print(str)
     f.write(str)
     f.close()
 
