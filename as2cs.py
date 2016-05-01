@@ -156,13 +156,32 @@ def find_literal_text(text, parts):
     return find_text(text, 'CHARNOSNGLQUOTE', parts)
 
 
-def replace_literals(a_def, b_def):
+def find_literals(def_text):
+    literals = {}
+    taglist = ebnf_parser.parse(def_text)[1]
+    for tag, begin, end, parts in taglist:
+        if tag == 'declaration':
+            name_begin, name_end = parts[0][1:3]
+            name = def_text[name_begin:name_end]
+            literal = find_literal_text(def_text, parts)
+            if literal:
+                literals[name] = literal
+    return literals
+
+
+def replace_literals(a_def, b_def, literals = None):
     """
+    >>> replaces = replace_literals(as_def, cs_def, literals['cs'])
+    >>> replaces.get('import')
+    'using'
+    >>> replaces.get('alphaunder')
     >>> replaces = replace_literals(as_def, cs_def)
     >>> replaces.get('import')
     'using'
     >>> replaces.get('alphaunder')
     """
+    if literals is None:
+        literals = find_literals(b_def)
     def replace_declaration(replaces, original_strings, def_text):
         taglist = ebnf_parser.parse(def_text)[1]
         for tag, begin, end, parts in taglist:
@@ -171,7 +190,7 @@ def replace_literals(a_def, b_def):
                 name = def_text[name_begin:name_end]
                 text = def_text[begin:end]
                 if name in original_strings and text != original_strings[name]:
-                    literal = find_literal_text(def_text, parts)
+                    literal = literals.get(name)
                     if literal:
                         replaces[name] = literal
                 original_strings[name] = text
@@ -185,9 +204,12 @@ def replace_literals(a_def, b_def):
 as_def = merge_declaration_paths(['as_and_cs.def', 'as/as3.def'])
 cs_def = merge_declaration_paths(['as_and_cs.def', 'cs/cs.def'])
 defs = {'as': as_def, 'cs': cs_def}
-replaces = {'as': {}, 'cs': {}}
-replaces['as']['cs'] = replace_literals(as_def, cs_def)
-replaces['cs']['as'] = replace_literals(cs_def, as_def)
+literals = {'as': {}, 'cs': {}}
+literals['as'] = find_literals(as_def)
+literals['cs'] = find_literals(cs_def)
+replace_tags = {'as': {}, 'cs': {}}
+replace_tags['as']['cs'] = replace_literals(as_def, cs_def, literals['cs'])
+replace_tags['cs']['as'] = replace_literals(cs_def, as_def, literals['as'])
 
 
 def tag_order(def_text):
@@ -213,6 +235,9 @@ def tags_to_reorder(a_def, b_def):
     >>> reorder_tags = tags_to_reorder(as_var, cs_var)
     >>> reorder_tags.get('variableDeclaration')
     ['dataType', 'whitespacechar', 'identifier', 'whitespace', 'SEMI']
+    >>> reorder_tags = tags_to_reorder(cs_var, as_var)
+    >>> reorder_tags.get('variableDeclaration')
+    ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'whitespace', 'SEMI']
     """
     def reorder_declaration(reorders, original_strings, def_text):
         taglist = ebnf_parser.parse(def_text)
@@ -238,13 +263,19 @@ reorder_tags['as']['cs'] = tags_to_reorder(as_def, cs_def)
 reorder_tags['cs']['as'] = tags_to_reorder(cs_def, as_def)
 
 
-def reorder_taglist(taglist, order_tags, input, replaces, reorder_tags):
+def insert(source_str, insert_str, pos):
+    """
+    answered Sep 22 '14 at 15:45 Sim Mak
+    http://stackoverflow.com/questions/4022827/how-to-insert-some-string-in-the-given-string-at-given-index-in-python
+    """
+    return source_str[:pos] + insert_str + source_str[pos:]
+
+
+def reorder_taglist(taglist, tag, input, source, to):
     """
     >>> input = 'var path:String;'
-    >>> variableDeclaration = ['dataType', 'whitespacechar', 'identifier', 
-    ...     'whitespace', 'SEMI']
     >>> taglist = [('variableDeclarationKeyword', 0, 3, None),
-    ...  ('whitespacechar', 3, 4, None),
+    ...  ('whitespace', 3, 4, None),
     ...  ('identifier',
     ...   4,
     ...   8,
@@ -258,8 +289,7 @@ def reorder_taglist(taglist, order_tags, input, replaces, reorder_tags):
     ...  ('COLON', 8, 9, None),
     ...  ('dataType', 9, 15, [('string', 9, 15, None)]),
     ...  ('SEMI', 15, 16, None)]
-    >>> reorder_taglist(taglist, variableDeclaration, input, 
-    ...     replaces['as']['cs'], reorder_tags['as']['cs'])
+    >>> reorder_taglist(taglist, 'variableDeclaration', input, 'as', 'cs')
     'string path;'
 
     Does not handle multiple occurences.
@@ -267,44 +297,95 @@ def reorder_taglist(taglist, order_tags, input, replaces, reorder_tags):
     >>> input = 'b22'
     >>> order = ['digits', 'letter']
     >>> taglist = [('letter', 0, 1, None), ('digits', 1, 3, None)]
-    >>> reorder_taglist(taglist, order, input, 
-    ...     replaces['as']['cs'], reorder_tags['as']['cs'])
+    >>> reorder_taglist(taglist, order, input, 'as', 'cs')
     '22b'
     >>> order = ['digit', 'letter']
     >>> taglist = [('letter', 0, 1, None), ('digit', 1, 2, None), ('digit', 2, 3, None)]
-    >>> reorder_taglist(taglist, order, input, 
-    ...     replaces['as']['cs'], reorder_tags['as']['cs'])
+    >>> reorder_taglist(taglist, order, input, 'as', 'cs')
     '2b'
+
+    Inserts tags not found in the source.
+    >>> taglist = [('dataType', 0, 6, [('string', 0, 6, None)]),
+    ...  ('whitespace', 6, 7, None),
+    ...  ('identifier',
+    ...   7,
+    ...   11,
+    ...   [('alphaunder', 7, 8, [('letter', 7, 8, None)]),
+    ...    ('alphanums',
+    ...     8,
+    ...     11,
+    ...     [('letter', 8, 9, None),
+    ...      ('letter', 9, 10, None),
+    ...      ('letter', 10, 11, None)])]),
+    ...  ('SEMI', 11, 12, None)]
+    >>> variableDeclaration = reorder_tags['cs']['as']['variableDeclaration']
+    >>> import pdb; pdb.set_trace(); reorder_taglist(taglist, 'variableDeclaration', 'string path;', 'cs', 'as')
+    'var path:String;'
     """
+    def add(unordered, r, length):
+        row = unordered[r]
+        t, b, e, parts = row
+        b += length
+        e += length
+        unordered[r] = (t, b, e, parts)
+        if parts:
+            for p, part in enumerate(parts):
+                add(parts, p, length)
     ordered = []
     unordered = taglist[:]
     used_indexes = {}
+    reorders = reorder_tags[source][to]
+    if isinstance(tag, basestring):
+        order_tags = reorders[tag]
+    else:
+        order_tags = tag
+    end = 0
+    row_index = 0
     for order_tag in order_tags:
         for r, row in enumerate(unordered):
-            tag = row[0]
-            if order_tag == tag and not r in used_indexes:
+            unordered_tag = row[0]
+            if order_tag == unordered_tag and not r in used_indexes:
                 ordered.append(unordered[r])
                 used_indexes[r] = True
+                end = row[2]
+                row_index = r
                 break
-    text = _recurse_tags(ordered, input, replaces, reorder_tags)
+        else:
+            if order_tag in literals[to]:
+                insert_text = literals[to][order_tag]
+                length = len(insert_text)
+                ordered.append((order_tag, end, end + length, None))
+                input = insert(input, insert_text, end)
+                for r in range(row_index, len(unordered)):
+                    if not r in used_indexes:
+                        add(unordered, r, length)
+    text = _recurse_tags(ordered, input, source, to)
     return text
 
 
-def _recurse_tags(taglist, input, replaces, reorder_tags):
+def _recurse_tags(taglist, input, source, to):
+    """
+    Reorder tags.
+    Transcribe common tags and literal tags.
+    Visit sub-parts.
+    """
+    reorders = reorder_tags[source][to]
+    replaces = replace_tags[source][to]
     text = ''
     for tag, begin, end, parts in taglist:
         if tag in replaces:
             text += replaces.get(tag)
-        elif tag in reorder_tags:
-            text += reorder_taglist(parts, reorder_tags[tag], input, 
-                replaces, reorder_tags)
+        elif tag in reorders:
+            text += reorder_taglist(parts, tag, input, source, to)
         elif tag in common_tags:
             if parts:
-                text += _recurse_tags(parts, input, replaces, reorder_tags)
+                text += _recurse_tags(parts, input, source, to)
             else:
                 text += input[begin:end]
+        elif tag in literals[to]:
+            text += input[begin:end]
         elif parts:
-            text += _recurse_tags(parts, input, replaces, reorder_tags)
+            text += _recurse_tags(parts, input, source, to)
     return text
 
 
@@ -327,7 +408,7 @@ def convert(input, definition = 'compilationUnit', is_disable_format = False):
     parser = Parser(defs[source], definition)
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
-    text = _recurse_tags(taglist, input, replaces[source][to], reorder_tags[source][to])
+    text = _recurse_tags(taglist, input, source, to)
     if 'compilationUnit' == definition and not is_disable_format:
         text = newline_after_braces(text)
         text = format_text(text)

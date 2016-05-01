@@ -39,10 +39,12 @@ Features
  * Reformat an example variable declaration by grammar.
  * Convert trivial package with one import.
  * Convert empty base class declaration.
+ * Convert basic example variables bi-directionally:  C# to ActionScript.
 
 To-do
 =====
 
+ * Convert basic example namespace bi-directionally:  C# to ActionScript.
  * Convert extended class declaration.
  * Preserve comments.
  * Convert function declaration.

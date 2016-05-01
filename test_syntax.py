@@ -74,6 +74,8 @@ class TestDefinitions(unittest.TestCase):
         except:
             print
             print definition, expected, got
+            print 'Input:'
+            print input
             print 'Expected:'
             print expected
             print 'Got:'
