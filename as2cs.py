@@ -1,5 +1,5 @@
 """
-Tests a trivial example.
+Converts a trivial example of an empty class.
 Usage: 
     cd as2cs
     python as2cs.py [file.as ...]
@@ -8,12 +8,17 @@ Usage:
 
 import codecs
 from os import path
-from sys import stdin, stdout
 from pprint import pformat
 from pretty_print_code.pretty_print_code import format_text
 from simpleparse.parser import Parser
 from simpleparse.simpleparsegrammar import declaration
 from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
+
+
+cfg = {
+    'source': 'as',
+    'to': 'cs'
+}
 
 
 ebnf_parser = Parser(declaration, 'declarationset')
@@ -179,7 +184,10 @@ def replace_literals(a_def, b_def):
 
 as_def = merge_declaration_paths(['as_and_cs.def', 'as/as3.def'])
 cs_def = merge_declaration_paths(['as_and_cs.def', 'cs/cs.def'])
-replaces = replace_literals(as_def, cs_def)
+defs = {'as': as_def, 'cs': cs_def}
+replaces = {'as': {}, 'cs': {}}
+replaces['as']['cs'] = replace_literals(as_def, cs_def)
+replaces['cs']['as'] = replace_literals(cs_def, as_def)
 
 
 def tag_order(def_text):
@@ -225,10 +233,12 @@ def tags_to_reorder(a_def, b_def):
     return reorders
 
 
-reorder_tags = tags_to_reorder(as_def, cs_def)
+reorder_tags = {'as': {}, 'cs': {}}
+reorder_tags['as']['cs'] = tags_to_reorder(as_def, cs_def)
+reorder_tags['cs']['as'] = tags_to_reorder(cs_def, as_def)
 
 
-def reorder_taglist(taglist, order_tags, input):
+def reorder_taglist(taglist, order_tags, input, replaces, reorder_tags):
     """
     >>> input = 'var path:String;'
     >>> variableDeclaration = ['dataType', 'whitespacechar', 'identifier', 
@@ -248,7 +258,8 @@ def reorder_taglist(taglist, order_tags, input):
     ...  ('COLON', 8, 9, None),
     ...  ('dataType', 9, 15, [('string', 9, 15, None)]),
     ...  ('SEMI', 15, 16, None)]
-    >>> reorder_taglist(taglist, variableDeclaration, input)
+    >>> reorder_taglist(taglist, variableDeclaration, input, 
+    ...     replaces['as']['cs'], reorder_tags['as']['cs'])
     'string path;'
 
     Does not handle multiple occurences.
@@ -256,11 +267,13 @@ def reorder_taglist(taglist, order_tags, input):
     >>> input = 'b22'
     >>> order = ['digits', 'letter']
     >>> taglist = [('letter', 0, 1, None), ('digits', 1, 3, None)]
-    >>> reorder_taglist(taglist, order, input)
+    >>> reorder_taglist(taglist, order, input, 
+    ...     replaces['as']['cs'], reorder_tags['as']['cs'])
     '22b'
     >>> order = ['digit', 'letter']
     >>> taglist = [('letter', 0, 1, None), ('digit', 1, 2, None), ('digit', 2, 3, None)]
-    >>> reorder_taglist(taglist, order, input)
+    >>> reorder_taglist(taglist, order, input, 
+    ...     replaces['as']['cs'], reorder_tags['as']['cs'])
     '2b'
     """
     ordered = []
@@ -273,24 +286,25 @@ def reorder_taglist(taglist, order_tags, input):
                 ordered.append(unordered[r])
                 used_indexes[r] = True
                 break
-    text = _recurse_tags(ordered, input)
+    text = _recurse_tags(ordered, input, replaces, reorder_tags)
     return text
 
 
-def _recurse_tags(taglist, input):
+def _recurse_tags(taglist, input, replaces, reorder_tags):
     text = ''
     for tag, begin, end, parts in taglist:
         if tag in replaces:
             text += replaces.get(tag)
         elif tag in reorder_tags:
-            text += reorder_taglist(parts, reorder_tags[tag], input)
+            text += reorder_taglist(parts, reorder_tags[tag], input, 
+                replaces, reorder_tags)
         elif tag in common_tags:
             if parts:
-                text += _recurse_tags(parts, input)
+                text += _recurse_tags(parts, input, replaces, reorder_tags)
             else:
                 text += input[begin:end]
         elif parts:
-            text += _recurse_tags(parts, input)
+            text += _recurse_tags(parts, input, replaces, reorder_tags)
     return text
 
 
@@ -308,10 +322,12 @@ def convert(input, definition = 'compilationUnit', is_disable_format = False):
     Related to grammar unit testing specification (gUnit)
     https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
     """
-    parser = Parser(as_def, definition)
+    source = cfg['source']
+    to = cfg['to']
+    parser = Parser(defs[source], definition)
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
-    text = _recurse_tags(taglist, input)
+    text = _recurse_tags(taglist, input, replaces[source][to], reorder_tags[source][to])
     if 'compilationUnit' == definition and not is_disable_format:
         text = newline_after_braces(text)
         text = format_text(text)
@@ -319,40 +335,46 @@ def convert(input, definition = 'compilationUnit', is_disable_format = False):
 
 
 def format_taglist(input, definition):
-    parser = Parser(as_def, definition)
+    source = cfg['source']
+    parser = Parser(defs[source], definition)
     taglist = parser.parse(input)
     return pformat(taglist)
 
 
-def convert_file(as_path, cs_path):
-    text = codecs.open(as_path, 'r', 'utf-8').read()
+def convert_file(source_path, to_path):
+    text = codecs.open(source_path, 'r', 'utf-8').read()
     str = convert(text)
-    f = codecs.open(cs_path, 'w', 'utf-8')
+    f = codecs.open(to_path, 'w', 'utf-8')
     ## print(str)
     f.write(str)
     f.close()
 
 
-def convert_files(as_paths):
-    for as_path in as_paths:
-        root, ext = path.splitext(as_path)
-        cs_path = root + '.cs'
-        convert_file(as_path, cs_path)
+def analogous_paths(source_paths):
+    path_pairs = []
+    for source_path in source_paths:
+        root, ext = path.splitext(source_path)
+        to_path = '%s.%s' % (root, cfg['to'])
+        path_pairs.append([source_path, to_path])
+    return path_pairs
 
 
-def compare_file(as_path, cs_path):
-    text = codecs.open(as_path, 'r', 'utf-8').read()
+def convert_files(source_paths):
+    for source_path, to_path in analogous_paths(source_paths):
+        convert_file(source_path, to_path)
+
+
+def compare_file(source_path, to_path):
+    text = codecs.open(source_path, 'r', 'utf-8').read()
     got = convert(text)
-    expected = codecs.open(cs_path, 'r', 'utf-8').read()
+    expected = codecs.open(to_path, 'r', 'utf-8').read()
     return [expected, got]
 
 
-def compare_files(as_paths):
+def compare_files(source_paths):
     expected_gots = []
-    for as_path in as_paths:
-        root, ext = path.splitext(as_path)
-        cs_path = root + '.cs'
-        expected_gots.append(compare_file(as_path, cs_path))
+    for source_path, to_path in analogous_paths(source_paths):
+        expected_gots.append(compare_file(source_path, to_path))
     return expected_gots
 
 
