@@ -91,6 +91,21 @@ debug_indexes = [
 original_source = cfg['source']
 original_to = cfg['to']
 
+def print_expected(expected, got, input, definition, index, err):
+    if got is None:
+        got = err.message
+    print
+    print definition, index, expected, got
+    print 'Input:'
+    print input
+    print 'Expected:'
+    print expected
+    print 'Got:'
+    print got
+    print 'tag parts:'
+    print format_taglist(input, definition)[:500]
+    raise err
+
 
 class TestDefinitions(unittest.TestCase):
 
@@ -104,19 +119,7 @@ class TestDefinitions(unittest.TestCase):
             got = convert(input, definition)
             self.assertEqual(expected, got)
         except Exception as err:
-            if got is None:
-                got = err.message
-            print
-            print definition, index, expected, got
-            print 'Input:'
-            print input
-            print 'Expected:'
-            print expected
-            print 'Got:'
-            print got
-            print 'tag parts:'
-            print format_taglist(input, definition)
-            raise
+            print_expected(expected, got, input, definition, index, err)
 
     def test_definitions(self):
         for source, to, s, t in directions:
@@ -136,16 +139,13 @@ class TestDefinitions(unittest.TestCase):
         pattern = 'test/*.%s' % cfg['source']
         paths = glob(realpath(pattern))
         expected_gots = compare_files(paths)
-        for expected, got in expected_gots:
+        for index, expected_got in enumerate(expected_gots):
+            expected, got = expected_got
+            path = paths[index]
             try:
                 self.assertEqual(expected, got)
-            except:
-                print
-                print 'Expected:'
-                print expected
-                print 'Got:'
-                print got
-                raise
+            except Exception as err:
+                print_expected(expected, got, open(path).read(), 'compilationUnit', index, err)
 
 
 if '__main__' == __name__:

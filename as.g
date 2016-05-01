@@ -1,4 +1,4 @@
-compilationUnit := namespaceDeclaration, LCURLY, importDefinitionPlace, classDefinitionPlace, ts?, RCURLY
+compilationUnit := namespaceDeclaration, LCURLY, importDefinitionPlace, classDefinitionPlace, RCURLY
 
 variableDeclaration := ts?, variableDeclarationKeyword, ts, identifier, (COLON, dataType)?, ts?, SEMI
 

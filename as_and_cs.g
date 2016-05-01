@@ -16,7 +16,7 @@ importDefinitionPlace := importDefinition*
 
 importDefinition := ts?, import, ts, identifier, SEMI, EOL?
 
-classDefinitionPlace := classDefinition?
+classDefinitionPlace := classDefinition?, ts?
 classDefinition := ts?, (scope, ts)?, class, ts, identifier, ts?, LCURLY, ts?, RCURLY
 
 scope := public / internal / private

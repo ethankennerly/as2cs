@@ -1,4 +1,4 @@
-compilationUnit := importDefinitionPlace, namespaceDeclaration, LCURLY, classDefinitionPlace, ts?, RCURLY
+compilationUnit := importDefinitionPlace, namespaceDeclaration, LCURLY, classDefinitionPlace, RCURLY
 
 import := "using"
 
