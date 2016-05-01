@@ -1,4 +1,4 @@
-compilationUnit := importDefinition*, namespace, whitespace, identifier, whitespace?, LCURLY, EOL, RCURLY, whitespace?
+compilationUnit := importDefinitions?, namespace, whitespace, identifier, whitespace?, LCURLY, EOL, RCURLY
 
 import := 'using'
 

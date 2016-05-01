@@ -86,7 +86,7 @@ common_tags = {}
 for source in SOURCES:
     for key in source.keys():
         common_tags[key] = True
-set_tags(common_tags, open('ecma.def').read())
+set_tags(common_tags, open('as_and_cs.def').read())
 
 
 def find_text(text, name, parts):
@@ -177,8 +177,8 @@ def replace_literals(a_def, b_def):
     return replaces
 
 
-as_def = merge_declaration_paths(['ecma.def', 'as/as3.def'])
-cs_def = merge_declaration_paths(['ecma.def', 'cs/cs.def'])
+as_def = merge_declaration_paths(['as_and_cs.def', 'as/as3.def'])
+cs_def = merge_declaration_paths(['as_and_cs.def', 'cs/cs.def'])
 replaces = replace_literals(as_def, cs_def)
 
 
@@ -250,6 +250,18 @@ def reorder_taglist(taglist, order_tags, input):
     ...  ('SEMI', 15, 16, None)]
     >>> reorder_taglist(taglist, variableDeclaration, input)
     'string path;'
+
+    Does not handle multiple occurences.
+    Instead group those together in the grammar, such as 'digits' instead of ('digit', 'digit')
+    >>> input = 'b22'
+    >>> order = ['digits', 'letter']
+    >>> taglist = [('letter', 0, 1, None), ('digits', 1, 3, None)]
+    >>> reorder_taglist(taglist, order, input)
+    '22b'
+    >>> order = ['digit', 'letter']
+    >>> taglist = [('letter', 0, 1, None), ('digit', 1, 2, None), ('digit', 2, 3, None)]
+    >>> reorder_taglist(taglist, order, input)
+    '2b'
     """
     ordered = []
     unordered = taglist[:]
@@ -257,8 +269,9 @@ def reorder_taglist(taglist, order_tags, input):
     for order_tag in order_tags:
         for r, row in enumerate(unordered):
             tag = row[0]
-            if order_tag == tag:
-                ordered.append(unordered.pop(r))
+            if order_tag == tag and not r in used_indexes:
+                ordered.append(unordered[r])
+                used_indexes[r] = True
                 break
     text = _recurse_tags(ordered, input)
     return text
@@ -312,7 +325,7 @@ def convert_file(as_path, cs_path):
     f = codecs.open(cs_path, 'w', 'utf-8')
     ## print(str)
     f.write(str)
-    f.close()   
+    f.close()
 
 
 def convert_files(as_paths):

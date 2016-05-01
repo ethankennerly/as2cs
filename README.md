@@ -37,15 +37,21 @@ Features
  * Transcribe 'import' example of common base grammar.
  * Replace literal 'import' with 'using' by grammar.
  * Reformat an example variable declaration by grammar.
+ * Convert trivial package with one import.
 
 To-do
 =====
 
- * Convert trivial package with one import.
+ * Convert class declaration.
+ * Convert function declaration.
+ * Convert local variable.
+ * Convert member variable.
+ * Convert static variable.
 
 Not supported
 =============
 
+ * Callbacks and delegates.
  * Preprocessor directive 'include'
  * Everything else not explicitly mentioned as a feature.
 

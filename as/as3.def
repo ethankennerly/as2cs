@@ -1,4 +1,4 @@
-compilationUnit := namespace, (whitespace, identifier)?, whitespace?, LCURLY, EOL, importDefinition*, RCURLY, whitespace?
+compilationUnit := namespace, (whitespace, identifier)?, whitespace?, LCURLY, EOL, importDefinitions?, RCURLY
 
 compilationUnit := namespaceDecl, namespaceBlock
 
