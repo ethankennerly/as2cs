@@ -30,13 +30,23 @@ functionParameters := ts?, LPAREN, ts?, argumentList?, ts?, RPAREN
 argumentList := argumentDeclaration, (ts?, COMMA, ts?, argumentDeclaration)*
 argumentDeclaration := argumentInitialized / argumentDeclared
 argumentInitializer := ts?, ASSIGN, ts?, assignmentValue
-assignmentValue := -argumentEnd+
+# assignmentValue := -argumentEnd+
+assignmentValue := expression
 argumentEnd := SEMI / COMMA / EOL / EOF / RPAREN
 variableAssignment := identifier, ts?, ASSIGN, ts?, assignmentValue
 
-statement := ts?, expression, ts?, SEMI
+statement := ts?, primaryExpression, ts?, SEMI
+primaryExpression := expression
 expression := variableDeclaration
     / variableAssignment
+    / callExpression
+    / identifier
+    / number
+    / string
+
+address := identifier, (ts?, PERIOD, ts?, identifier)?
+callExpression := address, ts?, LPAREN, ts?, callParameters?, ts?, RPAREN
+callParameters := expression, (ts?, COMMA, expression)*
 
 scope := public / internal / protected / private
 
@@ -55,7 +65,7 @@ STATIC := "static"
 identifier := alphaunder, (PERIOD?, alphanums+)*
 alphanums      := (letter / digit)+
 alphaunder     := (letter / UNDERSCORE)
-dataType := integer / string / boolean / float / object
+dataType := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT
 returnType := dataType / VOID
 
 PERIOD := "."
@@ -70,3 +80,6 @@ EOL   := ("\r"?, "\n") / EOF
 SPACE := " "
 ASSIGN := "="
 UNDERSCORE := "_"
+QUOTE := "\""
+APOS := "'"
+

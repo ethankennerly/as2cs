@@ -46,11 +46,12 @@ Features
  * Conform expected format in compilation unit test.
  * Preserve comments around namespace and class.
  * Convert function declaration.
+ * Convert simple local variable assignment.
 
 To-do
 =====
 
- * Convert local variable.
+ * Convert floating point number suffix.
  * Convert member variable.
  * Convert static variable.
  * Convert extended class declaration.

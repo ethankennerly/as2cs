@@ -191,7 +191,7 @@ def replace_literals(a_grammar, b_grammar, literals = None):
     >>> replaces.get('import')
     'using'
     >>> replaces.get('alphaunder')
-    >>> replaces.get('string')
+    >>> replaces.get('STRING')
     'string'
     """
     if literals is None:
@@ -375,11 +375,8 @@ def _recurse_tags(taglist, input, source, to):
             text += input[begin:end]
         elif tag in reorders:
             text += reorder_taglist(parts, tag, input, source, to)
-        # elif not different_tags.get(tag):
-        #    if parts:
-        #        text += _recurse_tags(parts, input, source, to)
-        #    else:
-        #        text += input[begin:end]
+        elif tag in source_keys:
+            text += input[begin:end]
         elif parts:
             text += _recurse_tags(parts, input, source, to)
         else:

@@ -4,16 +4,16 @@ compilationUnit := namespaceDeclaration, LCURLY, importDefinitionPlace, classDef
 functionModified := ts, namespaceModifiers, functionSignature, (ts?, COLON, ts?, returnType)?
 functionDefault := ts, functionSignature, (ts?, COLON, ts?, returnType)?
 
-variableDeclaration := ts?, variableDeclarationKeyword, ts, argumentDeclaration
+variableDeclaration := ts?, VARIABLEDECLARATIONKEYWORD, ts, argumentDeclaration
 argumentDeclared := identifier, (ts?, COLON, ts?, dataType)?
 argumentInitialized := identifier, (ts?, COLON, ts?, dataType)?, argumentInitializer
 
-integer := "int"
-string := "String"
-boolean := "Boolean"
-float := "Number"
-object := "Object"
-variableDeclarationKeyword := "var"
+INTEGER := "int"
+STRING := "String"
+BOOLEAN := "Boolean"
+FLOAT := "Number"
+OBJECT := "Object"
+VARIABLEDECLARATIONKEYWORD := "var"
 
 import := "import"
 

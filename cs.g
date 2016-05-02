@@ -11,8 +11,8 @@ argumentInitialized := dataType, ts, identifier, argumentInitializer
 functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
 functionDefault := ts, returnType, ts, functionSignature
 
-integer := "int"
-string := "string"
-boolean := "bool"
-float := "float"
-object := "object"
+INTEGER := "int"
+STRING := "string"
+BOOLEAN := "bool"
+FLOAT := "float"
+OBJECT := "object"

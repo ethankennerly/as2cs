@@ -120,6 +120,14 @@ definitions = [
         [' private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
          ' private bool function isF(int index, bool isEnabled, float a)'],
      ]),
+     ('variableAssignment', [
+        ['path = "as.g"',
+         'path = "as.g"'],
+        ['index = 16',
+         'index = 16'],
+        ['a = index',
+         'a = index'],
+     ]),
      ('variableDeclaration', [
         ['var path:String = "as.g"',
          'string path = "as.g"'],
@@ -132,19 +140,21 @@ definitions = [
         [' private function isF(index:int, isEnabled:Boolean, a:Number=NaN):Boolean',
          ' private bool function isF(int index, bool isEnabled, float a=NaN)'],
      ]),
-     ('variableAssignment', [
-        ['path = "as.g"',
-         'path = "as.g"'],
-        ['index = 16',
-         'index = 16'],
-        ['a = index',
-         'a = index'],
+     ('expression', [
+        ['"as.g"', 
+         '"as.g"'],
+        # ['0.125', 
+        #  '0.125f'], # TODO
+        ['Math.floor(index)', 
+         'Math.floor(index)'],
      ]),
      ('functionDefinition', [
         ['  function f():void{var i:int = index;}', 
          '  void function f(){int i = index;}'],
         ['  function f():void{i = index;}', 
          '  void function f(){i = index;}'],
+        ['  function f():void{var i:int = Math.floor(index);}', 
+         '  void function f(){int i = Math.floor(index);}'],
      ]),
 ]
 
