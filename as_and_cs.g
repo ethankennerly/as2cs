@@ -25,10 +25,11 @@ functionBody := ts?, LCURLY, ts?, RCURLY
 functionDeclaration := functionModified / functionDefault
 functionSignature := FUNCTION, ts, identifier, functionParameters
 functionDefinition := functionDeclaration, functionBody
+functionParameters := ts?, LPAREN, ts?, RPAREN
+
+argumentList := argumentDeclaration, (ts?, COMMA, ts?, argumentDeclaration)*
 
 statement := variableDeclaration, ts?, SEMI
-
-functionParameters := ts?, LPAREN, ts?, RPAREN
 
 scope := public / internal / protected / private
 
@@ -57,6 +58,7 @@ LPAREN := "("
 RPAREN := ")"
 SEMI := ";"
 COLON := ":"
+COMMA := ","
 EOL   := ("\r"?, "\n") / EOF
 SPACE := " "
 

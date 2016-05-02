@@ -106,7 +106,13 @@ definitions = [
         ['var index:int',
          'int index'],
      ]),
-     ('functionDefinition', [
+     ('argumentList', [
+        ['path:String',
+         'string path'],
+        ['path:String, index:int',
+         'string path, int index'],
+        ['index:int, isEnabled:Boolean, a:Number',
+         'int index, bool isEnabled, float a'],
      ]),
 ]
 
