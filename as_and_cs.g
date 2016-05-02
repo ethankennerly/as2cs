@@ -19,22 +19,42 @@ importDefinition := ts?, import, ts, identifier, SEMI, EOL?
 classDefinitionPlace := classDefinition?, ts?
 classDefinition := ts?, (scope, ts)?, class, ts, identifier, ts?, LCURLY, ts?, RCURLY
 
-scope := public / internal / private
+namespaceModifierPlace := namespaceModifiers?
+namespaceModifiers := (scope / STATIC, ts)+
+functionBody := ts?, LCURLY, ts?, RCURLY
+functionDeclaration := functionModified / functionDefault
+functionSignature := FUNCTION, ts, identifier, functionParameters
+functionDefinition := functionDeclaration, functionBody
+
+functionParameters := ts?, LPAREN, ts?, RPAREN
+
+scope := public / internal / protected / private
+
+FUNCTION := "function"
 
 class := "class"
 
 public := "public"
 internal := "internal"
+protected := "protected"
 private := "private"
+VOID := "void"
+
+STATIC := "static"
 
 identifier := alphaunder, (PERIOD?, alphanums+)*
 alphanums      := (letter / digit)+
 alphaunder     := (letter / "_")
 dataType := integer / string / boolean / float / object
+returnType := dataType / VOID
 
 PERIOD := "."
 LCURLY := "{"
 RCURLY := "}"
+LPAREN := "("
+RPAREN := ")"
 SEMI := ";"
 COLON := ":"
-EOL   := ("\r"?,"\n") / EOF
+EOL   := ("\r"?, "\n") / EOF
+SPACE := " "
+

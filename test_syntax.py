@@ -74,18 +74,46 @@ definitions = [
         ['/*c*/\npackage N\n{\npublic class C6{\n}\n}\n',
          '/*c*/\nnamespace N\n{\n    public class C6{\n    }\n}'],
      ]),
+     ('namespaceModifiers', [
+        ['public ', 
+         'public '],
+        ['private static ', 
+         'private static '],
+        ['static private ', 
+         'static private '],
+     ]),
+     ('functionDeclaration', [
+        ['  function f():void', 
+         '  void function f()'],
+        ['    function g( ):void', 
+         '    void function g( )'],
+     ]),
+     ('functionDefinition', [
+        ['  function f():void{}', 
+         '  void function f(){}'],
+        [' function f():void{}', 
+         ' void function f(){}'],
+        [' public function f():void{}', 
+         ' public void function f(){}'],
+        [' internal function isF():Boolean{}', 
+         ' internal bool function isF(){}'],
+        [' protected function getF():Number{}', 
+         ' protected float function getF(){}'],
+     ]),
 ]
 
 
 debug_definitions = [
+    # 'dataType'
     # 'compilationUnit'
+    # 'functionDefinition'
     # 'importDefinition'
     # 'ts'
     # 'variableDeclaration'
 ]
 
 debug_indexes = [
-    # 9
+    2
 ]
 
 original_source = cfg['source']
@@ -95,6 +123,7 @@ def print_expected(expected, got, input, definition, index, err):
     if got is None:
         got = err.message
     print
+    print 'Converting from %s to %s' % (cfg['source'], cfg['to'])
     print definition, index, expected, got
     print 'Input:'
     print input

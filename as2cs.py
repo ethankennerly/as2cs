@@ -191,6 +191,8 @@ def replace_literals(a_grammar, b_grammar, literals = None):
     >>> replaces.get('import')
     'using'
     >>> replaces.get('alphaunder')
+    >>> replaces.get('string')
+    'string'
     """
     if literals is None:
         literals = find_literals(b_grammar)
@@ -222,6 +224,10 @@ literals['cs'] = find_literals(cs_grammar)
 replace_tags = {'as': {}, 'cs': {}}
 replace_tags['as']['cs'] = replace_literals(as_grammar, cs_grammar, literals['cs'])
 replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as'])
+
+reorder_defaults = {'as': {}, 'cs': {}}
+reorder_defaults['cs']['ts'] = literals['cs']['SPACE']
+reorder_defaults['as']['ts'] = literals['as']['SPACE']
 
 different_tags = {}
 set_tags(different_tags, open('as.g').read(), True)
@@ -285,7 +291,6 @@ reorder_tags = {'as': {}, 'cs': {}}
 reorder_tags['as']['cs'] = tags_to_reorder(as_grammar, cs_grammar)
 reorder_tags['cs']['as'] = tags_to_reorder(cs_grammar, as_grammar)
 
-
 def insert(source_str, insert_str, pos):
     """
     answered Sep 22 '14 at 15:45 Sim Mak
@@ -339,14 +344,16 @@ def reorder_taglist(taglist, tag, input, source, to):
                 row_index = r
                 break
         else:
-            if order_tag in literals[to]:
-                insert_text = literals[to][order_tag]
-                length = len(insert_text)
-                ordered.append((order_tag, end, end + length, None))
-                input = insert(input, insert_text, end)
-                for r in range(row_index, len(unordered)):
-                    if not r in used_indexes:
-                        add(unordered, r, length)
+            for verbatim in reorder_defaults, literals:
+                if order_tag in verbatim[to]:
+                    insert_text = verbatim[to][order_tag]
+                    length = len(insert_text)
+                    ordered.append((order_tag, end, end + length, None))
+                    input = insert(input, insert_text, end)
+                    for r in range(row_index, len(unordered)):
+                        if not r in used_indexes:
+                            add(unordered, r, length)
+                    break
     text = _recurse_tags(ordered, input, source, to)
     return text
 
@@ -393,13 +400,15 @@ def _recurse_tags(taglist, input, source, to):
             text += input[begin:end]
         elif tag in reorders:
             text += reorder_taglist(parts, tag, input, source, to)
-        elif not different_tags.get(tag):
-            if parts:
-                text += _recurse_tags(parts, input, source, to)
-            else:
-                text += input[begin:end]
+        # elif not different_tags.get(tag):
+        #    if parts:
+        #        text += _recurse_tags(parts, input, source, to)
+        #    else:
+        #        text += input[begin:end]
         elif parts:
             text += _recurse_tags(parts, input, source, to)
+        else:
+            text += input[begin:end]
     return text
 
 
@@ -495,3 +504,5 @@ if '__main__' == __name__:
         print __doc__
     if 2 <= len(sys.argv) and '--test' != sys.argv[1]:
         convert_files(sys.argv[1:])
+    import doctest
+    doctest.testmod()

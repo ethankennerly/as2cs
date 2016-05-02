@@ -43,23 +43,36 @@ Features
  * Convert simple namespace from C# to ActionScript.
  * Comment grammar adapted from simpleparse.common.comments 
   with literals extracted and no unreported or expanded definitions
+ * Conform expected format in compilation unit test.
+ * Preserve comments around namespace and class.
+ * Convert empty function declaration.
 
 To-do
 =====
 
- * Preserve comments.
- * Convert extended class declaration.
- * Convert function declaration.
+ * Convert function parameter list.
  * Convert local variable.
  * Convert member variable.
  * Convert static variable.
- * Grammar names in snake_case matching simpleparsegrammar.
+ * Convert extended class declaration.
+ * Literals in CAPITAL\_CASE following ANTLR grammar conventions.
+ * Grammar names in snake\_case following simpleparsegrammar conventions.
 
 Not supported
 =============
 
- * Convert a sample of C# into ActionScript.
- * Test regardless of format.
+ * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
+
+ * Variable return type declaration in ActionScript '\*'
+ * Overriding virtual functions in C#.
+ * Anonymous function.
+ * ActionScript 3 argument list '...' syntax
+ * Reformatting with optional parameters.  
+  Instead I used two optional definitions, one which requires the option.  C# example:
+    functionDeclaration := functionModified / functionDefault
+    functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
+    functionDefault := ts, returnType, ts, functionSignature
+ * Default data-type when omitted in ActionScript to explicit data type in C#.
  * typeof string format.
  * Mixing literals and non-literals in grammar to be replaced.
  * Multiple occurences of items that are reordered.  
@@ -75,12 +88,18 @@ Not supported
 Reference code
 ==============
 
+ * ANTLR4 grammars
+  https://github.com/antlr/grammars-v4
  * ActionScript 3 grammar in ANTLR3
   http://svn.badgers-in-foil.co.uk/metaas/trunk/src/main/antlr/org/asdt/core/internal/antlr/AS3.g
   http://stackoverflow.com/questions/1839146/as3-grammar-most-accurate
  * ECMAScript grammar in ANTLR3
   http://antlr3.org/grammar/1153976512034/ecmascriptA3.g
   http://stackoverflow.com/questions/1786565/ebnf-for-ecmascript
+ * C# grammar
+  https://msdn.microsoft.com/en-us/library/aa664812(v=vs.71).aspx
+  https://github.com/ChristianWulf/CSharpGrammar/blob/master/grammars/CSharp4.g
+  https://antlrcsharp.codeplex.com/
  * ANTLR by Terrence Parr
   https://en.wikipedia.org/wiki/ANTLR
  * Meta AS for ANTLR
