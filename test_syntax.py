@@ -114,6 +114,12 @@ definitions = [
         ['index:int, isEnabled:Boolean, a:Number',
          'int index, bool isEnabled, float a'],
      ]),
+     ('functionDeclaration', [
+        [' function f(path:String, index:int):void',
+         ' void function f(string path, int index)'],
+        [' private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
+         ' private bool function isF(int index, bool isEnabled, float a)'],
+     ]),
 ]
 
 

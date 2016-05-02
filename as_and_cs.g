@@ -25,7 +25,7 @@ functionBody := ts?, LCURLY, ts?, RCURLY
 functionDeclaration := functionModified / functionDefault
 functionSignature := FUNCTION, ts, identifier, functionParameters
 functionDefinition := functionDeclaration, functionBody
-functionParameters := ts?, LPAREN, ts?, RPAREN
+functionParameters := ts?, LPAREN, ts?, argumentList?, ts?, RPAREN
 
 argumentList := argumentDeclaration, (ts?, COMMA, ts?, argumentDeclaration)*
 
