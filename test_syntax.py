@@ -188,6 +188,20 @@ definitions = [
         ['internal final class PC{    private static var index:int = 16;\nprivate var a:String;}', 
          'internal sealed class PC{    private static int index = 16;\nprivate string a;}'],
      ]),
+     ('classBaseClause', [
+        [' extends B',
+         ' : B'],
+        [' extends B implements IA', 
+         ' : B, IA'],
+        [' extends B implements IA, II', 
+         ' : B, IA, II'],
+        [' extends B implements IA, II', 
+         ' : B, IA, II'],
+        [' implements IPc', 
+         ' : IPc'],
+        [' extends It', 
+         ' : It'],
+     ]),
 ]
 
 one_ways = {

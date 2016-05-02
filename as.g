@@ -1,5 +1,9 @@
 compilationUnit := namespaceDeclaration, LCURLY, importDefinitionPlace, classDefinitionPlace, RCURLY
 
+classBaseClause := classBase
+classExtends := ts, EXTENDS, ts, classIdentifier
+interfaceFirst := ts, IMPLEMENTS, ts, interfaceIdentifier
+interfaceTypeListFollows := ts, IMPLEMENTS, ts, interfaceIdentifier, interfaceNextPlace
 
 functionModified := ts, namespaceModifiers, functionSignature, (ts?, COLON, ts?, returnType)?
 functionDefault := ts, functionSignature, (ts?, COLON, ts?, returnType)?
@@ -20,5 +24,6 @@ FINAL := "final"
 import := "import"
 
 namespace := "package"
-
+EXTENDS := "extends"
+IMPLEMENTS := "implements"
 

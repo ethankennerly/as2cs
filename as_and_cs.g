@@ -16,9 +16,17 @@ importDefinitionPlace := importDefinition*
 importDefinition := ts?, import, ts, identifier, SEMI, EOL?
 
 classDefinitionPlace := classDefinition?, ts?
-classDefinition := ts?, classModifier*, class, ts, identifier, ts?,
-    LCURLY, memberExpression*, ts?, RCURLY
+classDefinition := ts?, classModifier*, CLASS, ts, identifier, classBaseClause?, 
+    ts?, LCURLY, memberExpression*, ts?, RCURLY
 classModifier := scope / FINAL, ts
+classBase := 
+    (classExtends, interfaceTypeListFollows) / interfaceTypeList / 
+    classExtends
+classIdentifier := identifier
+interfaceTypeList := interfaceFirst, interfaceNextPlace
+interfaceNextPlace := (ts?, COMMA, ts?, interfaceIdentifier)*
+interfacePrefix := I, uppercasechar, identifier?
+interfaceIdentifier := interfacePrefix, identifier?
 
 namespaceModifierPlace := namespaceModifiers?
 namespaceModifiers := (scope / STATIC / FINAL / OVERRIDE, ts)+
@@ -58,7 +66,7 @@ scope := public / internal / protected / private
 
 FUNCTION := "function"
 
-class := "class"
+CLASS := "class"
 
 public := "public"
 internal := "internal"
@@ -89,3 +97,4 @@ UNDERSCORE := "_"
 QUOTE := "\""
 APOS := "'"
 OVERRIDE := "override"
+I := "I"

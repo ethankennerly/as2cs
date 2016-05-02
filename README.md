@@ -50,11 +50,20 @@ Features
  * Convert floating point number suffix.
  * C# float suffix in capital case 'F'.
  * Convert member and static variables.
+ * Distinguish if C# implements or extends only by prefix.  
+  Interfaces are conventionally be prefixed by "I" and uppercase letter.
+  Example:
+    class A : IB {}
+    class A implements IB {}
+    class A : B {}
+    class A extends B {}
+    class A : It {}
+    class A extends It {}
+ * Convert extended class declaration.
 
 To-do
 =====
 
- * Convert extended class declaration.
  * Example file of all of the above.
  * Literals in CAPITAL\_CASE following ANTLR grammar conventions.
  * Grammar names in snake\_case following simpleparsegrammar conventions.
@@ -69,9 +78,22 @@ Not supported
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
+ * Reformat and reorder may insert some optional grammar, such as class base.
  * Anonymous function.
+ * C# static class to ActionScript class.
+ * ActionScript dynamic class to C# class.
  * Insert C# explicit cast to another data type, such as from float to integer.
+ * C# Generic classes:
+    class B<U,V> {...}
+    class G<T>: B<string,T[]> {...}
+ * C# nested classes:
+    class A
+    {
+        class B: A {}
+    }
  * ActionScript 3 argument list '...' syntax
+ * Convert extended class declaration that has no whitespace:
+    class A:B {}
  * Reordering syntax from nested definitions.  
   Example:  ActionScript 3 has a colon before data type.  Formatting scans this grammar.
     argumentDeclared := identifier, (ts?, COLON, ts?, dataType)?

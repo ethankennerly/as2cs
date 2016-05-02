@@ -1,8 +1,10 @@
-compilationUnit := importDefinitionPlace, namespaceDeclaration, LCURLY, classDefinitionPlace, RCURLY
+compilationUnit := importDefinitionPlace, namespaceDeclaration, 
+    LCURLY, classDefinitionPlace, RCURLY
 
-import := "using"
-
-namespace := "namespace"
+classBaseClause := ts, COLON, classBase
+classExtends := ts, classIdentifier
+interfaceFirst := ts, interfaceIdentifier
+interfaceTypeListFollows := ts?, COMMA, ts, interfaceIdentifier, interfaceNextPlace
 
 variableDeclaration := ts?, argumentDeclaration
 argumentDeclared := dataType, ts, identifier
@@ -17,6 +19,8 @@ INTEGER := "int"
 STRING := "string"
 BOOLEAN := "bool"
 FLOAT := "float"
-OBJECT := "object"
 float_suffix := "f" / "F"
+OBJECT := "object"
 FINAL := "sealed"
+import := "using"
+namespace := "namespace"
