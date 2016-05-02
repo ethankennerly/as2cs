@@ -11,11 +11,11 @@ argumentInitialized := dataType, ts, identifier, argumentInitializer
 functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
 functionDefault := ts, returnType, ts, functionSignature
 
-floatFormat := float, FLOAT_SUFFIX
+floatFormat := float, float_suffix
 
 INTEGER := "int"
 STRING := "string"
 BOOLEAN := "bool"
 FLOAT := "float"
 OBJECT := "object"
-FLOAT_SUFFIX := "f"
+float_suffix := "f" / "F"

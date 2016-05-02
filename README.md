@@ -47,11 +47,12 @@ Features
  * Preserve comments around namespace and class.
  * Convert function declaration.
  * Convert simple local variable assignment.
+ * Convert floating point number suffix.
+ * C# float suffix in capital case 'F'.
 
 To-do
 =====
 
- * Convert floating point number suffix.
  * Convert member variable.
  * Convert static variable.
  * Convert extended class declaration.
@@ -63,7 +64,6 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * C# float suffix in capital case 'F'.
  * Constant declaration.
  * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.

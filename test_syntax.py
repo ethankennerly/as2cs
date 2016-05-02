@@ -172,8 +172,8 @@ one_ways = {
     'as': {'cs': []},
     'cs': {'as': [
         ('numberFormat', [
-            # ['3.5',   # not supported
-            #  '3.5F'],
+            ['3.5',   # not supported
+             '3.5F'],
         ]),
     ]},
 }

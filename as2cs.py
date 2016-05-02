@@ -94,14 +94,31 @@ def set_tags(tags, grammar_text, value):
             tags[name] = value
 
 
-def find_text(text, names, parts):
+def find_text(text, parts,
+        names = ['CHARNOSNGLQUOTE', 'CHARNODBLQUOTE']):
     """
-    >>> parts = [('name', 0, 6, []), ('seq_group', 9, 18, [('element_token', 10, 18, [('literal', 10, 17, [('CHARNOSNGLQUOTE', 11, 16, None)])])])]
-    >>> find_text("import := 'using'", ['digit'], parts)
-    >>> find_text("import := 'using'", ['literal'], parts)
+    If no match, return nothing.
+    >>> grammar = "import := 'using'"
+    >>> parts = ebnf_parser.parse(grammar)[1]
+    >>> find_text(grammar, parts, ['digit'])
+
+    Return first text matching.
+    >>> find_text(grammar, parts, ['literal'])
     "'using'"
-    >>> find_text('import := "using"', ['CHARNODBLQUOTE', 'CHARNOSNGLQUOTE'], parts)
+
+    By default find characters in single or double quotes.
+    >>> find_text(grammar, parts)
     'using'
+    >>> double_quote = 'import := "using"'
+    >>> parts = ebnf_parser.parse(double_quote)[1]
+    >>> find_text(double_quote, parts)
+    'using'
+
+    If multiple text found, only return the first found.
+    >>> first = 'float_suffix := "f" / "F"'
+    >>> parts = ebnf_parser.parse(first)[1]
+    >>> find_text(first, parts)
+    'f'
     """
     found = ''
     if parts:
@@ -110,8 +127,8 @@ def find_text(text, names, parts):
                 found += text[begin:end]
                 break
             else:
-                found_part = find_text(text, names, part)
-                if found_part:
+                found_part = find_text(text, part, names)
+                if found_part and not found:
                     found += found_part
     if found:
         return found
@@ -164,10 +181,6 @@ def find_texts(text, name, parts, not_followed_by = None):
     return found
 
 
-def find_literal_text(text, parts):
-    return find_text(text, ['CHARNOSNGLQUOTE', 'CHARNODBLQUOTE'], parts)
-
-
 def find_literals(grammar_text):
     literals = {}
     taglist = ebnf_parser.parse(grammar_text)[1]
@@ -175,7 +188,7 @@ def find_literals(grammar_text):
         if tag == 'declaration':
             name_begin, name_end = parts[0][1:3]
             name = grammar_text[name_begin:name_end]
-            literal = find_literal_text(grammar_text, parts)
+            literal = find_text(grammar_text, parts)
             if literal:
                 literals[name] = literal
     return literals
