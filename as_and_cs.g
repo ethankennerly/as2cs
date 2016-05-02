@@ -21,7 +21,7 @@ classDefinition := ts?, (scope, ts)?, class, ts, identifier, ts?, LCURLY, ts?, R
 
 namespaceModifierPlace := namespaceModifiers?
 namespaceModifiers := (scope / STATIC, ts)+
-functionBody := ts?, LCURLY, ts?, RCURLY
+functionBody := ts?, LCURLY, statement*, ts?, RCURLY
 functionDeclaration := functionModified / functionDefault
 functionSignature := FUNCTION, ts, identifier, functionParameters
 functionDefinition := functionDeclaration, functionBody
@@ -34,7 +34,9 @@ assignmentValue := -argumentEnd+
 argumentEnd := SEMI / COMMA / EOL / EOF / RPAREN
 variableAssignment := identifier, ts?, ASSIGN, ts?, assignmentValue
 
-statement := variableDeclaration, ts?, SEMI
+statement := ts?, expression, ts?, SEMI
+expression := variableDeclaration
+    / variableAssignment
 
 scope := public / internal / protected / private
 

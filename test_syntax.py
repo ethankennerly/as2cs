@@ -140,6 +140,12 @@ definitions = [
         ['a = index',
          'a = index'],
      ]),
+     ('functionDefinition', [
+        ['  function f():void{var i:int = index;}', 
+         '  void function f(){int i = index;}'],
+        ['  function f():void{i = index;}', 
+         '  void function f(){i = index;}'],
+     ]),
 ]
 
 
