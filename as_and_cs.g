@@ -41,8 +41,10 @@ expression := variableDeclaration
     / variableAssignment
     / callExpression
     / identifier
-    / number
+    / numberFormat
     / string
+
+numberFormat := hex / floatFormat / int
 
 address := identifier, (ts?, PERIOD, ts?, identifier)?
 callExpression := address, ts?, LPAREN, ts?, callParameters?, ts?, RPAREN

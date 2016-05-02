@@ -140,13 +140,23 @@ definitions = [
         [' private function isF(index:int, isEnabled:Boolean, a:Number=NaN):Boolean',
          ' private bool function isF(int index, bool isEnabled, float a=NaN)'],
      ]),
+     ('numberFormat', [
+        ['125', 
+         '125'],
+        ['-125', 
+         '-125'],
+        ['0xFF', 
+         '0xFF'],
+        ['0.125', 
+         '0.125f'],
+     ]),
      ('expression', [
         ['"as.g"', 
          '"as.g"'],
-        # ['0.125', 
-        #  '0.125f'], # TODO
         ['Math.floor(index)', 
          'Math.floor(index)'],
+        ['0.125', 
+         '0.125f'],
      ]),
      ('functionDefinition', [
         ['  function f():void{var i:int = index;}', 
@@ -158,6 +168,17 @@ definitions = [
      ]),
 ]
 
+one_ways = {
+    'as': {'cs': []},
+    'cs': {'as': [
+        ('numberFormat', [
+            # ['3.5',   # not supported
+            #  '3.5F'],
+        ]),
+    ]},
+}
+
+is_debug_fail = True
 
 debug_definitions = [
     # 'dataType'
@@ -193,7 +214,6 @@ def print_expected(expected, got, input, definition, index, err):
     print got
     print 'tag parts:'
     print format_taglist(input, definition)[:500]
-    raise err
 
 
 class TestDefinitions(unittest.TestCase):
@@ -210,12 +230,18 @@ class TestDefinitions(unittest.TestCase):
             self.assertEqual(expected, got)
         except Exception as err:
             print_expected(expected, got, input, definition, index, err)
+            if is_debug_fail:
+                import pdb
+                pdb.set_trace()
+                got = convert(input, definition)
+                self.assertEqual(expected, got)
+            raise err
 
     def test_definitions(self):
         for source, to, s, t in directions:
             cfg['source'] = source
             cfg['to'] = to
-            for definition, rows in definitions:
+            for definition, rows in definitions + one_ways[source][to]:
                 for r, row in enumerate(rows):
                     expected = row[t]
                     input = row[s]
@@ -236,6 +262,7 @@ class TestDefinitions(unittest.TestCase):
                 self.assertEqual(expected, got)
             except Exception as err:
                 print_expected(expected, got, open(path).read(), 'compilationUnit', index, err)
+                raise err
 
 
 if '__main__' == __name__:

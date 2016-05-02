@@ -63,6 +63,7 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+ * C# float suffix in capital case 'F'.
  * Constant declaration.
  * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.
@@ -75,6 +76,7 @@ Not supported
     functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
     functionDefault := ts, returnType, ts, functionSignature
  * Default data-type when omitted in ActionScript to explicit data type in C#.
+ * JavaScript "Math.floor" to Unity C# "Mathf.Floor".
  * typeof string format.
  * Omitting semicolon at end of ActionScript.
  * Mixing literals and non-literals in grammar to be replaced.
