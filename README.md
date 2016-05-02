@@ -49,11 +49,11 @@ Features
  * Convert simple local variable assignment.
  * Convert floating point number suffix.
  * C# float suffix in capital case 'F'.
+ * Convert member and static variables.
 
 To-do
 =====
 
- * Convert member and static variables.
  * Convert extended class declaration.
  * Example file of all of the above.
  * Literals in CAPITAL\_CASE following ANTLR grammar conventions.
@@ -67,6 +67,8 @@ Not supported
  * Constant declaration.
  * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.
+  http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
+ * Interface definition.
  * Anonymous function.
  * Insert C# explicit cast to another data type, such as from float to integer.
  * ActionScript 3 argument list '...' syntax

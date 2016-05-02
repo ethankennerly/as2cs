@@ -15,6 +15,7 @@ BOOLEAN := "Boolean"
 FLOAT := "Number"
 OBJECT := "Object"
 VARIABLEDECLARATIONKEYWORD := "var"
+FINAL := "final"
 
 import := "import"
 

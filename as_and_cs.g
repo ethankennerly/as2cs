@@ -11,16 +11,17 @@ comment_line_start := "//"
 comment_start := "/*"
 comment_end := "*/"
 
-
 importDefinitionPlace := importDefinition*
 
 importDefinition := ts?, import, ts, identifier, SEMI, EOL?
 
 classDefinitionPlace := classDefinition?, ts?
-classDefinition := ts?, (scope, ts)?, class, ts, identifier, ts?, LCURLY, ts?, RCURLY
+classDefinition := ts?, classModifier*, class, ts, identifier, ts?,
+    LCURLY, memberExpression*, ts?, RCURLY
+classModifier := scope / FINAL, ts
 
 namespaceModifierPlace := namespaceModifiers?
-namespaceModifiers := (scope / STATIC, ts)+
+namespaceModifiers := (scope / STATIC / FINAL / OVERRIDE, ts)+
 functionBody := ts?, LCURLY, statement*, ts?, RCURLY
 functionDeclaration := functionModified / functionDefault
 functionSignature := FUNCTION, ts, identifier, functionParameters
@@ -35,7 +36,8 @@ assignmentValue := expression
 argumentEnd := SEMI / COMMA / EOL / EOF / RPAREN
 variableAssignment := identifier, ts?, ASSIGN, ts?, assignmentValue
 
-memberDeclaration := ts, namespaceModifiers?, variableDeclaration
+memberExpression := functionDefinition / memberDeclaration
+memberDeclaration := ts, namespaceModifiers?, variableDeclaration, ts?, SEMI
 
 statement := ts?, primaryExpression, ts?, SEMI
 primaryExpression := expression
@@ -86,4 +88,4 @@ ASSIGN := "="
 UNDERSCORE := "_"
 QUOTE := "\""
 APOS := "'"
-
+OVERRIDE := "override"
