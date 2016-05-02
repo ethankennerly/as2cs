@@ -53,9 +53,9 @@ Features
 To-do
 =====
 
- * Convert member variable.
- * Convert static variable.
+ * Convert member and static variables.
  * Convert extended class declaration.
+ * Example file of all of the above.
  * Literals in CAPITAL\_CASE following ANTLR grammar conventions.
  * Grammar names in snake\_case following simpleparsegrammar conventions.
 
@@ -70,11 +70,21 @@ Not supported
  * Anonymous function.
  * Insert C# explicit cast to another data type, such as from float to integer.
  * ActionScript 3 argument list '...' syntax
+ * Reordering syntax from nested definitions.  
+  Example:  ActionScript 3 has a colon before data type.  Formatting scans this grammar.
+    argumentDeclared := identifier, (ts?, COLON, ts?, dataType)?
+    argumentDeclared := dataType, ts, identifier
+  To convert both ways between argument declarations:
+    path:String
+    string path
  * Reformatting with optional parameters.  
   Instead I used two optional definitions, one which requires the option.  C# example:
     functionDeclaration := functionModified / functionDefault
     functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
     functionDefault := ts, returnType, ts, functionSignature
+ * Member variable and function declarations without preceding whitespace.  
+  Instead have at least one space or tab before the.
+  Whitespace is required to retain when reformatted.
  * Default data-type when omitted in ActionScript to explicit data type in C#.
  * JavaScript "Math.floor" to Unity C# "Mathf.Floor".
  * typeof string format.

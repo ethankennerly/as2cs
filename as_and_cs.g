@@ -35,6 +35,8 @@ assignmentValue := expression
 argumentEnd := SEMI / COMMA / EOL / EOF / RPAREN
 variableAssignment := identifier, ts?, ASSIGN, ts?, assignmentValue
 
+memberDeclaration := ts, namespaceModifiers?, variableDeclaration
+
 statement := ts?, primaryExpression, ts?, SEMI
 primaryExpression := expression
 expression := variableDeclaration

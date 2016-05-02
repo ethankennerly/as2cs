@@ -166,6 +166,18 @@ definitions = [
         ['  function f():void{var i:int = Math.floor(index);}', 
          '  void function f(){int i = Math.floor(index);}'],
      ]),
+     ('memberDeclaration', [
+        ['  var path:String = "as.g"',
+         '  string path = "as.g"'],
+        ['  var path:String = "as.g"',
+         '  string path = "as.g"'],
+        [' private static var index:int = 16',
+         ' private static int index = 16'],
+        [' var path:String = "as.g"',
+         ' string path = "as.g"'],
+        ['    var index:int = 16',
+         '    int index = 16'],
+     ]),
 ]
 
 one_ways = {
