@@ -120,6 +120,18 @@ definitions = [
         [' private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
          ' private bool function isF(int index, bool isEnabled, float a)'],
      ]),
+     ('variableDeclaration', [
+        ['var path:String = "as.g"',
+         'string path = "as.g"'],
+        ['var index:int = 16',
+         'int index = 16'],
+     ]),
+     ('functionDeclaration', [
+        [' function f(path:String, index:int = -1):void',
+         ' void function f(string path, int index = -1)'],
+        [' private function isF(index:int, isEnabled:Boolean, a:Number=NaN):Boolean',
+         ' private bool function isF(int index, bool isEnabled, float a=NaN)'],
+     ]),
 ]
 
 

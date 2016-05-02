@@ -5,7 +5,8 @@ import := "using"
 namespace := "namespace"
 
 variableDeclaration := ts?, argumentDeclaration
-argumentDeclaration := dataType, ts, identifier
+argumentDeclared := dataType, ts, identifier
+argumentInitialized := dataType, ts, identifier, argumentInitializer
 
 functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
 functionDefault := ts, returnType, ts, functionSignature

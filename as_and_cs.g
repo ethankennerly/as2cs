@@ -28,6 +28,10 @@ functionDefinition := functionDeclaration, functionBody
 functionParameters := ts?, LPAREN, ts?, argumentList?, ts?, RPAREN
 
 argumentList := argumentDeclaration, (ts?, COMMA, ts?, argumentDeclaration)*
+argumentDeclaration := argumentInitialized / argumentDeclared
+argumentInitializer := ts?, ASSIGN, ts?, assignmentValue
+assignmentValue := -argumentEnd+
+argumentEnd := SEMI / COMMA / EOL / EOF / RPAREN
 
 statement := variableDeclaration, ts?, SEMI
 
@@ -47,7 +51,7 @@ STATIC := "static"
 
 identifier := alphaunder, (PERIOD?, alphanums+)*
 alphanums      := (letter / digit)+
-alphaunder     := (letter / "_")
+alphaunder     := (letter / UNDERSCORE)
 dataType := integer / string / boolean / float / object
 returnType := dataType / VOID
 
@@ -61,4 +65,5 @@ COLON := ":"
 COMMA := ","
 EOL   := ("\r"?, "\n") / EOF
 SPACE := " "
-
+ASSIGN := "="
+UNDERSCORE := "_"

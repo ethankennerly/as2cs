@@ -45,12 +45,11 @@ Features
   with literals extracted and no unreported or expanded definitions
  * Conform expected format in compilation unit test.
  * Preserve comments around namespace and class.
- * Convert empty function declaration.
+ * Convert function declaration.
 
 To-do
 =====
 
- * Convert function parameter list.
  * Convert local variable.
  * Convert member variable.
  * Convert static variable.
@@ -63,6 +62,7 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+ * Constant declaration.
  * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.
  * Anonymous function.
@@ -74,6 +74,7 @@ Not supported
     functionDefault := ts, returnType, ts, functionSignature
  * Default data-type when omitted in ActionScript to explicit data type in C#.
  * typeof string format.
+ * Omitting semicolon at end of ActionScript.
  * Mixing literals and non-literals in grammar to be replaced.
  * Multiple occurences of items that are reordered.  
   Instead these can be grouped, like 'digits?' instead of 'digit\*'.
@@ -83,6 +84,7 @@ Not supported
  * Consistent prettify format that trims whitespace.
  * Prettify format from optional end of line and indentation in grammar.
  * ActionScript only allows one public class per package and one package per file.
+ * Validate that initializations are last in a function parameter list.
  * Everything else not explicitly mentioned as a feature.
 
 Reference code

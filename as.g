@@ -5,7 +5,8 @@ functionModified := ts, namespaceModifiers, functionSignature, (ts?, COLON, ts?,
 functionDefault := ts, functionSignature, (ts?, COLON, ts?, returnType)?
 
 variableDeclaration := ts?, variableDeclarationKeyword, ts, argumentDeclaration
-argumentDeclaration := identifier, (ts?, COLON, ts?, dataType)?
+argumentDeclared := identifier, (ts?, COLON, ts?, dataType)?
+argumentInitialized := identifier, (ts?, COLON, ts?, dataType)?, argumentInitializer
 
 integer := "int"
 string := "String"
