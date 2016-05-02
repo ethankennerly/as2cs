@@ -39,12 +39,6 @@ definitions = [
         ['public class PC{}', 'public class PC{}'],
         ['internal class IC{}', 'internal class IC{}'],
      ]),
-     ('variableDeclaration', [
-        ['var path:String;',
-         'string path;'],
-        ['var index:int;',
-         'int index;'],
-     ]),
      ('ts', [
         ['/*c*/', '/*c*/'],
         ['//c', '//c'],
@@ -100,6 +94,20 @@ definitions = [
         [' protected function getF():Number{}', 
          ' protected float function getF(){}'],
      ]),
+     ('argumentDeclaration', [
+        ['path:String',
+         'string path'],
+        ['index:int',
+         'int index'],
+     ]),
+     ('variableDeclaration', [
+        ['var path:String',
+         'string path'],
+        ['var index:int',
+         'int index'],
+     ]),
+     ('functionDefinition', [
+     ]),
 ]
 
 
@@ -112,8 +120,12 @@ debug_definitions = [
     # 'variableDeclaration'
 ]
 
+debug_source = [
+    # 'cs'
+]
+
 debug_indexes = [
-    2
+    # 2
 ]
 
 original_source = cfg['source']
@@ -144,7 +156,8 @@ class TestDefinitions(unittest.TestCase):
             expected = may_format(definition, expected)
             if definition in debug_definitions:
                 if not debug_indexes or index in debug_indexes:
-                    import pdb; pdb.set_trace()
+                    if not debug_source or cfg['source'] in debug_source:
+                        import pdb; pdb.set_trace()
             got = convert(input, definition)
             self.assertEqual(expected, got)
         except Exception as err:

@@ -26,6 +26,8 @@ functionDeclaration := functionModified / functionDefault
 functionSignature := FUNCTION, ts, identifier, functionParameters
 functionDefinition := functionDeclaration, functionBody
 
+statement := variableDeclaration, ts?, SEMI
+
 functionParameters := ts?, LPAREN, ts?, RPAREN
 
 scope := public / internal / protected / private

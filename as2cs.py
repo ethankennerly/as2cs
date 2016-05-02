@@ -215,28 +215,6 @@ def replace_literals(a_grammar, b_grammar, literals = None):
     return replaces
 
 
-as_grammar = merge_declaration_paths(['as_and_cs.g', 'as.g'])
-cs_grammar = merge_declaration_paths(['as_and_cs.g', 'cs.g'])
-grammars = {'as': as_grammar, 'cs': cs_grammar}
-literals = {'as': {}, 'cs': {}}
-literals['as'] = find_literals(as_grammar)
-literals['cs'] = find_literals(cs_grammar)
-replace_tags = {'as': {}, 'cs': {}}
-replace_tags['as']['cs'] = replace_literals(as_grammar, cs_grammar, literals['cs'])
-replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as'])
-
-reorder_defaults = {'as': {}, 'cs': {}}
-reorder_defaults['cs']['ts'] = literals['cs']['SPACE']
-reorder_defaults['as']['ts'] = literals['as']['SPACE']
-
-different_tags = {}
-set_tags(different_tags, open('as.g').read(), True)
-set_tags(different_tags, open('cs.g').read(), True)
-for key in source_keys:
-    different_tags[key] = False
-set_tags(different_tags, open('as_and_cs.g').read(), False)
-
-
 def tag_order(grammar_text):
     """
     >>> cs_var = 'variableDeclaration := whitespace?, dataType, whitespacechar+, identifier, whitespace*, SEMI'
@@ -286,10 +264,6 @@ def tags_to_reorder(a_grammar, b_grammar):
     reorder_declaration(reorders, original_strings, b_grammar)
     return reorders
 
-
-reorder_tags = {'as': {}, 'cs': {}}
-reorder_tags['as']['cs'] = tags_to_reorder(as_grammar, cs_grammar)
-reorder_tags['cs']['as'] = tags_to_reorder(cs_grammar, as_grammar)
 
 def insert(source_str, insert_str, pos):
     """
@@ -344,7 +318,7 @@ def reorder_taglist(taglist, tag, input, source, to):
                 row_index = r
                 break
         else:
-            for verbatim in reorder_defaults, literals:
+            for verbatim in literals, reorder_defaults:
                 if order_tag in verbatim[to]:
                     insert_text = verbatim[to][order_tag]
                     length = len(insert_text)
@@ -353,6 +327,7 @@ def reorder_taglist(taglist, tag, input, source, to):
                     for r in range(row_index, len(unordered)):
                         if not r in used_indexes:
                             add(unordered, r, length)
+                    end += length
                     break
     text = _recurse_tags(ordered, input, source, to)
     return text
@@ -497,6 +472,31 @@ def realpath(a_path):
     """
     return path.join(path.dirname(path.realpath(__file__)), a_path)
 
+
+# Cache global variables for speed
+as_grammar = merge_declaration_paths(['as_and_cs.g', 'as.g'])
+cs_grammar = merge_declaration_paths(['as_and_cs.g', 'cs.g'])
+grammars = {'as': as_grammar, 'cs': cs_grammar}
+literals = {'as': {}, 'cs': {}}
+literals['as'] = find_literals(as_grammar)
+literals['cs'] = find_literals(cs_grammar)
+replace_tags = {'as': {}, 'cs': {}}
+replace_tags['as']['cs'] = replace_literals(as_grammar, cs_grammar, literals['cs'])
+replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as'])
+
+reorder_defaults = {'as': {}, 'cs': {}}
+reorder_defaults['cs']['ts'] = literals['cs']['SPACE']
+reorder_defaults['as']['ts'] = literals['as']['SPACE']
+reorder_tags = {'as': {}, 'cs': {}}
+reorder_tags['as']['cs'] = tags_to_reorder(as_grammar, cs_grammar)
+reorder_tags['cs']['as'] = tags_to_reorder(cs_grammar, as_grammar)
+
+different_tags = {}
+set_tags(different_tags, open('as.g').read(), True)
+set_tags(different_tags, open('cs.g').read(), True)
+for key in source_keys:
+    different_tags[key] = False
+set_tags(different_tags, open('as_and_cs.g').read(), False)
 
 if '__main__' == __name__:
     import sys

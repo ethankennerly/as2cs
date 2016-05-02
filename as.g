@@ -4,8 +4,8 @@ compilationUnit := namespaceDeclaration, LCURLY, importDefinitionPlace, classDef
 functionModified := ts, namespaceModifiers, functionSignature, (ts?, COLON, ts?, returnType)?
 functionDefault := ts, functionSignature, (ts?, COLON, ts?, returnType)?
 
-variableDeclaration := ts?, variableDeclarationKeyword, ts, identifier, 
-    (ts?, COLON, ts?, dataType)?, ts?, SEMI
+variableDeclaration := ts?, variableDeclarationKeyword, ts, argumentDeclaration
+argumentDeclaration := identifier, (ts?, COLON, ts?, dataType)?
 
 integer := "int"
 string := "String"

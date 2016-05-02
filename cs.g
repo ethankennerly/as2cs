@@ -4,7 +4,8 @@ import := "using"
 
 namespace := "namespace"
 
-variableDeclaration := ts?, dataType, ts, identifier, ts?, SEMI
+variableDeclaration := ts?, argumentDeclaration
+argumentDeclaration := dataType, ts, identifier
 
 functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
 functionDefault := ts, returnType, ts, functionSignature
