@@ -66,6 +66,7 @@ Not supported
  * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.
  * Anonymous function.
+ * Insert C# explicit cast to another data type, such as from float to integer.
  * ActionScript 3 argument list '...' syntax
  * Reformatting with optional parameters.  
   Instead I used two optional definitions, one which requires the option.  C# example:

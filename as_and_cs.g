@@ -32,6 +32,7 @@ argumentDeclaration := argumentInitialized / argumentDeclared
 argumentInitializer := ts?, ASSIGN, ts?, assignmentValue
 assignmentValue := -argumentEnd+
 argumentEnd := SEMI / COMMA / EOL / EOF / RPAREN
+variableAssignment := identifier, ts?, ASSIGN, ts?, assignmentValue
 
 statement := variableDeclaration, ts?, SEMI
 

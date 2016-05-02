@@ -132,6 +132,14 @@ definitions = [
         [' private function isF(index:int, isEnabled:Boolean, a:Number=NaN):Boolean',
          ' private bool function isF(int index, bool isEnabled, float a=NaN)'],
      ]),
+     ('variableAssignment', [
+        ['path = "as.g"',
+         'path = "as.g"'],
+        ['index = 16',
+         'index = 16'],
+        ['a = index',
+         'a = index'],
+     ]),
 ]
 
 
