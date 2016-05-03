@@ -1,19 +1,16 @@
-namespaceDeclaration := ts?, namespace, (ts, identifier)?, ts?
-
 ts := (whitespace+ / comment_area)+
-
 comment_area := comment_line / comment_block
-comment_block := comment_start, comment_middle*, comment_end
-comment_line := comment_line_start, comment_line_content*, EOL
-comment_middle := -comment_end
+comment_block := COMMENT_START, comment_middle*, COMMENT_END
+comment_line := COMMENT_LINE_START, comment_line_content*, EOL
+comment_middle := -COMMENT_END
 comment_line_content := -EOL
-comment_line_start := "//"
-comment_start := "/*"
-comment_end := "*/"
+COMMENT_LINE_START := "//"
+COMMENT_START := "/*"
+COMMENT_END := "*/"
 
+namespaceDeclaration := ts?, NAMESPACE, (ts, identifier)?, ts?
 importDefinitionPlace := importDefinition*
-
-importDefinition := ts?, import, ts, identifier, SEMI, EOL?
+importDefinition := ts?, IMPORT, ts, identifier, SEMI, EOL?
 
 classDefinitionPlace := classDefinition?, ts?
 classDefinition := ts?, classModifier*, CLASS, ts, identifier, classBaseClause?, 
@@ -27,6 +24,10 @@ interfaceTypeList := interfaceFirst, interfaceNextPlace
 interfaceNextPlace := (ts?, COMMA, ts?, interfaceIdentifier)*
 interfacePrefix := I, uppercasechar, identifier?
 interfaceIdentifier := interfacePrefix, identifier?
+I := "I"
+
+memberExpression := functionDefinition / memberDeclaration
+memberDeclaration := ts, namespaceModifiers?, variableDeclaration, ts?, SEMI
 
 namespaceModifierPlace := namespaceModifiers?
 namespaceModifiers := (scope / STATIC / FINAL / OVERRIDE, ts)+
@@ -35,17 +36,32 @@ functionDeclaration := functionModified / functionDefault
 functionSignature := FUNCTION, ts, identifier, functionParameters
 functionDefinition := functionDeclaration, functionBody
 functionParameters := ts?, LPAREN, ts?, argumentList?, ts?, RPAREN
+FUNCTION := "function"
+OVERRIDE := "override"
+scope := PUBLIC / INTERNAL / PROTECTED / PRIVATE
+CLASS := "class"
+PUBLIC := "public"
+INTERNAL := "internal"
+PROTECTED := "protected"
+PRIVATE := "private"
+VOID := "void"
+STATIC := "static"
 
 argumentList := argumentDeclaration, (ts?, COMMA, ts?, argumentDeclaration)*
 argumentDeclaration := argumentInitialized / argumentDeclared
 argumentInitializer := ts?, ASSIGN, ts?, assignmentValue
-# assignmentValue := -argumentEnd+
 assignmentValue := expression
 argumentEnd := SEMI / COMMA / EOL / EOF / RPAREN
 variableAssignment := identifier, ts?, ASSIGN, ts?, assignmentValue
+address := identifier, (ts?, PERIOD, ts?, identifier)?
+callExpression := address, ts?, LPAREN, ts?, callParameters?, ts?, RPAREN
+callParameters := expression, (ts?, COMMA, expression)*
 
-memberExpression := functionDefinition / memberDeclaration
-memberDeclaration := ts, namespaceModifiers?, variableDeclaration, ts?, SEMI
+identifier := alphaunder, (PERIOD?, alphanums+)*
+alphanums      := (letter / digit)+
+alphaunder     := (letter / UNDERSCORE)
+dataType := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT
+returnType := dataType / VOID
 
 statement := ts?, primaryExpression, ts?, SEMI
 primaryExpression := expression
@@ -57,30 +73,6 @@ expression := variableDeclaration
     / string
 
 numberFormat := hex / floatFormat / int
-
-address := identifier, (ts?, PERIOD, ts?, identifier)?
-callExpression := address, ts?, LPAREN, ts?, callParameters?, ts?, RPAREN
-callParameters := expression, (ts?, COMMA, expression)*
-
-scope := public / internal / protected / private
-
-FUNCTION := "function"
-
-CLASS := "class"
-
-public := "public"
-internal := "internal"
-protected := "protected"
-private := "private"
-VOID := "void"
-
-STATIC := "static"
-
-identifier := alphaunder, (PERIOD?, alphanums+)*
-alphanums      := (letter / digit)+
-alphaunder     := (letter / UNDERSCORE)
-dataType := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT
-returnType := dataType / VOID
 
 PERIOD := "."
 LCURLY := "{"
@@ -96,5 +88,3 @@ ASSIGN := "="
 UNDERSCORE := "_"
 QUOTE := "\""
 APOS := "'"
-OVERRIDE := "override"
-I := "I"

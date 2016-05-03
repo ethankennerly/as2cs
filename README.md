@@ -61,11 +61,12 @@ Features
     class A extends It {}
  * Convert extended class declaration.
  * Example file of all of the above.
+ * Grammar literals in CAPITAL\_CASE following ANTLR grammar conventions.
+ * Grammar ordered approximately in same order as the elements appear in a file.
 
 To-do
 =====
 
- * Literals in CAPITAL\_CASE following ANTLR grammar conventions.
  * Grammar names in snake\_case following simpleparsegrammar conventions.
 
 Not supported

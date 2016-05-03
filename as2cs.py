@@ -39,15 +39,15 @@ def merge_declarations(declarations):
     Normalize whitespace before and after assignment.
     Expects definition fits on one line.
     >>> a = "whitespace     := [ \t\r\n]+"
-    >>> b = "import := 'import'"
+    >>> b = "IMPORT := 'import'"
     >>> merge_declarations([a, b])
-    "whitespace     := [ \t\r\n]+\nimport := 'import'"
+    "whitespace     := [ \t\r\n]+\nIMPORT := 'import'"
 
     B overwrites A.
-    >>> a = "import  \t := 'import'"
-    >>> b = "import := \t 'using'"
+    >>> a = "IMPORT  \t := 'import'"
+    >>> b = "IMPORT := \t 'using'"
     >>> merge_declarations([a, b])
-    "import := \t 'using'"
+    "IMPORT := \t 'using'"
     """
     names = {}
     def new_declarations(parser, input):
@@ -199,11 +199,11 @@ def find_literals(grammar_text):
 def replace_literals(a_grammar, b_grammar, literals = None):
     """
     >>> replaces = replace_literals(as_grammar, cs_grammar, literals['cs'])
-    >>> replaces.get('import')
+    >>> replaces.get('IMPORT')
     'using'
     >>> replaces.get('alphaunder')
     >>> replaces = replace_literals(as_grammar, cs_grammar)
-    >>> replaces.get('import')
+    >>> replaces.get('IMPORT')
     'using'
     >>> replaces.get('alphaunder')
     >>> replaces.get('STRING')
