@@ -1,21 +1,21 @@
-compilationUnit := namespaceDeclaration, LCURLY, importDefinitionPlace, classDefinitionPlace, RCURLY
+compilation_unit := namespace_declaration, LCURLY, import_definition_place, class_definition_place, RCURLY
 NAMESPACE := "package"
 IMPORT := "import"
 
-classBaseClause := classBase
-classExtends := ts, EXTENDS, ts, classIdentifier
-interfaceFirst := ts, IMPLEMENTS, ts, interfaceIdentifier
-interfaceTypeListFollows := ts, IMPLEMENTS, ts, interfaceIdentifier, interfaceNextPlace
+class_base_clause := class_base
+class_extends := ts, EXTENDS, ts, class_identifier
+interface_first := ts, IMPLEMENTS, ts, interface_identifier
+interface_type_list_follows := ts, IMPLEMENTS, ts, interface_identifier, interface_next_place
 EXTENDS := "extends"
 IMPLEMENTS := "implements"
 
-functionModified := ts, namespaceModifiers, functionSignature, (ts?, COLON, ts?, returnType)?
-functionDefault := ts, functionSignature, (ts?, COLON, ts?, returnType)?
+function_modified := ts, namespace_modifiers, function_signature, (ts?, COLON, ts?, return_type)?
+function_default := ts, function_signature, (ts?, COLON, ts?, return_type)?
 
-variableDeclaration := ts?, VARIABLE, ts, argumentDeclaration
-argumentDeclared := identifier, (ts?, COLON, ts?, dataType)?
-argumentInitialized := identifier, (ts?, COLON, ts?, dataType)?, argumentInitializer
-floatFormat := float
+variable_declaration := ts?, VARIABLE, ts, argument_declaration
+argument_declared := identifier, (ts?, COLON, ts?, data_type)?
+argument_initialized := identifier, (ts?, COLON, ts?, data_type)?, argument_initializer
+float_format := float
 
 INTEGER := "int"
 STRING := "String"

@@ -21,13 +21,13 @@ directions = [
 ]
 
 definitions = [
-     ('dataType', [
+     ('data_type', [
         ['int', 'int'],
         ['String', 'string'],
         ['Boolean', 'bool'],
         ['Number', 'float'],
      ]),
-     ('importDefinition', [
+     ('import_definition', [
         ['import com.finegamedesign.anagram.Model;',
          'using com.finegamedesign.anagram.Model;'],
         ['import _2;',
@@ -37,7 +37,7 @@ definitions = [
         ['import A;',
          'using A;'],
      ]),
-     ('classDefinition', [
+     ('class_definition', [
         ['class C{}', 'class C{}'],
         ['public class PC{}', 'public class PC{}'],
         ['internal class IC{}', 'internal class IC{}'],
@@ -47,7 +47,7 @@ definitions = [
         ['//c', '//c'],
         ['// var i:int;', '// var i:int;'],
      ]),
-     ('namespaceModifiers', [
+     ('namespace_modifiers', [
         ['public ', 
          'public '],
         ['private static ', 
@@ -55,13 +55,13 @@ definitions = [
         ['static private ', 
          'static private '],
      ]),
-     ('functionDeclaration', [
+     ('function_declaration', [
         ['  function f():void', 
          '  void function f()'],
         ['    function g( ):void', 
          '    void function g( )'],
      ]),
-     ('functionDefinition', [
+     ('function_definition', [
         ['  function f():void{}', 
          '  void function f(){}'],
         [' function f():void{}', 
@@ -73,19 +73,19 @@ definitions = [
         [' protected function getF():Number{}', 
          ' protected float function getF(){}'],
      ]),
-     ('argumentDeclaration', [
+     ('argument_declaration', [
         ['path:String',
          'string path'],
         ['index:int',
          'int index'],
      ]),
-     ('variableDeclaration', [
+     ('variable_declaration', [
         ['var path:String',
          'string path'],
         ['var index:int',
          'int index'],
      ]),
-     ('argumentList', [
+     ('argument_list', [
         ['path:String',
          'string path'],
         ['path:String, index:int',
@@ -93,13 +93,13 @@ definitions = [
         ['index:int, isEnabled:Boolean, a:Number',
          'int index, bool isEnabled, float a'],
      ]),
-     ('functionDeclaration', [
+     ('function_declaration', [
         [' function f(path:String, index:int):void',
          ' void function f(string path, int index)'],
         [' private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
          ' private bool function isF(int index, bool isEnabled, float a)'],
      ]),
-     ('variableAssignment', [
+     ('variable_assignment', [
         ['path = "as.g"',
          'path = "as.g"'],
         ['index = 16',
@@ -107,19 +107,19 @@ definitions = [
         ['a = index',
          'a = index'],
      ]),
-     ('variableDeclaration', [
+     ('variable_declaration', [
         ['var path:String = "as.g"',
          'string path = "as.g"'],
         ['var index:int = 16',
          'int index = 16'],
      ]),
-     ('functionDeclaration', [
+     ('function_declaration', [
         [' function f(path:String, index:int = -1):void',
          ' void function f(string path, int index = -1)'],
         [' private function isF(index:int, isEnabled:Boolean, a:Number=NaN):Boolean',
          ' private bool function isF(int index, bool isEnabled, float a=NaN)'],
      ]),
-     ('numberFormat', [
+     ('number_format', [
         ['125', 
          '125'],
         ['-125', 
@@ -137,7 +137,7 @@ definitions = [
         ['0.125', 
          '0.125f'],
      ]),
-     ('functionDefinition', [
+     ('function_definition', [
         ['  function f():void{var i:int = index;}', 
          '  void function f(){int i = index;}'],
         ['  function f():void{i = index;}', 
@@ -145,7 +145,7 @@ definitions = [
         ['  function f():void{var i:int = Math.floor(index);}', 
          '  void function f(){int i = Math.floor(index);}'],
      ]),
-     ('memberDeclaration', [
+     ('member_declaration', [
         ['  var path:String = "as.g";',
          '  string path = "as.g";'],
         ['  var path:String = "as.g";',
@@ -157,7 +157,7 @@ definitions = [
         ['    private var index:int = 16;',
          '    private int index = 16;'],
      ]),
-     ('classDefinition', [
+     ('class_definition', [
         ['class C{  var path:String = "as.g";}', 
          'class C{  string path = "as.g";}'],
         ['public class PC{    private static var index:int = 16;}', 
@@ -167,7 +167,7 @@ definitions = [
         ['internal final class PC{    private static var index:int = 16;\nprivate var a:String;}', 
          'internal sealed class PC{    private static int index = 16;\nprivate string a;}'],
      ]),
-     ('classBaseClause', [
+     ('class_base_clause', [
         [' extends B',
          ' : B'],
         [' extends B implements IA', 
@@ -181,7 +181,7 @@ definitions = [
         [' extends It', 
          ' : It'],
      ]),
-     ('compilationUnit', [
+     ('compilation_unit', [
         ['package{public class C{}}', 
          'namespace{\n    public class C{\n    }\n}'],
         ['package{class C{}}',
@@ -210,7 +210,7 @@ definitions = [
 one_ways = {
     'as': {'cs': []},
     'cs': {'as': [
-        ('numberFormat', [
+        ('number_format', [
             ['3.5',   # not supported
              '3.5F'],
         ]),
@@ -220,12 +220,12 @@ one_ways = {
 is_debug_fail = True
 
 debug_definitions = [
-    # 'dataType'
-    # 'compilationUnit'
-    # 'functionDefinition'
-    # 'importDefinition'
+    # 'data_type'
+    # 'compilation_unit'
+    # 'function_definition'
+    # 'import_definition'
     # 'ts'
-    # 'variableDeclaration'
+    # 'variable_declaration'
 ]
 
 debug_source = [
@@ -296,7 +296,7 @@ class TestDefinitions(TestCase):
             pattern = 'test/*.%s' % cfg['source']
             paths = glob(realpath(pattern))
             expected_gots = compare_files(paths)
-            definition = 'compilationUnit'
+            definition = 'compilation_unit'
             for index, expected_got in enumerate(expected_gots):
                 expected, got = expected_got
                 expected = may_format(definition, expected)

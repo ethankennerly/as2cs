@@ -19,7 +19,7 @@ cfg = {
     'source': 'as',
     'to': 'cs',
     'is_formats': [
-        'compilationUnit'
+        'compilation_unit'
     ],
 }
 
@@ -138,7 +138,7 @@ def find_text(text, parts,
 
 def find_texts(text, name, parts, not_followed_by = None):
     """
-    >>> parts = [('variableDeclarationKeyword', 0, 3, None),
+    >>> parts = [('VARIABLE', 0, 3, None),
     ...  ('whitespacechar', 3, 4, None),
     ...  ('identifier',
     ...   4,
@@ -151,7 +151,7 @@ def find_texts(text, name, parts, not_followed_by = None):
     ...      ('letter', 6, 7, None),
     ...      ('letter', 7, 8, None)])]),
     ...  ('COLON', 8, 9, None),
-    ...  ('dataType', 9, 15, [('string', 9, 15, None)]),
+    ...  ('data_type', 9, 15, [('string', 9, 15, None)]),
     ...  ('SEMI', 15, 16, None)]
     >>> as_code = 'var path:String;';
     >>> find_texts(as_code, 'digit', parts)
@@ -249,14 +249,14 @@ def tags_to_reorder(a_grammar, b_grammar):
     """
     For grammar tags of the same name.
     Order of tags in definition B where they differ from order in A
-    >>> cs_var = 'variableDeclaration := whitespace?, dataType, whitespacechar+, identifier, whitespace*, SEMI'
-    >>> as_var = 'variableDeclaration := whitespace?, variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
+    >>> cs_var = 'variable_declaration := whitespace?, data_type, whitespace, identifier, whitespace?, SEMI'
+    >>> as_var = 'variable_declaration := whitespace?, VARIABLE, whitespace, identifier, (COLON, data_type)?, whitespace?, SEMI'
     >>> reorder_tags = tags_to_reorder(as_var, cs_var)
-    >>> reorder_tags.get('variableDeclaration')
-    ['dataType', 'whitespacechar', 'identifier', 'SEMI']
+    >>> reorder_tags.get('variable_declaration')
+    ['data_type', 'whitespace', 'identifier', 'SEMI']
     >>> reorder_tags = tags_to_reorder(cs_var, as_var)
-    >>> reorder_tags.get('variableDeclaration')
-    ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'SEMI']
+    >>> reorder_tags.get('variable_declaration')
+    ['VARIABLE', 'whitespace', 'identifier', 'COLON', 'data_type', 'SEMI']
     >>> tags_to_reorder('namespace := "package"', 'namespace := "namespace"')
     {}
     """
@@ -405,11 +405,11 @@ def may_format(definition, text):
     return text
 
 
-def convert(input, definition = 'compilationUnit'):
+def convert(input, definition = 'compilation_unit'):
     """
     Example of converting syntax from ActionScript to C#.
 
-    >>> print convert('import com.finegamedesign.anagram.Model;', 'importDefinition')
+    >>> print convert('import com.finegamedesign.anagram.Model;', 'import_definition')
     using com.finegamedesign.anagram.Model;
 
     Related to grammar unit testing specification (gUnit)

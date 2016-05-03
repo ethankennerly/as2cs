@@ -1,22 +1,22 @@
-compilationUnit := importDefinitionPlace, namespaceDeclaration, 
-    LCURLY, classDefinitionPlace, RCURLY
+compilation_unit := import_definition_place, namespace_declaration, 
+    LCURLY, class_definition_place, RCURLY
 IMPORT := "using"
 NAMESPACE := "namespace"
 
-classBaseClause := ts, COLON, classBase
-classExtends := ts, classIdentifier
-interfaceFirst := ts, interfaceIdentifier
-interfaceTypeListFollows := ts?, COMMA, ts, interfaceIdentifier, interfaceNextPlace
+class_base_clause := ts, COLON, class_base
+class_extends := ts, class_identifier
+interface_first := ts, interface_identifier
+interface_type_list_follows := ts?, COMMA, ts, interface_identifier, interface_next_place
 FINAL := "sealed"
 
-functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
-functionDefault := ts, returnType, ts, functionSignature
+function_modified := ts, namespace_modifiers, return_type, ts, function_signature
+function_default := ts, return_type, ts, function_signature
 
-variableDeclaration := ts?, argumentDeclaration
-argumentDeclared := dataType, ts, identifier
-argumentInitialized := dataType, ts, identifier, argumentInitializer
+variable_declaration := ts?, argument_declaration
+argument_declared := data_type, ts, identifier
+argument_initialized := data_type, ts, identifier, argument_initializer
 
-floatFormat := float, float_suffix
+float_format := float, float_suffix
 
 INTEGER := "int"
 STRING := "string"

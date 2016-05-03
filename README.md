@@ -63,11 +63,9 @@ Features
  * Example file of all of the above.
  * Grammar literals in CAPITAL\_CASE following ANTLR grammar conventions.
  * Grammar ordered approximately in same order as the elements appear in a file.
-
-To-do
-=====
-
- * Grammar names in snake\_case following simpleparsegrammar conventions.
+ * Grammar names in snake\_case following simpleparsegrammar conventions.  Vim sed:
+    %s/\([a-z]\)\([A-Z]\)/\1_\L\2/gIce
+  http://vim.wikia.com/wiki/Switching_case_of_characters
 
 Not supported
 =============
@@ -75,6 +73,7 @@ Not supported
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
  * Constant declaration.
+ * ActionScript 3 convention of no return type in constructor.
  * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
