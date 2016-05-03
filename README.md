@@ -60,11 +60,11 @@ Features
     class A : It {}
     class A extends It {}
  * Convert extended class declaration.
+ * Example file of all of the above.
 
 To-do
 =====
 
- * Example file of all of the above.
  * Literals in CAPITAL\_CASE following ANTLR grammar conventions.
  * Grammar names in snake\_case following simpleparsegrammar conventions.
 

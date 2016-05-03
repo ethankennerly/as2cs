@@ -6,11 +6,14 @@ definitions[definition]: [[input], [output]]
 Related to gUnit:  Grammar unit test for ANTLR
 https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
 """
+
+
 from glob import glob
-import unittest
+from unittest import main, TestCase
+
 from as2cs import cfg, convert, compare_files, \
     format_taglist, may_format, realpath
-
+from pretty_print_code.pretty_print_code import format_difference
 
 directions = [
     ['as', 'cs', 0, 1],
@@ -18,6 +21,12 @@ directions = [
 ]
 
 definitions = [
+     ('dataType', [
+        ['int', 'int'],
+        ['String', 'string'],
+        ['Boolean', 'bool'],
+        ['Number', 'float'],
+     ]),
      ('importDefinition', [
         ['import com.finegamedesign.anagram.Model;',
          'using com.finegamedesign.anagram.Model;'],
@@ -28,12 +37,6 @@ definitions = [
         ['import A;',
          'using A;'],
      ]),
-     ('dataType', [
-        ['int', 'int'],
-        ['String', 'string'],
-        ['Boolean', 'bool'],
-        ['Number', 'float'],
-     ]),
      ('classDefinition', [
         ['class C{}', 'class C{}'],
         ['public class PC{}', 'public class PC{}'],
@@ -43,30 +46,6 @@ definitions = [
         ['/*c*/', '/*c*/'],
         ['//c', '//c'],
         ['// var i:int;', '// var i:int;'],
-     ]),
-     ('compilationUnit', [
-        ['package{public class C{}}', 
-         'namespace{\n    public class C{\n    }\n}'],
-        ['package{class C{}}',
-         'namespace{\n    class C{\n    }\n}'],
-        ['package{public class C{\n}}',
-         'namespace{\n    public class C{\n    }\n}'],
-        ['package{\n    import A;\npublic class C{\n}}',
-         '\nusing A;\nnamespace{\n    public class C{\n    }\n}'],
-        ['package{\npublic class C1{}}',
-         'namespace{\n    public class C1{\n    }\n}'],
-        ['package{public class C2{}\n}',
-         'namespace{\n    public class C2{\n    }\n}'],
-        ['package{\npublic class C3{\n}\n}',
-         'namespace{\n    public class C3{\n    }\n}'],
-        ['package N\n{\npublic class C4{\n}\n}\n',
-         'namespace N\n{\n    public class C4{\n    }\n}'],
-        ['//c\npackage N\n{\npublic class C5{\n}\n}\n',
-         '//c\nnamespace N\n{\n    public class C5{\n    }\n}'],
-        ['package N\n{\n//c\npublic class C7{\n}\n}\n',
-         'namespace N\n{\n    //c\n    public class C7{\n    }\n}'],
-        ['/*c*/\npackage N\n{\npublic class C6{\n}\n}\n',
-         '/*c*/\nnamespace N\n{\n    public class C6{\n    }\n}'],
      ]),
      ('namespaceModifiers', [
         ['public ', 
@@ -202,6 +181,30 @@ definitions = [
         [' extends It', 
          ' : It'],
      ]),
+     ('compilationUnit', [
+        ['package{public class C{}}', 
+         'namespace{\n    public class C{\n    }\n}'],
+        ['package{class C{}}',
+         'namespace{\n    class C{\n    }\n}'],
+        ['package{public class C{\n}}',
+         'namespace{\n    public class C{\n    }\n}'],
+        ['package{\n    import A;\n\npublic class C{\n}}',
+         'using A;\nnamespace{\n    public class C{\n    }\n}'],
+        ['package{\npublic class C1{}}',
+         'namespace{\n    public class C1{\n    }\n}'],
+        ['package{public class C2{}\n}',
+         'namespace{\n    public class C2{\n    }\n}'],
+        ['package{\npublic class C3{\n}\n}',
+         'namespace{\n    public class C3{\n    }\n}'],
+        ['package N\n{\npublic class C4{\n}\n}\n',
+         'namespace N\n{\n    public class C4{\n    }\n}'],
+        ['//c\npackage N\n{\npublic class C5{\n}\n}\n',
+         '//c\nnamespace N\n{\n    public class C5{\n    }\n}'],
+        ['package N\n{\n//c\npublic class C7{\n}\n}\n',
+         'namespace N\n{\n    //c\n    public class C7{\n    }\n}'],
+        ['/*c*/\npackage N\n{\npublic class C6{\n}\n}\n',
+         '/*c*/\nnamespace N\n{\n    public class C6{\n    }\n}'],
+     ]),
 ]
 
 one_ways = {
@@ -236,23 +239,23 @@ debug_indexes = [
 original_source = cfg['source']
 original_to = cfg['to']
 
+
 def print_expected(expected, got, input, definition, index, err):
+    difference = format_difference(expected, got)
     if got is None:
         got = err.message
     print
     print 'Converting from %s to %s' % (cfg['source'], cfg['to'])
-    print definition, index, expected, got
+    print definition, index
     print 'Input:'
     print input
-    print 'Expected:'
-    print expected
-    print 'Got:'
-    print got
-    print 'tag parts:'
+    print 'Difference (expected to got):'
+    print difference
+    print 'Tag parts (first 500 characters):'
     print format_taglist(input, definition)[:500]
 
 
-class TestDefinitions(unittest.TestCase):
+class TestDefinitions(TestCase):
 
     def assertExample(self, definition, expected, input, index):
         got = None
@@ -261,7 +264,8 @@ class TestDefinitions(unittest.TestCase):
             if definition in debug_definitions:
                 if not debug_indexes or index in debug_indexes:
                     if not debug_source or cfg['source'] in debug_source:
-                        import pdb; pdb.set_trace()
+                        import pdb
+                        pdb.set_trace()
             got = convert(input, definition)
             self.assertEqual(expected, got)
         except Exception as err:
@@ -286,20 +290,25 @@ class TestDefinitions(unittest.TestCase):
         cfg['to'] = original_to 
 
     def test_files(self):
-        cfg['source'] = original_source 
-        cfg['to'] = original_to 
-        pattern = 'test/*.%s' % cfg['source']
-        paths = glob(realpath(pattern))
-        expected_gots = compare_files(paths)
-        for index, expected_got in enumerate(expected_gots):
-            expected, got = expected_got
-            path = paths[index]
-            try:
-                self.assertEqual(expected, got)
-            except Exception as err:
-                print_expected(expected, got, open(path).read(), 'compilationUnit', index, err)
-                raise err
+        for source, to, s, t in directions:
+            cfg['source'] = source
+            cfg['to'] = to
+            pattern = 'test/*.%s' % cfg['source']
+            paths = glob(realpath(pattern))
+            expected_gots = compare_files(paths)
+            definition = 'compilationUnit'
+            for index, expected_got in enumerate(expected_gots):
+                expected, got = expected_got
+                expected = may_format(definition, expected)
+                path = paths[index]
+                try:
+                    self.assertEqual(expected, got)
+                except Exception as err:
+                    print_expected(expected, got, open(path).read(), definition, index, err)
+                    raise err
+        cfg['source'] = original_source
+        cfg['to'] = original_to
 
 
 if '__main__' == __name__:
-    unittest.main()
+    main()

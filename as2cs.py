@@ -9,7 +9,7 @@ Usage:
 import codecs
 from os import path
 from pprint import pformat
-from pretty_print_code.pretty_print_code import format_text
+from pretty_print_code.pretty_print_code import format
 from simpleparse.parser import Parser
 from simpleparse.simpleparsegrammar import declaration
 from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
@@ -18,7 +18,9 @@ from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
 cfg = {
     'source': 'as',
     'to': 'cs',
-    'is_formats': ['compilationUnit'],
+    'is_formats': [
+        'compilationUnit'
+    ],
 }
 
 
@@ -394,16 +396,6 @@ def _recurse_tags(taglist, input, source, to):
             text += _recurse_tags(parts, input, source, to)
         else:
             text += input[begin:end]
-    return text
-
-
-def newline_after_braces(text):
-    return text.replace('{', '{\n').replace('}', '}\n').replace('\n\n', '\n')
-
-
-def format(text):
-    text = newline_after_braces(text)
-    text = format_text(text)
     return text
 
 
