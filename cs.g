@@ -20,6 +20,8 @@ strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA,
 strict_not_equal_expression := LNOT, ts?, REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
 REFERENCE_EQUAL := "object.ReferenceEquals"
 
+literal_keyword := NULL
+
 float_format := float, float_suffix
 
 INTEGER := "int"

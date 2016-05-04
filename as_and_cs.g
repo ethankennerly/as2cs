@@ -69,8 +69,12 @@ expression := variable_declaration
     / variable_assignment
     / call_expression
     / identifier
-    / number_format
+    / literal
+
+literal :=
+    number_format
     / string
+    / literal_keyword
 
 number_format := hex / float_format / int
 

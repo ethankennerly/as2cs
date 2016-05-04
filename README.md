@@ -67,6 +67,9 @@ Features
     %s/\([a-z]\)\([A-Z]\)/\1_\L\2/gIce
   http://vim.wikia.com/wiki/Switching\_case\_of\_characters
  * Equality operators.
+ * Strictly equals to ReferenceEquals.
+  http://stackoverflow.com/questions/4704388/using-equal-operators-in-c-sharp
+ * ActionScript undefined to C# null.
 
 Not supported
 =============
@@ -76,8 +79,6 @@ Not supported
  * Conditional expression.
  * If-then statement.
  * Null and undefined.
- * Strictly equals to ReferenceEquals.
-  http://stackoverflow.com/questions/4704388/using-equal-operators-in-c-sharp
  * In-place assignment operators.
  * ActionScript Vector to C# List data type.
  * ActionScript Array to C# ArrayList data type.

@@ -225,14 +225,14 @@ definitions = [
 
 one_ways = {
     'as': {'cs': [
-        #('literal', [
-        #    ['undefined',
-        #     'null'],
-        # ]),
+        ('literal', [
+            ['undefined',
+             'null'],
+         ]),
      ]},
     'cs': {'as': [
         ('number_format', [
-            ['3.5',   # not supported
+            ['3.5',
              '3.5F'],
         ]),
     ]},

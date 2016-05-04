@@ -21,6 +21,8 @@ strict_not_equal_expression := expression, ts, STRICT_NOT_EQUAL, ts, expression
 STRICT_EQUAL := "==="
 STRICT_NOT_EQUAL := "!=="
 
+literal_keyword := NULL / UNDEFINED
+
 float_format := float
 
 UNDEFINED := "undefined"
