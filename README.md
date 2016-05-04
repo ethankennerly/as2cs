@@ -65,13 +65,18 @@ Features
  * Grammar ordered approximately in same order as the elements appear in a file.
  * Grammar names in snake\_case following simpleparsegrammar conventions.  Vim sed:
     %s/\([a-z]\)\([A-Z]\)/\1_\L\2/gIce
-  http://vim.wikia.com/wiki/Switching_case_of_characters
+  http://vim.wikia.com/wiki/Switching\_case\_of\_characters
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+ * Conditional expression.
+ * If-then statement.
+ * ActionScript Vector to C# List data type.
+ * ActionScript Array to C# ArrayList data type.
+ * ActionScript Object and Dictionary to C# Hashtable data type.
  * Constant declaration.
  * ActionScript 3 convention of no return type in constructor.
  * Variable return type declaration in ActionScript '\*'
@@ -154,4 +159,4 @@ Reference code
   https://github.com/gamemachine/as3/tree/master/parser
  * Program transformation system in DMS
   http://stackoverflow.com/questions/28711580/how-to-write-a-source-to-source-compiler-api
-  https://en.wikipedia.org/wiki/DMS_Software_Reengineering_Toolkit
+  https://en.wikipedia.org/wiki/DMS\_Software\_Reengineering\_Toolkit
