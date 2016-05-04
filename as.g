@@ -18,6 +18,11 @@ argument_initialized := identifier, (ts?, COLON, ts?, data_type)?, argument_init
 
 strict_equal_expression := expression, ts, STRICT_EQUAL, ts, expression
 strict_not_equal_expression := expression, ts, STRICT_NOT_EQUAL, ts, expression
+contains_expression := 
+    contained_expression, ts, IS_CONTAINED_IN, ts, container_expression
+contains_not_expression := LNOT, ts?, LPAREN, ts?, 
+    contained_expression, ts, IS_CONTAINED_IN, ts, container_expression, ts?, RPAREN
+container_expression := identifier
 STRICT_EQUAL := "==="
 STRICT_NOT_EQUAL := "!=="
 
@@ -33,3 +38,4 @@ FLOAT := "Number"
 OBJECT := "Object"
 VARIABLE := "var"
 FINAL := "final"
+IS_CONTAINED_IN := "in"

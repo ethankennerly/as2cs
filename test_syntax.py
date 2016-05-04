@@ -106,6 +106,8 @@ definitions = [
          'index = 16'],
         ['a = index',
          'a = index'],
+        ['this.a = index',
+         'this.a = index'],
      ]),
      ('variable_declaration', [
         ['var path:String = "as.g"',
@@ -188,12 +190,32 @@ definitions = [
          '.0f == ""'],
         ['a != b',
          'a != b'],
+        ['a < b',
+         'a < b'],
+        ['a > b',
+         'a > b'],
+     ]),
+     ('conditional_expression', [
         ['.0 === null',
          'object.ReferenceEquals(.0f, null)'],
         ['.0 === ""',
          'object.ReferenceEquals(.0f, "")'],
         ['a !== b',
          '!object.ReferenceEquals(a, b)'],
+     ]),
+     ('container_expression', [
+        ['salad',
+         'salad'],
+     ]),
+     ('contains_expression', [
+        ['oil in salad',
+         'salad.Contains(oil)'],
+     ]),
+     ('conditional_function', [
+        ['oil in salad',
+         'salad.Contains(oil)'],
+        ['!(apple in basket)',
+         '!basket.Contains(apple)'],
      ]),
      ('relational_operator', [
      ]),

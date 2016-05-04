@@ -19,10 +19,15 @@ argument_initialized := data_type, ts, identifier, argument_initializer
 strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
 strict_not_equal_expression := LNOT, ts?, REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
 REFERENCE_EQUAL := "object.ReferenceEquals"
-
-literal_keyword := NULL
+contains_expression := 
+    container_expression, ts?, CONTAINS, ts?, contained_expression, ts?, RPAREN
+contains_not_expression := LNOT, ts?, 
+    container_expression, ts?, CONTAINS, ts?, contained_expression, ts?, RPAREN
+CONTAINS := ".Contains("
+container_expression := ?-CONTAINS*, identifier
 
 float_format := float, float_suffix
+literal_keyword := NULL
 
 INTEGER := "int"
 STRING := "string"

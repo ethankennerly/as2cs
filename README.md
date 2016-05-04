@@ -70,6 +70,7 @@ Features
  * Strictly equals to ReferenceEquals.
   http://stackoverflow.com/questions/4704388/using-equal-operators-in-c-sharp
  * ActionScript undefined to C# null.
+ * ActionScript in operator to C# Contains only with identifiers, not addresses.
 
 Not supported
 =============
@@ -77,8 +78,11 @@ Not supported
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
  * Conditional expression.
+ * ActionScript is keyword.
+ * ActionScript as keyword.
+ * ActionScript instanceof keyword.
+ * JavaScript type keyword.
  * If-then statement.
- * Null and undefined.
  * In-place assignment operators.
  * ActionScript Vector to C# List data type.
  * ActionScript Array to C# ArrayList data type.
@@ -93,6 +97,10 @@ Not supported
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
  * Reformat and reorder may insert some optional grammar, such as class base.
+ * Reorder with nested.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
+  This creates redundancy.  Example:
+    contains_expression := expression, ts, IS_CONTAINED_IN, ts, container_expression
+    contains_not_expression := LNOT, ts?, LPAREN, ts?, expression, ts, IS_CONTAINED_IN, ts, container_expression, ts?, RPAREN
  * Strict condition without whitespace around operator:
     a===b
     object.ReferenceEquals(a,b)

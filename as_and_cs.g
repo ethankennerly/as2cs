@@ -8,9 +8,9 @@ COMMENT_LINE_START := "//"
 COMMENT_START := "/*"
 COMMENT_END := "*/"
 
-namespace_declaration := ts?, NAMESPACE, (ts, identifier)?, ts?
+namespace_declaration := ts?, NAMESPACE, (ts, address)?, ts?
 import_definition_place := import_definition*
-import_definition := ts?, IMPORT, ts, identifier, SEMI, EOL?
+import_definition := ts?, IMPORT, ts, address, SEMI, EOL?
 
 class_definition_place := class_definition?, ts?
 class_definition := ts?, class_modifier*, CLASS, ts, identifier, class_base_clause?, 
@@ -52,14 +52,14 @@ argument_declaration := argument_initialized / argument_declared
 argument_initializer := ts?, ASSIGN, ts?, assignment_value
 assignment_value := expression
 argument_end := SEMI / COMMA / EOL / EOF / RPAREN
-variable_assignment := identifier, ts?, ASSIGN, ts?, assignment_value
-address := identifier, (ts?, PERIOD, ts?, identifier)?
+variable_assignment := address, ts?, ASSIGN, ts?, assignment_value
+address := identifier, (ts?, PERIOD, ts?, identifier)*
 call_expression := address, ts?, LPAREN, ts?, call_parameters?, ts?, RPAREN
 call_parameters := expression, (ts?, COMMA, expression)*
 
-identifier := alphaunder, (PERIOD?, alphanums+)*
-alphanums      := (letter / digit)+
-alphaunder     := (letter / UNDERSCORE)
+identifier := alphaunder, alphanumunder*
+alphanumunder := digit / alphaunder
+alphaunder := letter / UNDERSCORE
 data_type := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT
 return_type := data_type / VOID
 
@@ -68,7 +68,7 @@ primary_expression := expression
 expression := variable_declaration
     / variable_assignment
     / call_expression
-    / identifier
+    / address
     / literal
 
 literal :=
@@ -79,11 +79,21 @@ literal :=
 number_format := hex / float_format / int
 
 conditional_expression :=
-    strict_condition /
-    (expression, ts?, equality_operator, ts?, expression)
+    conditional_function /
+    (expression, ts?, comparison_operator, ts?, expression)
 
-strict_condition := strict_not_equal_expression / strict_equal_expression
+conditional_function := 
+    contains_not_expression / contains_expression
+    / strict_not_equal_expression / strict_equal_expression 
+contained_expression := expression
+comparison_operator := equality_operator / relational_operator
 equality_operator := NOT_EQUAL / EQUAL
+relational_operator := LT / GT / LE / GE
+
+GE := ">="
+GT := ">"
+LT := "<"
+LE := "<="
 
 EQUAL := "=="
 NOT_EQUAL := "!="

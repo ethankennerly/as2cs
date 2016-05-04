@@ -136,7 +136,7 @@ def find_text(text, parts,
         return found
 
 
-def find_texts(text, name, parts, not_followed_by = None):
+def find_texts(text, name, parts, not_followed_by = None, not_preceded_by = None):
     """
     >>> parts = [('VARIABLE', 0, 3, None),
     ...  ('whitespacechar', 3, 4, None),
@@ -158,10 +158,18 @@ def find_texts(text, name, parts, not_followed_by = None):
     []
     >>> find_texts(as_code, 'letter', parts)
     ['p', 'a', 't', 'h']
+
+    Not followed by
     >>> find_texts(as_code, 'letter', parts, ':')
     ['p', 'a', 't']
     >>> find_texts(as_code, 'letter', parts, 't')
     ['p', 't', 'h']
+
+    Not preceded by
+    >>> find_texts(as_code, 'letter', parts, None, ':')
+    ['p', 'a', 't', 'h']
+    >>> find_texts(as_code, 'letter', parts, None, 't')
+    ['p', 'a', 't']
     """
     found = []
     if parts:
@@ -174,10 +182,16 @@ def find_texts(text, name, parts, not_followed_by = None):
                         if following.startswith(not_followed):
                             is_match = False
                             break
+                if not_preceded_by is not None:
+                    preceding = text[:begin]
+                    for not_preceded in not_preceded_by:
+                        if preceding.endswith(not_preceded):
+                            is_match = False
+                            break
                 if is_match:
                     found.append(text[begin:end])
             else:
-                found_part = find_texts(text, name, part, not_followed_by)
+                found_part = find_texts(text, name, part, not_followed_by, not_preceded_by)
                 if found_part:
                     found.extend(found_part)
     return found
@@ -238,10 +252,20 @@ def tag_order(grammar_text):
     >>> as_var = 'variableDeclaration := whitespace?, variableDeclarationKeyword, whitespacechar+, identifier, (COLON, dataType)?, whitespace*, SEMI'
     >>> tag_order(as_var)
     ['variableDeclarationKeyword', 'whitespacechar', 'identifier', 'COLON', 'dataType', 'SEMI']
+
+    Exclude lookahead and negatives.
+    >>> tag_order('container_expression := -CONTAINS, identity')
+    ['identity']
+    >>> tag_order('container_expression := ?-CONTAINS, identity')
+    ['identity']
+    >>> tag_order('container_expression := ?CONTAINS, identity')
+    ['identity']
     """
     taglist = ebnf_parser.parse(grammar_text)[1]
     optional_occurences = ['*', '?']
-    order = find_texts(grammar_text, 'name', taglist, optional_occurences)[1:]
+    lookahead_or_negatives = ['-', '?']
+    order = find_texts(grammar_text, 'name', taglist, optional_occurences, 
+        lookahead_or_negatives)[1:]
     return order
 
 
@@ -262,7 +286,6 @@ def tags_to_reorder(a_grammar, b_grammar):
     """
     def reorder_declaration(reorders, original_strings, grammar_text):
         taglist = ebnf_parser.parse(grammar_text)
-        ## print pformat(taglist)
         for tag, begin, end, parts in taglist[1]:
             if tag == 'declaration':
                 name_begin, name_end = parts[0][1:3]
@@ -304,15 +327,6 @@ def reorder_taglist(taglist, tag, input, source, to):
     >>> reorder_taglist(taglist, order, input, 'as', 'cs')
     '2b'
     """
-    def add(unordered, r, length):
-        row = unordered[r]
-        t, b, e, parts = row
-        b += length
-        e += length
-        unordered[r] = (t, b, e, parts)
-        if parts:
-            for p, part in enumerate(parts):
-                add(parts, p, length)
     ordered = []
     unordered = taglist[:]
     used_indexes = {}
@@ -321,28 +335,21 @@ def reorder_taglist(taglist, tag, input, source, to):
         order_tags = reorders[tag]
     else:
         order_tags = tag
-    end = 0
-    row_index = 0
     for order_tag in order_tags:
         for r, row in enumerate(unordered):
             unordered_tag = row[0]
             if order_tag == unordered_tag and not r in used_indexes:
                 ordered.append(unordered[r])
                 used_indexes[r] = True
-                end = row[2]
-                row_index = r
                 break
         else:
             for verbatim in literals, reorder_defaults:
                 if order_tag in verbatim[to]:
                     insert_text = verbatim[to][order_tag]
                     length = len(insert_text)
+                    end = len(input)
                     ordered.append((order_tag, end, end + length, None))
-                    input = insert(input, insert_text, end)
-                    for r in range(row_index, len(unordered)):
-                        if not r in used_indexes:
-                            add(unordered, r, length)
-                    end += length
+                    input += insert_text
                     break
     text = _recurse_tags(ordered, input, source, to)
     return text
