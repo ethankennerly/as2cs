@@ -66,6 +66,7 @@ Features
  * Grammar names in snake\_case following simpleparsegrammar conventions.  Vim sed:
     %s/\([a-z]\)\([A-Z]\)/\1_\L\2/gIce
   http://vim.wikia.com/wiki/Switching\_case\_of\_characters
+ * Equality operators.
 
 Not supported
 =============
@@ -74,16 +75,26 @@ Not supported
 
  * Conditional expression.
  * If-then statement.
+ * Null and undefined.
+ * Strictly equals to ReferenceEquals.
+  http://stackoverflow.com/questions/4704388/using-equal-operators-in-c-sharp
+ * In-place assignment operators.
  * ActionScript Vector to C# List data type.
  * ActionScript Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
+ * Array literal.
+ * Hash literal.
  * Constant declaration.
+ * Nested function definitions.
  * ActionScript 3 convention of no return type in constructor.
  * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
  * Reformat and reorder may insert some optional grammar, such as class base.
+ * Strict condition without whitespace around operator:
+    a===b
+    object.ReferenceEquals(a,b)
  * Anonymous function.
  * C# static class to ActionScript class.
  * ActionScript dynamic class to C# class.

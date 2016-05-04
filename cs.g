@@ -16,6 +16,10 @@ variable_declaration := ts?, argument_declaration
 argument_declared := data_type, ts, identifier
 argument_initialized := data_type, ts, identifier, argument_initializer
 
+strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
+strict_not_equal_expression := LNOT, ts?, REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
+REFERENCE_EQUAL := "object.ReferenceEquals"
+
 float_format := float, float_suffix
 
 INTEGER := "int"
@@ -24,3 +28,5 @@ BOOLEAN := "bool"
 FLOAT := "float"
 float_suffix := "f" / "F"
 OBJECT := "object"
+UNDEFINED := NULL
+

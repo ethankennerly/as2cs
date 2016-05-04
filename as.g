@@ -15,8 +15,15 @@ function_default := ts, function_signature, (ts?, COLON, ts?, return_type)?
 variable_declaration := ts?, VARIABLE, ts, argument_declaration
 argument_declared := identifier, (ts?, COLON, ts?, data_type)?
 argument_initialized := identifier, (ts?, COLON, ts?, data_type)?, argument_initializer
+
+strict_equal_expression := expression, ts, STRICT_EQUAL, ts, expression
+strict_not_equal_expression := expression, ts, STRICT_NOT_EQUAL, ts, expression
+STRICT_EQUAL := "==="
+STRICT_NOT_EQUAL := "!=="
+
 float_format := float
 
+UNDEFINED := "undefined"
 INTEGER := "int"
 STRING := "String"
 BOOLEAN := "Boolean"

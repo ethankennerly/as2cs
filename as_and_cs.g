@@ -74,6 +74,18 @@ expression := variable_declaration
 
 number_format := hex / float_format / int
 
+conditional_expression :=
+    strict_condition /
+    (expression, ts?, equality_operator, ts?, expression)
+
+strict_condition := strict_not_equal_expression / strict_equal_expression
+equality_operator := NOT_EQUAL / EQUAL
+
+EQUAL := "=="
+NOT_EQUAL := "!="
+LNOT := "!"
+NULL := "null"
+
 PERIOD := "."
 LCURLY := "{"
 RCURLY := "}"

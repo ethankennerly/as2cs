@@ -181,6 +181,22 @@ definitions = [
         [' extends It', 
          ' : It'],
      ]),
+     ('conditional_expression', [
+        ['a == b',
+         'a == b'],
+        ['.0 == ""',
+         '.0f == ""'],
+        ['a != b',
+         'a != b'],
+        ['.0 === null',
+         'object.ReferenceEquals(.0f, null)'],
+        ['.0 === ""',
+         'object.ReferenceEquals(.0f, "")'],
+        ['a !== b',
+         '!object.ReferenceEquals(a, b)'],
+     ]),
+     ('relational_operator', [
+     ]),
      ('compilation_unit', [
         ['package{public class C{}}', 
          'namespace{\n    public class C{\n    }\n}'],
@@ -208,7 +224,12 @@ definitions = [
 ]
 
 one_ways = {
-    'as': {'cs': []},
+    'as': {'cs': [
+        #('literal', [
+        #    ['undefined',
+        #     'null'],
+        # ]),
+     ]},
     'cs': {'as': [
         ('number_format', [
             ['3.5',   # not supported
