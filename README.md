@@ -78,10 +78,7 @@ Not supported
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
  * Conditional expression.
- * ActionScript is keyword.
- * ActionScript as keyword.
- * ActionScript instanceof keyword.
- * JavaScript type keyword.
+ * ActionScript type-casting to C# type-casting.
  * If-then statement.
  * In-place assignment operators.
  * ActionScript Vector to C# List data type.
@@ -90,12 +87,16 @@ Not supported
  * Array literal.
  * Hash literal.
  * Constant declaration.
- * Nested function definitions.
- * ActionScript 3 convention of no return type in constructor.
- * Variable return type declaration in ActionScript '\*'
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
+ * ActionScript is keyword.
+ * ActionScript as keyword.
+ * ActionScript instanceof keyword.
+ * JavaScript type keyword.
+ * Nested function definitions.
+ * ActionScript 3 convention of no return type in constructor.
+ * Variable return type declaration in ActionScript '\*'
  * Reformat and reorder may insert some optional grammar, such as class base.
  * Reorder with nested.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
   This creates redundancy.  Example:

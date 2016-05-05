@@ -283,24 +283,43 @@ def tags_to_reorder(a_grammar, b_grammar):
     ['VARIABLE', 'whitespace', 'identifier', 'COLON', 'data_type', 'SEMI']
     >>> tags_to_reorder('namespace := "package"', 'namespace := "namespace"')
     {}
+
+    Exclude same order when optional keyword or lookahead.
+    >>> as_grammar = 'container_identifier := alphaunder'
+    >>> cs_grammar = 'container_identifier := ?-CONTAINS, alphaunder, alphanumunder*'
+    >>> tags_to_reorder(as_grammar, cs_grammar)
+    {}
+    >>> cs_grammar = 'container_identifier := CONTAINS, alphaunder, alphanumunder*'
+    >>> tags_to_reorder(as_grammar, cs_grammar)
+    {'container_identifier': ['CONTAINS', 'alphaunder']}
     """
-    def reorder_declaration(reorders, original_strings, grammar_text):
+    def reorder_declaration(reorders, original_tags, grammar_text):
         taglist = ebnf_parser.parse(grammar_text)
         for tag, begin, end, parts in taglist[1]:
             if tag == 'declaration':
                 name_begin, name_end = parts[0][1:3]
                 name = grammar_text[name_begin:name_end]
                 text = grammar_text[begin:end]
-                if name in original_strings and text != original_strings[name]:
-                    order_tags = tag_order(text)
-                    if order_tags:
-                        reorders[name] = order_tags
-                original_strings[name] = text
+                order_tags = tag_order(text)
+                if name in original_tags:
+                    if order_tags != original_tags[name]:
+                        if order_tags:
+                            reorders[name] = order_tags
+                original_tags[name] = order_tags
     reorders = {}
-    original_strings = {}
-    reorder_declaration(reorders, original_strings, a_grammar)
-    reorder_declaration(reorders, original_strings, b_grammar)
+    original_tags = {}
+    reorder_declaration(reorders, original_tags, a_grammar)
+    reorder_declaration(reorders, original_tags, b_grammar)
     return reorders
+
+
+def unique_tag_orders(as_grammar, cs_grammar):
+    """
+    """
+    reorder_tags = {'as': {}, 'cs': {}}
+    reorder_tags['as']['cs'] = tags_to_reorder(as_grammar, cs_grammar)
+    reorder_tags['cs']['as'] = tags_to_reorder(cs_grammar, as_grammar)
+    return reorder_tags
 
 
 def insert(source_str, insert_str, pos):
@@ -496,9 +515,7 @@ replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as
 reorder_defaults = {'as': {}, 'cs': {}}
 reorder_defaults['cs']['ts'] = literals['cs']['SPACE']
 reorder_defaults['as']['ts'] = literals['as']['SPACE']
-reorder_tags = {'as': {}, 'cs': {}}
-reorder_tags['as']['cs'] = tags_to_reorder(as_grammar, cs_grammar)
-reorder_tags['cs']['as'] = tags_to_reorder(cs_grammar, as_grammar)
+reorder_tags = unique_tag_orders(as_grammar, cs_grammar)
 
 different_tags = {}
 set_tags(different_tags, open('as.g').read(), True)

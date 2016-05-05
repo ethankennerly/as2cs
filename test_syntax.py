@@ -215,13 +215,9 @@ definitions = [
         ['a !== b',
          '!object.ReferenceEquals(a, b)'],
      ]),
-     ('container_expression', [
-        ['salad',
-         'salad'],
-     ]),
      ('contains_expression', [
-        ['oil in salad',
-         'salad.Contains(oil)'],
+        ['oil in italian.salad',
+         'italian.salad.Contains(oil)'],
      ]),
      ('conditional_function', [
         ['oil in salad',

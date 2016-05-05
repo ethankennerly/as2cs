@@ -27,9 +27,9 @@ cnoremap   :simalt ~
 inoremap   :simalt ~
 map <silent> \t :call MakeGreen()
 nmap gx <Plug>NetrwBrowseX
-nmap <S-Insert> "+gP
-nnoremap <C-Tab> w
 nnoremap <C-F4> c
+nnoremap <C-Tab> w
+nmap <S-Insert> "+gP
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 onoremap <C-F4> c
 vnoremap <C-F4> c
@@ -80,7 +80,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 session.vim
+badd +17 session.vim
 badd +1 As3ToCSharp.py
 badd +15 typographify.py
 badd +10 typographify.def
@@ -137,10 +137,10 @@ badd +3 cs\example\Empty.cs
 badd +895 \archive\as2js\as2js.py
 badd +5 test\Empty.as
 badd +1 test\Empty.cs
-badd +235 pretty_print_code\pretty_print_code.py
+badd +304 pretty_print_code\pretty_print_code.py
 badd +1 pretty_print_code\__init__.py
 badd +2 as_and_cs.def
-badd +1 test\EmptyClass.as
+badd +13 test\EmptyClass.as
 badd +1 test\EmptyClass.cs
 badd +3 \archive\unity\UnityToykit\toolkit\Toolkit.cs
 badd +1 as_and_cs.g
@@ -159,6 +159,8 @@ badd +42 \Python27\Lib\site-packages\simpleparse\generator.py
 badd +1 \archive\python\as2js\as2js.py
 badd +9 test\AllInOne.as
 badd +12 test\AllInOne.cs
+badd +1 ..\..\unity\anagram\Assets\Scripts\Model.cs
+badd +0 ..\..\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
 args README.md as\as3.def as\example\Empty.as as\example\Model.as as2cs.log as2cs.py as2cs.pyc cs\cs.def cs.pyc def.bak.def design.txt ecma.def session.vim test.py test.pyc test_import.pyc test_syntax.py test_syntax.pyc typographify\README.md typographify\__init__.py typographify\__init__.pyc typographify\typo_html.py typographify\typo_html.pyc typographify\typographify.def typographify\typographify.py typographify\typographify.pyc typographify\typographify.txt
 edit README.md
 set splitbelow splitright
@@ -268,12 +270,247 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 76 - ((7 * winheight(0) + 14) / 29)
+let s:l = 86 - ((10 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-76
-normal! 012l
+86
+normal! 055l
+tabedit ..\..\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
+set splitbelow splitright
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+exe '1resize ' . ((&lines * 14 + 15) / 30)
+exe '2resize ' . ((&lines * 13 + 15) / 30)
+argglobal
+edit ..\..\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal binary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal expandtab
+if &filetype != 'actionscript'
+setlocal filetype=actionscript
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=mxmlc\ -compiler.debug\ -compiler.incremental
+setlocal matchpairs=(:),{:},[:]
+setlocal nomodeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'actionscript'
+setlocal syntax=actionscript
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 2 - ((1 * winheight(0) + 7) / 14)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+2
+normal! 0
+wincmd w
+argglobal
+edit ..\..\unity\anagram\Assets\Scripts\Model.cs
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal binary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cs'
+setlocal filetype=cs
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal nomodeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'cs'
+setlocal syntax=cs
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 79 - ((12 * winheight(0) + 6) / 13)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+79
+normal! 02l
+wincmd w
+2wincmd w
+exe '1resize ' . ((&lines * 14 + 15) / 30)
+exe '2resize ' . ((&lines * 13 + 15) / 30)
 tabedit \archive\antlr\grammars-v4-master\java\Java.g4
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -746,6 +983,7 @@ normal! zt
 normal! 03l
 lcd C:\archive\python\as2cs
 wincmd w
+2wincmd w
 exe '1resize ' . ((&lines * 9 + 15) / 30)
 exe 'vert 1resize ' . ((&columns * 51 + 51) / 103)
 exe '2resize ' . ((&lines * 9 + 15) / 30)
@@ -863,13 +1101,14 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 90 - ((4 * winheight(0) + 14) / 29)
+let s:l = 27 - ((14 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-90
-normal! 023l
+27
+normal! 027l
 lcd C:\archive\python\as2cs
+2wincmd w
 tabedit C:\archive\python\as2cs\as_and_cs.g
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -990,12 +1229,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 87 - ((3 * winheight(0) + 4) / 9)
+let s:l = 56 - ((5 * winheight(0) + 4) / 9)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-87
-normal! 059l
+56
+normal! 0
 lcd C:\archive\python\as2cs
 wincmd w
 argglobal
@@ -1102,12 +1341,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 28 - ((7 * winheight(0) + 4) / 9)
+let s:l = 23 - ((4 * winheight(0) + 4) / 9)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-28
-normal! 0
+23
+normal! 0104l
 lcd C:\archive\python\as2cs
 wincmd w
 argglobal
@@ -1214,14 +1453,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 26 - ((7 * winheight(0) + 4) / 8)
+let s:l = 22 - ((3 * winheight(0) + 4) / 8)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-26
-normal! 0
+22
+normal! 051l
 lcd C:\archive\python\as2cs
 wincmd w
+2wincmd w
 exe '1resize ' . ((&lines * 9 + 15) / 30)
 exe '2resize ' . ((&lines * 9 + 15) / 30)
 exe '3resize ' . ((&lines * 8 + 15) / 30)
@@ -1336,493 +1576,14 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 351 - ((0 * winheight(0) + 14) / 29)
+let s:l = 517 - ((28 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-351
-normal! 020l
-lcd C:\archive\python\as2cs
-tabedit C:\archive\python\as2cs\pretty_print_code\pretty_print_code.py
-set splitbelow splitright
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 14 + 15) / 30)
-exe '2resize ' . ((&lines * 13 + 15) / 30)
-argglobal
-1argu
-edit C:\archive\python\as2cs\pretty_print_code\pretty_print_code.py
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal expandtab
-if &filetype != 'python'
-setlocal filetype=python
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'python'
-setlocal syntax=python
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 184 - ((9 * winheight(0) + 7) / 14)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-184
+517
 normal! 04l
 lcd C:\archive\python\as2cs
-wincmd w
-argglobal
-1argu
-edit C:\archive\python\as2cs\pretty_print_code\pretty_print_code.py
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal expandtab
-if &filetype != 'python'
-setlocal filetype=python
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'python'
-setlocal syntax=python
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 304 - ((12 * winheight(0) + 6) / 13)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-304
-normal! 04l
-lcd C:\archive\python\as2cs
-wincmd w
-exe '1resize ' . ((&lines * 14 + 15) / 30)
-exe '2resize ' . ((&lines * 13 + 15) / 30)
-tabedit C:\archive\python\as2cs\test\EmptyClass.as
-set splitbelow splitright
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 14 + 15) / 30)
-exe '2resize ' . ((&lines * 13 + 15) / 30)
-argglobal
-9argu
-edit C:\archive\python\as2cs\test\EmptyClass.as
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal expandtab
-if &filetype != 'actionscript'
-setlocal filetype=actionscript
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=mxmlc\ -compiler.debug\ -compiler.incremental
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal smartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'actionscript'
-setlocal syntax=actionscript
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 13 - ((12 * winheight(0) + 7) / 14)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-13
-normal! 0
-lcd C:\archive\python\as2cs
-wincmd w
-argglobal
-9argu
-edit C:\archive\python\as2cs\test\EmptyClass.cs
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal binary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal noexpandtab
-if &filetype != 'cs'
-setlocal filetype=cs
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal nomodeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'cs'
-setlocal syntax=cs
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 6) / 13)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-1
-normal! 0
-lcd C:\archive\python\as2cs
-wincmd w
-exe '1resize ' . ((&lines * 14 + 15) / 30)
-exe '2resize ' . ((&lines * 13 + 15) / 30)
+2wincmd w
 tabedit C:\Python27\Lib\site-packages\simpleparse\simpleparsegrammar.py
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -2061,6 +1822,7 @@ normal! zt
 normal! 0
 lcd C:\archive\python\as2cs
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 51 + 51) / 103)
 exe 'vert 2resize ' . ((&columns * 50 + 51) / 103)
 tabedit C:\archive\python\as2js\as2js.py
@@ -2180,7 +1942,8 @@ normal! zt
 23
 normal! 010l
 lcd C:\archive\python\as2cs
-tabnext 1
+2wincmd w
+tabnext 2
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

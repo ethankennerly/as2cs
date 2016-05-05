@@ -24,9 +24,10 @@ contains_expression :=
 contains_not_expression := LNOT, ts?, 
     container_expression, ts?, PERIOD, ts?, CONTAINS, ts?, LPAREN, ts?, contained_expression, ts?, RPAREN
 CONTAINS := "Contains"
-container_expression := 
-    identifier, 
-    ?-CONTAINS
+container_expression := container_address
+container_address := identifier, container_subaddress*
+container_subaddress := ts?, PERIOD, ts?, container_identifier
+container_identifier := ?-CONTAINS, alphaunder, alphanumunder*
 
 float_format := float, float_suffix
 literal_keyword := NULL

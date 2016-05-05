@@ -22,7 +22,11 @@ contains_expression :=
     contained_expression, ts, IS_CONTAINED_IN, ts, container_expression
 contains_not_expression := LNOT, ts?, LPAREN, ts?, 
     contained_expression, ts, IS_CONTAINED_IN, ts, container_expression, ts?, RPAREN
-container_expression := identifier
+container_expression := container_address
+container_address := identifier, container_subaddress*
+container_subaddress := ts?, PERIOD, ts?, container_identifier
+container_identifier := alphaunder, alphanumunder*
+
 STRICT_EQUAL := "==="
 STRICT_NOT_EQUAL := "!=="
 
