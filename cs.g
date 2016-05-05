@@ -20,11 +20,13 @@ strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA,
 strict_not_equal_expression := LNOT, ts?, REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
 REFERENCE_EQUAL := "object.ReferenceEquals"
 contains_expression := 
-    container_expression, ts?, CONTAINS, ts?, contained_expression, ts?, RPAREN
+    container_expression, ts?, PERIOD, ts?, CONTAINS, ts?, LPAREN, ts?, contained_expression, ts?, RPAREN
 contains_not_expression := LNOT, ts?, 
-    container_expression, ts?, CONTAINS, ts?, contained_expression, ts?, RPAREN
-CONTAINS := ".Contains("
-container_expression := ?-CONTAINS*, identifier
+    container_expression, ts?, PERIOD, ts?, CONTAINS, ts?, LPAREN, ts?, contained_expression, ts?, RPAREN
+CONTAINS := "Contains"
+container_expression := 
+    identifier, 
+    ?-CONTAINS
 
 float_format := float, float_suffix
 literal_keyword := NULL

@@ -27,6 +27,18 @@ definitions = [
         ['Boolean', 'bool'],
         ['Number', 'float'],
      ]),
+     ('identifier', [
+        ['_a', '_a'],
+        ['_2', '_2'],
+        ['I', 'I'],
+        ['b', 'b'],
+     ]),
+     ('address', [
+        ['_a', '_a'],
+        ['salad', 'salad'],
+        ['OIL', 'OIL'],
+        ['_0._1._2', '_0._1._2'],
+     ]),
      ('import_definition', [
         ['import com.finegamedesign.anagram.Model;',
          'using com.finegamedesign.anagram.Model;'],

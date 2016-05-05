@@ -153,6 +153,8 @@ Not supported
 Reference code
 ==============
 
+ * Intro to parsing and left-recursion.
+  http://www.cs.kau.se/cs/education/courses/dvgc01/lectures/Syntax.pdf
  * ANTLR4 grammars
   https://github.com/antlr/grammars-v4
  * ActionScript 3 grammar in ANTLR3
