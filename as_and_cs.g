@@ -53,7 +53,7 @@ argument_initializer := ts?, ASSIGN, ts?, assignment_value
 assignment_value := expression
 argument_end := SEMI / COMMA / EOL / EOF / RPAREN
 variable_assignment := address, ts?, ASSIGN, ts?, assignment_value
-address := identifier, (ts?, PERIOD, ts?, identifier)*
+address := identifier, (ts?, DOT, ts?, identifier)*
 call_expression := address, ts?, LPAREN, ts?, call_parameters?, ts?, RPAREN
 call_parameters := expression, (ts?, COMMA, expression)*
 
@@ -67,9 +67,13 @@ statement := ts?, primary_expression, ts?, SEMI
 primary_expression := expression
 expression := variable_declaration
     / variable_assignment
+    / left_hand_side_expression
+
+left_hand_side_expression := 
+    literal
     / call_expression
     / address
-    / literal
+    / (LPAREN, ts?, conditional_expression, ts?, RPAREN)
 
 literal :=
     number_format
@@ -80,27 +84,55 @@ number_format := hex / float_format / int
 
 conditional_expression :=
     conditional_function /
-    (expression, ts?, comparison_operator, ts?, expression)
+    relational_expression
 
 conditional_function := 
     contains_not_expression / contains_expression
     / strict_not_equal_expression / strict_equal_expression 
 contained_expression := expression
+
+relational_expression := (ts?, unary_expression, relational_expression_tail*)
+relational_expression_tail := ts?, computational_operator, ts?, relational_expression
+
+unary_expression :=
+    postfix_expression
+    / (PLUS2, ts?, unary_expression)
+    / (MINUS2, ts?, unary_expression)
+    / (LNOT, ts?, unary_expression)
+
+postfix_expression := left_hand_side_expression, (PLUS2 / MINUS2)?
+PLUS2 := "++"
+MINUS2 := "--"
+
+computational_operator :=
+    arithmetic_operator
+    / comparison_operator
+    / logical_operator
+
 comparison_operator := equality_operator / relational_operator
 equality_operator := NOT_EQUAL / EQUAL
-relational_operator := LT / GT / LE / GE
-
+relational_operator := LE / GE / LT / GT
 GE := ">="
 GT := ">"
 LT := "<"
 LE := "<="
-
 EQUAL := "=="
 NOT_EQUAL := "!="
+
+arithmetic_operator := PLUS / MINUS / ASTERISK / DIVIDE
+PLUS := "+"
+MINUS := "-"
+PERCENT := "%"
+ASTERISK := "*"
+DIVIDE := "/"
+
+logical_operator := OR / AND
+OR := "||"
+AND := "&&"
+
 LNOT := "!"
 NULL := "null"
-
-PERIOD := "."
+DOT := "."
 LCURLY := "{"
 RCURLY := "}"
 LPAREN := "("

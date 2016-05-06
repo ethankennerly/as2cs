@@ -27,9 +27,9 @@ cnoremap   :simalt ~
 inoremap   :simalt ~
 map <silent> \t :call MakeGreen()
 nmap gx <Plug>NetrwBrowseX
-nnoremap <C-F4> c
-nnoremap <C-Tab> w
 nmap <S-Insert> "+gP
+nnoremap <C-Tab> w
+nnoremap <C-F4> c
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 onoremap <C-F4> c
 vnoremap <C-F4> c
@@ -80,7 +80,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +17 session.vim
+badd +1 session.vim
 badd +1 As3ToCSharp.py
 badd +15 typographify.py
 badd +10 typographify.def
@@ -159,8 +159,8 @@ badd +42 \Python27\Lib\site-packages\simpleparse\generator.py
 badd +1 \archive\python\as2js\as2js.py
 badd +9 test\AllInOne.as
 badd +12 test\AllInOne.cs
-badd +1 ..\..\unity\anagram\Assets\Scripts\Model.cs
-badd +0 ..\..\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
+badd +1 \archive\unity\anagram\Assets\Scripts\Model.cs
+badd +1 \archive\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
 args README.md as\as3.def as\example\Empty.as as\example\Model.as as2cs.log as2cs.py as2cs.pyc cs\cs.def cs.pyc def.bak.def design.txt ecma.def session.vim test.py test.pyc test_import.pyc test_syntax.py test_syntax.pyc typographify\README.md typographify\__init__.py typographify\__init__.pyc typographify\typo_html.py typographify\typo_html.pyc typographify\typographify.def typographify\typographify.py typographify\typographify.pyc typographify\typographify.txt
 edit README.md
 set splitbelow splitright
@@ -270,13 +270,13 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 86 - ((10 * winheight(0) + 14) / 29)
+let s:l = 73 - ((8 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-86
-normal! 055l
-tabedit ..\..\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
+73
+normal! 057l
+tabedit \archive\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
 set splitbelow splitright
 wincmd _ | wincmd |
 split
@@ -289,7 +289,7 @@ set winheight=1 winwidth=1
 exe '1resize ' . ((&lines * 14 + 15) / 30)
 exe '2resize ' . ((&lines * 13 + 15) / 30)
 argglobal
-edit ..\..\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
+edit \archive\flash\anagram-attack\src\com\finegamedesign\anagram\Model.as
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -391,15 +391,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 2 - ((1 * winheight(0) + 7) / 14)
+let s:l = 322 - ((13 * winheight(0) + 7) / 14)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-2
+322
 normal! 0
 wincmd w
 argglobal
-edit ..\..\unity\anagram\Assets\Scripts\Model.cs
+edit \archive\unity\anagram\Assets\Scripts\Model.cs
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -501,14 +501,13 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 79 - ((12 * winheight(0) + 6) / 13)
+let s:l = 311 - ((12 * winheight(0) + 6) / 13)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-79
-normal! 02l
+311
+normal! 0
 wincmd w
-2wincmd w
 exe '1resize ' . ((&lines * 14 + 15) / 30)
 exe '2resize ' . ((&lines * 13 + 15) / 30)
 tabedit \archive\antlr\grammars-v4-master\java\Java.g4
@@ -751,12 +750,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 298 - ((0 * winheight(0) + 4) / 9)
+let s:l = 1 - ((0 * winheight(0) + 4) / 9)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-298
-normal! 01l
+1
+normal! 0
 lcd C:\archive\python\as2cs
 wincmd w
 argglobal
@@ -975,15 +974,14 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 946 - ((3 * winheight(0) + 14) / 28)
+let s:l = 954 - ((11 * winheight(0) + 14) / 28)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-946
-normal! 03l
+954
+normal! 015l
 lcd C:\archive\python\as2cs
 wincmd w
-2wincmd w
 exe '1resize ' . ((&lines * 9 + 15) / 30)
 exe 'vert 1resize ' . ((&columns * 51 + 51) / 103)
 exe '2resize ' . ((&lines * 9 + 15) / 30)
@@ -1101,14 +1099,13 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 27 - ((14 * winheight(0) + 14) / 29)
+let s:l = 221 - ((11 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-27
-normal! 027l
+221
+normal! 041l
 lcd C:\archive\python\as2cs
-2wincmd w
 tabedit C:\archive\python\as2cs\as_and_cs.g
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -1229,12 +1226,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 56 - ((5 * winheight(0) + 4) / 9)
+let s:l = 86 - ((2 * winheight(0) + 4) / 9)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-56
-normal! 0
+86
+normal! 04l
 lcd C:\archive\python\as2cs
 wincmd w
 argglobal
@@ -1341,12 +1338,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 23 - ((4 * winheight(0) + 4) / 9)
+let s:l = 32 - ((7 * winheight(0) + 4) / 9)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-23
-normal! 0104l
+32
+normal! 034l
 lcd C:\archive\python\as2cs
 wincmd w
 argglobal
@@ -1453,15 +1450,14 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 22 - ((3 * winheight(0) + 4) / 8)
+let s:l = 26 - ((3 * winheight(0) + 4) / 8)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-22
-normal! 051l
+26
+normal! 04l
 lcd C:\archive\python\as2cs
 wincmd w
-2wincmd w
 exe '1resize ' . ((&lines * 9 + 15) / 30)
 exe '2resize ' . ((&lines * 9 + 15) / 30)
 exe '3resize ' . ((&lines * 8 + 15) / 30)
@@ -1576,14 +1572,13 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 517 - ((28 * winheight(0) + 14) / 29)
+let s:l = 310 - ((0 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-517
+310
 normal! 04l
 lcd C:\archive\python\as2cs
-2wincmd w
 tabedit C:\Python27\Lib\site-packages\simpleparse\simpleparsegrammar.py
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -1822,7 +1817,6 @@ normal! zt
 normal! 0
 lcd C:\archive\python\as2cs
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 51 + 51) / 103)
 exe 'vert 2resize ' . ((&columns * 50 + 51) / 103)
 tabedit C:\archive\python\as2js\as2js.py
@@ -1942,8 +1936,7 @@ normal! zt
 23
 normal! 010l
 lcd C:\archive\python\as2cs
-2wincmd w
-tabnext 2
+tabnext 4
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

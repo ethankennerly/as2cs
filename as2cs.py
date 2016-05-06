@@ -177,13 +177,13 @@ def find_texts(text, name, parts, not_followed_by = None, not_preceded_by = None
             if name == tag:
                 is_match = True
                 if not_followed_by is not None:
-                    following = text[end:]
+                    following = text[end:].strip()
                     for not_followed in not_followed_by:
                         if following.startswith(not_followed):
                             is_match = False
                             break
                 if not_preceded_by is not None:
-                    preceding = text[:begin]
+                    preceding = text[:begin].strip()
                     for not_preceded in not_preceded_by:
                         if preceding.endswith(not_preceded):
                             is_match = False
@@ -260,10 +260,12 @@ def tag_order(grammar_text):
     ['identity']
     >>> tag_order('container_expression := ?CONTAINS, identity')
     ['identity']
+    >>> tag_order('literal_keyword := NULL / UNDEFINED')
+    []
     """
     taglist = ebnf_parser.parse(grammar_text)[1]
-    optional_occurences = ['*', '?']
-    lookahead_or_negatives = ['-', '?']
+    optional_occurences = ['*', '?', '/']
+    lookahead_or_negatives = ['-', '?', '/']
     order = find_texts(grammar_text, 'name', taglist, optional_occurences, 
         lookahead_or_negatives)[1:]
     return order

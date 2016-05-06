@@ -195,7 +195,15 @@ definitions = [
         [' extends It', 
          ' : It'],
      ]),
-     ('conditional_expression', [
+     ('unary_expression', [
+        ['a', 'a'],
+        ['a++', 'a++'],
+        ['b--', 'b--'],
+        ['""', '""'],
+        ['!a', '!a'],
+        ['.0', '.0f'],
+     ]),
+     ('relational_expression', [
         ['a == b',
          'a == b'],
         ['.0 == ""',
@@ -204,8 +212,8 @@ definitions = [
          'a != b'],
         ['a < b',
          'a < b'],
-        ['a > b',
-         'a > b'],
+        ['a >= b',
+         'a >= b'],
      ]),
      ('conditional_expression', [
         ['.0 === null',
@@ -218,6 +226,8 @@ definitions = [
      ('contains_expression', [
         ['oil in italian.salad',
          'italian.salad.Contains(oil)'],
+        ['Content in Container.Container',
+         'Container.Container.Contains(Content)'],
      ]),
      ('conditional_function', [
         ['oil in salad',
@@ -225,7 +235,17 @@ definitions = [
         ['!(apple in basket)',
          '!basket.Contains(apple)'],
      ]),
-     ('relational_operator', [
+     ('relational_expression', [
+        ['a.b.c >= x.y',
+         'a.b.c >= x.y'],
+        ['a.b + 1.0 >= x.y',
+         'a.b + 1.0f >= x.y'],
+        ['a.b + 1.0 >= y - 1',
+         'a.b + 1.0f >= y - 1'],
+        ['(a + 1.0) >= y',
+         '(a + 1.0f) >= y'],
+        ['!(a.b + 1.0 == y - 1) && c',
+         '!(a.b + 1.0f == y - 1) && c'],
      ]),
      ('compilation_unit', [
         ['package{public class C{}}', 

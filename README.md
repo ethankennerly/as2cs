@@ -70,17 +70,17 @@ Features
  * Strictly equals to ReferenceEquals.
   http://stackoverflow.com/questions/4704388/using-equal-operators-in-c-sharp
  * ActionScript undefined to C# null.
- * ActionScript in operator to C# Contains only with identifiers, not addresses.
+ * ActionScript in operator to C# Contains only with some addresses.
+ * Convert simple relational expressions verbatim.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Conditional expression.
- * ActionScript type-casting to C# type-casting.
  * If-then statement.
  * In-place assignment operators.
+ * ActionScript type-casting to C# type-casting.
  * ActionScript Vector to C# List data type.
  * ActionScript Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
@@ -95,6 +95,7 @@ Not supported
  * ActionScript instanceof keyword.
  * JavaScript type keyword.
  * Nested function definitions.
+ * Complex conditional expressions on shift operators, bitwise operators.
  * ActionScript 3 convention of no return type in constructor.
  * Variable return type declaration in ActionScript '\*'
  * Reformat and reorder may insert some optional grammar, such as class base.
@@ -105,6 +106,7 @@ Not supported
  * Strict condition without whitespace around operator:
     a===b
     object.ReferenceEquals(a,b)
+ * Distinguish order of operators that will be translated verbatim.
  * Anonymous function.
  * C# static class to ActionScript class.
  * ActionScript dynamic class to C# class.
