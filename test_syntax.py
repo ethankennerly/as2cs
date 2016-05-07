@@ -187,6 +187,8 @@ definitions = [
          'a && b'],
         ['a || b', 
          'a || b'],
+        ['new C(a, b)', 
+         'new C(a, b)'],
      ]),
      ('function_definition', [
         ['  function f():void{var i:int = index;}', 

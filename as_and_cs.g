@@ -53,7 +53,7 @@ argument_initializer := ts?, ASSIGN, ts?, assignment_value
 assignment_value := expression
 argument_end := SEMI / COMMA / EOL / EOF / RPAREN
 variable_assignment := address, ts?, assignment_operator, ts?, assignment_value
-address := identifier, address_tail*
+address := (new_expression / identifier), address_tail*
 address_tail := ts?, 
     (DOT, ts?, identifier)
     / (LBRACK, ts?, expression, ts?, RBRACK)
@@ -85,6 +85,10 @@ expression :=
     variable_assignment
     / relational_expression
     / left_hand_side_expression
+
+new_expression := NEW, ts?, address, ts?, LPAREN, ts?, parameter_list?, ts?, RPAREN
+NEW := "new"
+parameter_list := expression, (ts?, COMMA, ts?, expression)*
 
 left_hand_side_expression := 
     literal

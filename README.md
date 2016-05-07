@@ -75,13 +75,13 @@ Features
  * If statement.
  * Shared assignment operators.
  * Array and hash access.
+ * Create new object.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * New keyword.
  * ActionScript Vector to C# List data type.
  * ActionScript Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
