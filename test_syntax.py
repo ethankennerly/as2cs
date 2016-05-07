@@ -27,6 +27,7 @@ definitions = [
         ['Boolean', 'bool'],
         ['Number', 'float'],
         ['Custom', 'Custom'],
+        ['Array', 'ArrayList'],
      ]),
      ('identifier', [
         ['_a', '_a'],

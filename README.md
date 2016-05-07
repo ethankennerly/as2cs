@@ -81,13 +81,14 @@ Features
   http://stackoverflow.com/questions/3487690/multidimentional-vector-in-as3
  * Prefix import of generic list.
     using System.Collections.Generic;
+ * ActionScript untyped Array to C# ArrayList data type.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript Array to C# ArrayList data type.
+ * C# typed Array to ActionScript typed Vector.
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * Array literal.
  * Hash literal.
@@ -95,6 +96,8 @@ Not supported
  * Array iteration:  foreach.
  * Constant declaration.
  * ActionScript type-casting to C# type-casting.
+ * ActionScript Array.concat to C# ArrayList.Clone.
+ * ActionScript Array.push to C# ArrayList.Add.
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.

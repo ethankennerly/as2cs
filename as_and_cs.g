@@ -65,7 +65,7 @@ call_parameters := expression, (ts?, COMMA, expression)*
 identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-data_type := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT / collection_type / identifier
+shared_data_type := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT / collection_type / identifier
 return_type := data_type / VOID
 collection_type := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
 

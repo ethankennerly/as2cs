@@ -16,6 +16,8 @@ variable_declaration := ts?, VARIABLE, ts, argument_declaration
 argument_declared := identifier, (ts?, COLON, ts?, data_type)?
 argument_initialized := identifier, (ts?, COLON, ts?, data_type)?, argument_initializer
 collection_prefix := LIST, ts?, DOT
+data_type := ARRAY_LIST / shared_data_type
+ARRAY_LIST := "Array"
 LIST := "Vector"
 
 strict_equal_expression := expression, ts, STRICT_EQUAL, ts, expression
