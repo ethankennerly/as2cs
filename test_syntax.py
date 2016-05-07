@@ -22,7 +22,8 @@ directions = [
 
 definitions = [
      ('expression', [
-        ['[]', 'new []{}'],
+        ['[]', 'new ArrayList(){}'],
+        ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
      ]),
      ('data_type', [
         ['int', 'int'],

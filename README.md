@@ -84,14 +84,14 @@ Features
     using System.Collections.Generic;
  * ActionScript untyped Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
+ * ActionScript Array literal.
+  http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript Array literal.
-  http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
  * ActionScript JSON literal.
  * ActionScript JSON literal without quotes on keys.
  * Hash iteration:  for in.

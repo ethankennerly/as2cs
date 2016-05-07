@@ -59,8 +59,7 @@ address_tail := ts?,
     / (LBRACK, ts?, expression, ts?, RBRACK)
 LBRACK := "["
 RBRACK := "]"
-call_expression := address, ts?, LPAREN, ts?, call_parameters?, ts?, RPAREN
-call_parameters := expression, (ts?, COMMA, expression)*
+call_expression := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 
 identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
@@ -69,7 +68,8 @@ data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / OBJECT / ide
 return_type := data_type / VOID
 collection_type := collection / generic_collection 
 generic_collection := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
-collection := ARRAY_LIST / STRING_HASH_TABLE / HASH_TABLE 
+collection := ARRAY_LIST / STRING_HASH_TABLE / HASH_TABLE
+array_literal := array_literal_prefix, ts?, expression_list?, ts?, array_literal_suffix
 
 statement := ts?, 
     block /
@@ -90,9 +90,9 @@ expression :=
     / relational_expression
     / left_hand_side_expression
 
-new_expression := NEW, ts?, (data_type / address), ts?, LPAREN, ts?, parameter_list?, ts?, RPAREN
+new_expression := NEW, ts?, (data_type / address), ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 NEW := "new"
-parameter_list := expression, (ts?, COMMA, ts?, expression)*
+expression_list := expression, (ts?, COMMA, ts?, expression)*
 
 left_hand_side_expression := 
     literal
