@@ -40,6 +40,10 @@ definitions = [
          'while( true ){i++;  j--;}'],
         ['do {i++; j--;}while(false)',
          'do {i++; j--;}while(false)'],
+        ['for(var key:String in items){text += key;}',
+         'foreach(DictionaryEntry _entry in items){string key = _entry.Key; text += key;}'],
+        ['for(key in items){text += key;}',
+         'foreach(DictionaryEntry _entry in items){key = _entry.Key; text += key;}'],
      ]),
      ('expression', [
         ['[]', 'new ArrayList(){}'],

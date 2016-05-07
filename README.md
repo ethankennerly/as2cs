@@ -95,12 +95,22 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Hash iteration over keys:  for in.
+ * Hashtable iteration over keys:  for in.
+  ActionScript:
+    for (var key:String in items) {
+        text += key;
+    }
+  C#:
+    foreach (DictionaryEntry item in items) {
+        string key = item.Key;
+        text += key;
+    }
  * Constant declaration.
  * ActionScript type-casting to C# type-casting.
  * Explicit type-casting on access to a ArrayList to a data type.
  * ActionScript Array.concat to C# ArrayList.Clone.
  * ActionScript Array.push to C# ArrayList.Add.
+ * ActionScript Array.length to C# ArrayList.Count.
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
@@ -109,14 +119,25 @@ Not supported
  * ActionScript instanceof keyword.
  * JavaScript type keyword.
  * Nested function definitions.
- * Complex conditional expressions on shift operators, bitwise operators.
  * ActionScript 3 convention of no return type in constructor.
  * Declare multiple variables in a statement.
  * Variable return type declaration in ActionScript '\*'
  * C# typed Array to ActionScript typed Vector.
  * Hash literal without space before value in key value pair.
+ * Dictionary iteration over keys:  for in with type.
+  ActionScript:
+    for (var key:String in items) {
+        text += key;
+    }
+  C#:
+    foreach (KeyValuePair<string, object> item in items) {
+        string key = item.Key;
+        text += key;
+    }
  * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
  * C# Hashtable literal with addresses to ActionScript.
+ * Foreach statement.
+ * For in hashtable without a block.
  * ActionScript only allows literal keyword, string, number default in signature.
  * Profile function hotspots in unit tests.
  * Reformat and reorder may insert some optional grammar, such as class base.
