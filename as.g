@@ -48,6 +48,9 @@ literal_keyword := NULL / UNDEFINED
 STRICT_EQUAL := "==="
 STRICT_NOT_EQUAL := "!=="
 
+typecast_expression := ts?, left_hand_side_expression, ts, AS, ts, data_type
+AS := "as"
+
 float_format := float
 
 UNDEFINED := "undefined"

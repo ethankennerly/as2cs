@@ -100,13 +100,13 @@ Features
         text += key;
     }
  * Constant declaration.
+ * Cast type by ActionScript "as" keyword.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript type-casting to C# type-casting.
  * Explicit type-casting on access to a ArrayList to a data type.
  * ActionScript Array.concat to C# ArrayList.Clone.
  * ActionScript Array.push to C# ArrayList.Add.
@@ -115,7 +115,6 @@ Not supported
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
  * ActionScript is keyword.
- * ActionScript as keyword.
  * ActionScript instanceof keyword.
  * JavaScript type keyword.
  * Nested function definitions.
@@ -141,6 +140,7 @@ Not supported
  * For in hashtable without a block.
  * ActionScript only allows literal keyword, string, number default in signature.
  * Profile function hotspots in unit tests.
+ * ActionScript type-casting to C# type-casting by type function.  With custom data types, it is ambiguous of a type is cast or if an arbitrary function is called.  Instead the ActionScript "as" keyword is clear.
  * Reformat and reorder may insert some optional grammar, such as class base.
  * Reorder with nested grammar.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
   This creates redundancy.  Example:

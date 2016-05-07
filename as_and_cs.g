@@ -138,7 +138,8 @@ relational_expression := (ts?, unary_expression, relational_expression_tail*)
 relational_expression_tail := ts?, computational_operator, ts?, relational_expression
 
 unary_expression :=
-    postfix_expression
+    typecast_expression
+    / postfix_expression
     / (PLUS2, ts?, unary_expression)
     / (MINUS2, ts?, unary_expression)
     / (LNOT, ts?, unary_expression)

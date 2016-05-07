@@ -21,6 +21,10 @@ directions = [
 ]
 
 definitions = [
+     ('expression', [
+        ['path as String',
+         '(string)path'],
+     ]),
      ('data_declaration', [
         ['const path:String',
          'const string path'],

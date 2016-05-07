@@ -50,6 +50,8 @@ container_address := identifier, container_subaddress*
 container_subaddress := ts?, DOT, ts?, container_identifier
 container_identifier := ?-CONTAINS, alphaunder, alphanumunder*
 
+typecast_expression := ts?, LPAREN, ts?, data_type, ts?, RPAREN, ts?, left_hand_side_expression
+
 float_format := float, float_suffix
 
 literal_keyword := NULL
