@@ -28,7 +28,8 @@ hash_literal_suffix := RBRACE
 property := key, ts?, COLON, ts, expression
 quoted_identifier := identifier
 
-for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, VARIABLE, ts, argument_declared, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, ts?, LBRACE, statement+, RBRACE
+for_in_statement := ts?, FOR_IN, ts?, LPAREN, iterator, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, ts?, LBRACE, statement+, RBRACE
+variable_declared := ts?, VARIABLE, ts, argument_declared
 FOR_IN := "for"
 
 strict_equal_expression := expression, ts, STRICT_EQUAL, ts, expression

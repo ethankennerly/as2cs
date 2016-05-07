@@ -89,13 +89,7 @@ Features
  * Nested hash literal:  ActionScript JSON literal without quotes on keys.
  * For loop iteration.  Grammar is more permissive than a compiled for loop.
  * While loop iteration; break and continue keywords.
-
-Not supported
-=============
-
- * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
-
- * Hashtable iteration over keys:  for in.
+ * Hack Hashtable iteration over keys:  for in.
   ActionScript:
     for (var key:String in items) {
         text += key;
@@ -105,6 +99,12 @@ Not supported
         string key = item.Key;
         text += key;
     }
+
+Not supported
+=============
+
+ * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
+
  * Constant declaration.
  * ActionScript type-casting to C# type-casting.
  * Explicit type-casting on access to a ArrayList to a data type.
@@ -137,6 +137,7 @@ Not supported
  * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
  * C# Hashtable literal with addresses to ActionScript.
  * Foreach statement.
+ * Key iteration over an array (also "for in" syntax in ActionScript).
  * For in hashtable without a block.
  * ActionScript only allows literal keyword, string, number default in signature.
  * Profile function hotspots in unit tests.

@@ -187,7 +187,7 @@ AND := "&&"
 
 BIT_NOT := "~"
 
-iteration_statement := for_statement / do_statement / while_statement / for_in_statement
+iteration_statement := for_in_statement / for_statement / do_statement / while_statement
 for_statement := ts?, FOR, ts?, LPAREN, statement, statement, expression_list?, RPAREN, statement
 FOR := "for"
 while_statement := ts?, WHILE, conditional_clause, statement
@@ -196,6 +196,7 @@ do_statement := ts?, DO, statement, ts?, WHILE, conditional_clause
 DO := "do"
 NULL := "null"
 DOT := "."
+iterator := variable_declared / address
 LBRACE := "{"
 RBRACE := "}"
 LPAREN := "("

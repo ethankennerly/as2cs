@@ -30,9 +30,10 @@ property := LBRACE, ts?, key, ts?, COMMA, ts, expression, ts?, RBRACE
 quoted_identifier := QUOTE, identifier, QUOTE
 
 
-for_in_statement := ts?, FOR_IN, ts?, LPAREN, HASH_ENTRY, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, LBRACE, argument_declared, ASSIGN_KEY, statement+, RBRACE
+for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, HASH_ENTRY, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, ts?, LBRACE, iterator, ASSIGN_KEY, ts, statement+, RBRACE
+variable_declared := ts?, argument_declared
 HASH_ENTRY := "DictionaryEntry _entry"
-ASSIGN_KEY := " = _entry.Key; "
+ASSIGN_KEY := " = _entry.Key;"
 FOR_IN := "foreach"
 
 strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
