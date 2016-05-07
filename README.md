@@ -82,20 +82,20 @@ Features
  * Prefix import of generic list.
     using System.Collections.Generic;
  * ActionScript untyped Array to C# ArrayList data type.
+ * ActionScript Object and Dictionary to C# Hashtable data type.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * C# typed Array to ActionScript typed Vector.
- * ActionScript Object and Dictionary to C# Hashtable data type.
  * Array literal.
  * Hash literal.
  * Hash iteration:  for in.
  * Array iteration:  foreach.
  * Constant declaration.
  * ActionScript type-casting to C# type-casting.
+ * Explicit type-casting on access to a ArrayList to a data type.
  * ActionScript Array.concat to C# ArrayList.Clone.
  * ActionScript Array.push to C# ArrayList.Add.
  * Overriding virtual functions in C#.
@@ -110,6 +110,8 @@ Not supported
  * ActionScript 3 convention of no return type in constructor.
  * Declare multiple variables in a statement.
  * Variable return type declaration in ActionScript '\*'
+ * C# typed Array to ActionScript typed Vector.
+ * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
  * ActionScript only allows literal keyword, string, number default in signature.
  * Profile function hotspots in unit tests.
  * Reformat and reorder may insert some optional grammar, such as class base.

@@ -28,6 +28,7 @@ definitions = [
         ['Number', 'float'],
         ['Custom', 'Custom'],
         ['Array', 'ArrayList'],
+        ['Object', 'Hashtable'],
      ]),
      ('identifier', [
         ['_a', '_a'],
@@ -366,6 +367,10 @@ one_ways = {
         ('literal', [
             ['undefined',
              'null'],
+         ]),
+        ('data_type', [
+            ['Dictionary',
+             'Hashtable'],
          ]),
      ]},
     'cs': {'as': [

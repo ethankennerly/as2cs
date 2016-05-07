@@ -15,11 +15,11 @@ function_default := ts, return_type, ts, function_signature
 variable_declaration := ts?, argument_declaration
 argument_declared := data_type, ts, identifier
 argument_initialized := data_type, ts, identifier, argument_initializer
-data_type := ARRAY_LIST / shared_data_type
 collection_prefix := LIST
 ARRAY_LIST := "ArrayList"
 LIST := "List"
-
+HASH_TABLE := "Hashtable"
+STRING_HASH_TABLE := "Hashtable"
 strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
 strict_not_equal_expression := LNOT, ts?, REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
 REFERENCE_EQUAL := "object.ReferenceEquals"
