@@ -26,6 +26,7 @@ definitions = [
         ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
         ['{}', 'new Hashtable(){}'],
         ['{a: b, "1.0": 2.0}', 'new Hashtable(){{"a", b}, {"1.0", 2.0f}}'],
+        ['{a: {b: "1.0"}}', 'new Hashtable(){{"a", new Hashtable(){{"b", "1.0"}}}}'],
      ]),
      ('data_type', [
         ['int', 'int'],

@@ -86,7 +86,7 @@ Features
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * ActionScript Array literal.
   http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
- * Hash literal:  ActionScript JSON literal without quotes on keys.
+ * Nested hash literal:  ActionScript JSON literal without quotes on keys.
 
 Not supported
 =============
