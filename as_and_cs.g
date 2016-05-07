@@ -65,9 +65,11 @@ call_parameters := expression, (ts?, COMMA, expression)*
 identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-data_type := ARRAY_LIST / STRING_HASH_TABLE / HASH_TABLE / OBJECT / INTEGER / STRING / BOOLEAN / FLOAT / collection_type / identifier
+data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / OBJECT / identifier
 return_type := data_type / VOID
-collection_type := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
+collection_type := collection / generic_collection 
+generic_collection := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
+collection := ARRAY_LIST / STRING_HASH_TABLE / HASH_TABLE 
 
 statement := ts?, 
     block /

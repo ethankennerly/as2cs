@@ -443,9 +443,9 @@ def is_iterable(obj):
 
 def find_tag(taglist, target_tag):
     """
-    >>> taglist = ((('other', None), ('collection_type', None)))
-    >>> find_tag(taglist, 'collection_type')
-    ('collection_type', None)
+    >>> taglist = ((('other', None), ('generic_collection', None)))
+    >>> find_tag(taglist, 'generic_collection')
+    ('generic_collection', None)
     """
     if not taglist:
         return None
@@ -461,8 +461,8 @@ def find_tag(taglist, target_tag):
 
 def may_import_collections(taglist, text, definition, to):
     r"""
-    Insert into C# compilation_unit only if there is a collection_type.
-    >>> taglist = ((('other', None), ('collection_type', None)))
+    Insert into C# compilation_unit only if there is a generic_collection.
+    >>> taglist = ((('other', None), ('generic_collection', None)))
     >>> may_import_collections(taglist, 't', 'function_body', 'cs')
     't'
     >>> may_import_collections(taglist, 't', 'compilation_unit', 'as')
@@ -473,20 +473,30 @@ def may_import_collections(taglist, text, definition, to):
     'using System.Collections.Generic;\nt'
     >>> may_import_collections(taglist, 't', 'compilation_unit', 'as')
     't'
+    >>> taglist = ((('generic_collection', None), ('collection', None)))
+    >>> may_import_collections(taglist, 't', 'compilation_unit', 'cs')
+    'using System.Collections;\nusing System.Collections.Generic;\nt'
 
     During preprocessing, remove from C# being converted to ActionScript.
     >>> from_cs = 'before\nusing System.Collections.Generic;\nafter'
     >>> may_import_collections(taglist, from_cs, 'compilation_unit', 'as')
     'before\nafter'
+    >>> from_cs = 'before\nusing System.Collections;\nafter'
+    >>> may_import_collections(taglist, from_cs, 'compilation_unit', 'as')
+    'before\nafter'
     """
     if 'compilation_unit' == definition:
-        import_statement = 'using System.Collections.Generic;\n'
-        if 'cs' == to:
-            tag = find_tag(taglist, 'collection_type')
-            if tag:
-                text = '%s%s' % (import_statement, text)
-        elif 'as' == to:
-            text = text.replace(import_statement, '')
+        import_statements = (
+            ('generic_collection', 'using System.Collections.Generic;\n'),
+            ('collection', 'using System.Collections;\n'),
+        )
+        for tag, import_statement in import_statements:
+            if 'cs' == to:
+                found = find_tag(taglist, tag)
+                if found:
+                    text = '%s%s' % (import_statement, text)
+            elif 'as' == to:
+                text = text.replace(import_statement, '')
     return text
 
 

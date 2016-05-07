@@ -79,7 +79,8 @@ Features
  * Ternary expression.
  * ActionScript Vector to C# List data type.
   http://stackoverflow.com/questions/3487690/multidimentional-vector-in-as3
- * Prefix import of generic list.
+ * Prefix import of collection.
+    using System.Collections;
     using System.Collections.Generic;
  * ActionScript untyped Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
@@ -89,8 +90,10 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Array literal.
- * Hash literal.
+ * ActionScript Array literal.
+  http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
+ * ActionScript JSON literal.
+ * ActionScript JSON literal without quotes on keys.
  * Hash iteration:  for in.
  * Array iteration:  foreach.
  * Constant declaration.
