@@ -261,6 +261,12 @@ definitions = [
          'object.ReferenceEquals(.0f, "")'],
         ['a !== b',
          '!object.ReferenceEquals(a, b)'],
+        ['i ? 1 : 2',
+         'i ? 1 : 2'],
+        ['i == 0 ? 1 : 2',
+         'i == 0 ? 1 : 2'],
+        ['i ? 1 : (b ? c : 4)',
+         'i ? 1 : (b ? c : 4)'],
      ]),
      ('contains_expression', [
         ['oil in italian.salad',

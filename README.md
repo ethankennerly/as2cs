@@ -76,6 +76,7 @@ Features
  * Shared assignment operators.
  * Array and hash access.
  * Create new object.
+ * Ternary expression.
 
 Not supported
 =============
@@ -87,7 +88,7 @@ Not supported
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * Array literal.
  * Hash literal.
- * Ternary assignment.
+ * C# nested data types, such as list of lists.
  * Constant declaration.
  * ActionScript type-casting to C# type-casting.
  * Overriding virtual functions in C#.
@@ -115,6 +116,10 @@ Not supported
  * Distinguish order of operators that will be translated verbatim.
  * Anonymous function.
  * C# static class to ActionScript class.
+ * Ungrouped ternary repetition
+    i ? 1 : b ? c : 4
+  Instead:
+    i ? 1 : (b ? c : 4)
  * ActionScript dynamic class to C# class.
  * Insert C# explicit cast to another data type, such as from float to integer.
  * C# Generic classes:
@@ -159,6 +164,7 @@ Not supported
  * Preprocessor directive 'include'
  * Consistent prettify format that trims whitespace.
  * Prettify format from optional end of line and indentation in grammar.
+ * Regular expressions.
  * ActionScript only allows one public class per package and one package per file.
  * C# does not have logical assignment.  ActionScript does.  Instead bitwise assignments exist.
  http://stackoverflow.com/questions/6346001/why-are-there-no-or-operators

@@ -110,8 +110,12 @@ IF := "if"
 ELSE := "else"
 
 conditional_expression :=
-    conditional_function /
-    relational_expression
+    conditional_function 
+    / ternary_expression
+    / relational_expression
+
+ternary_expression := relational_expression, ts?, QUESTION, ts?, assignment_value, ts?, COLON, ts?, assignment_value
+QUESTION := "?"
 
 conditional_function := 
     contains_not_expression / contains_expression
