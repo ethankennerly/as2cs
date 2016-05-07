@@ -113,7 +113,9 @@ number_format := hex / float_format / int
 
 if_statement := (if_head, ts?, ELSE, statement) /
     if_head
-if_head := ts?, IF, ts?, LPAREN, ts?, conditional_expression, ts?, RPAREN, statement
+if_head := ts?, IF, conditional_clause, statement
+conditional_clause := ts?, LPAREN, ts?, conditional_expression, ts?, RPAREN
+
 IF := "if"
 ELSE := "else"
 
@@ -121,6 +123,7 @@ conditional_expression :=
     conditional_function 
     / ternary_expression
     / relational_expression
+    / address
 
 ternary_expression := relational_expression, ts?, QUESTION, ts?, assignment_value, ts?, COLON, ts?, assignment_value
 QUESTION := "?"
@@ -184,9 +187,13 @@ AND := "&&"
 
 BIT_NOT := "~"
 
-iteration_statement := for_statement
+iteration_statement := for_statement / do_statement / while_statement
 for_statement := ts?, FOR, ts?, LPAREN, statement, statement, expression_list?, RPAREN, statement
 FOR := "for"
+while_statement := ts?, WHILE, conditional_clause, statement
+WHILE := "while"
+do_statement := ts?, DO, statement, ts?, WHILE, conditional_clause
+DO := "do"
 
 NULL := "null"
 DOT := "."
