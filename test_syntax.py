@@ -278,6 +278,10 @@ definitions = [
         ['if (a.b.c >= x.y) a.b.c = x.y; else {x.y = -1.0; z++;}',
          'if (a.b.c >= x.y) a.b.c = x.y; else {x.y = -1.0f; z++;}'],
      ]),
+     ('function_definition', [
+        ['  function f():void{if (a){}}', 
+         '  void function f(){if (a){}}'],
+     ]),
      ('compilation_unit', [
         ['package{public class C{}}', 
          'namespace{\n    public class C{\n    }\n}'],

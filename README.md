@@ -72,13 +72,13 @@ Features
  * ActionScript undefined to C# null.
  * ActionScript in operator to C# Contains only with some addresses.
  * Convert simple relational expressions verbatim.
+ * If statement.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * If-then statement.
  * In-place assignment operators.
  * ActionScript type-casting to C# type-casting.
  * ActionScript Vector to C# List data type.

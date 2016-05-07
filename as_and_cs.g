@@ -72,6 +72,7 @@ statement := ts?,
         ), 
         ts?, SEMI
     )
+    / if_statement
 
 block := LBRACE, statement*, RBRACE
 primary_expression := expression
