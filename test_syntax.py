@@ -21,12 +21,24 @@ directions = [
 ]
 
 definitions = [
+     ('iteration_statement', [
+        ['for (i=0; i<L;i++){}',
+         'for (i=0; i<L;i++){}'],
+        ['for (var i:int=0; i<L;i++){}',
+         'for (int i=0; i<L;i++){}'],
+        ['for(;;);',
+         'for(;;);'],
+        ['for(;; i++, j--);',
+         'for(;; i++, j--);'],
+     ]),
      ('expression', [
         ['[]', 'new ArrayList(){}'],
         ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
         ['{}', 'new Hashtable(){}'],
         ['{a: b, "1.0": 2.0}', 'new Hashtable(){{"a", b}, {"1.0", 2.0f}}'],
         ['{a: {b: "1.0"}}', 'new Hashtable(){{"a", new Hashtable(){{"b", "1.0"}}}}'],
+        ['[{a: b}]', 'new ArrayList(){new Hashtable(){{"a", b}}}'],
+        ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],
      ]),
      ('data_type', [
         ['int', 'int'],

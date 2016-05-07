@@ -87,14 +87,15 @@ Features
  * ActionScript Array literal.
   http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
  * Nested hash literal:  ActionScript JSON literal without quotes on keys.
+ * For loop iteration.  Grammar is more permissive than a compiled for loop.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Hash iteration:  for in.
- * Array iteration:  foreach.
+ * While loop iteration.
+ * Hash iteration over keys:  for in.
  * Constant declaration.
  * ActionScript type-casting to C# type-casting.
  * Explicit type-casting on access to a ArrayList to a data type.
@@ -180,6 +181,7 @@ Not supported
  * Regular expressions.
  * camelCase method names to CapitalCase method names.
  * ActionScript only allows one public class per package and one package per file.
+ * Scope of variables declared a block are available outside the block in JavaScript.
  * C# does not have logical assignment.  ActionScript does.  Instead bitwise assignments exist.
  http://stackoverflow.com/questions/6346001/why-are-there-no-or-operators
  http://help.adobe.com/en\_US/FlashPlatform/reference/actionscript/3/operators.html

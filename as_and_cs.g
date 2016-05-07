@@ -80,7 +80,7 @@ statement := ts?,
         (
             variable_declaration
             / primary_expression
-        ), 
+        )?, 
         ts?, SEMI
     )
     / if_statement
@@ -183,6 +183,10 @@ OR := "||"
 AND := "&&"
 
 BIT_NOT := "~"
+
+iteration_statement := for_statement
+for_statement := ts?, FOR, ts?, LPAREN, statement, statement, expression_list?, RPAREN, statement
+FOR := "for"
 
 NULL := "null"
 DOT := "."
