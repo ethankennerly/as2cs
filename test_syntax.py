@@ -249,7 +249,15 @@ definitions = [
         ['!(a.b + 1.0 == y - 1) && c',
          '!(a.b + 1.0f == y - 1) && c'],
      ]),
+     ('conditional_expression', [
+        ['a >= y',
+         'a >= y'],
+     ]),
      ('if_statement', [
+        ['if (a >= x) a = x;',
+         'if (a >= x) a = x;'],
+        ['if (a.b.c >= x.y) a.b.c = x.y; else x.y = -1.0;',
+         'if (a.b.c >= x.y) a.b.c = x.y; else x.y = -1.0f;'],
      ]),
      ('compilation_unit', [
         ['package{public class C{}}', 

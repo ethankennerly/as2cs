@@ -88,6 +88,12 @@ literal :=
 
 number_format := hex / float_format / int
 
+if_statement := (if_head, ts?, ELSE, statement) /
+    if_head
+if_head := ts?, IF, ts?, LPAREN, ts?, conditional_expression, ts?, RPAREN, statement
+IF := "if"
+ELSE := "else"
+
 conditional_expression :=
     conditional_function /
     relational_expression
