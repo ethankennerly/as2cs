@@ -256,8 +256,27 @@ definitions = [
      ('if_statement', [
         ['if (a >= x) a = x;',
          'if (a >= x) a = x;'],
+        ['if (a) a = x;',
+         'if (a) a = x;'],
+        ['if (!a) a = x;',
+         'if (!a) a = x;'],
         ['if (a.b.c >= x.y) a.b.c = x.y; else x.y = -1.0;',
          'if (a.b.c >= x.y) a.b.c = x.y; else x.y = -1.0f;'],
+     ]),
+     ('statement', [
+        ['a = 0;', 'a = 0;'],
+        ['{}', '{}'],
+        ['{a = 0; b = "c";}', '{a = 0; b = "c";}'],
+        ['i++;', 'i++;'],
+        ['--i;', '--i;'],
+     ]),
+     ('if_statement', [
+        ['if (a) {a = x; c = 1.0;}',
+         'if (a) {a = x; c = 1.0f;}'],
+        ['if (a.b.c >= x.y) a.b.c = x.y; else {x.y = -1.0;}',
+         'if (a.b.c >= x.y) a.b.c = x.y; else {x.y = -1.0f;}'],
+        ['if (a.b.c >= x.y) a.b.c = x.y; else {x.y = -1.0; z++;}',
+         'if (a.b.c >= x.y) a.b.c = x.y; else {x.y = -1.0f; z++;}'],
      ]),
      ('compilation_unit', [
         ['package{public class C{}}', 

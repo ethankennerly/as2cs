@@ -1,5 +1,5 @@
 compilation_unit := import_definition_place, namespace_declaration, 
-    LCURLY, class_definition_place, RCURLY
+    LBRACE, class_definition_place, RBRACE
 IMPORT := "using"
 NAMESPACE := "namespace"
 

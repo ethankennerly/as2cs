@@ -1,4 +1,4 @@
-compilation_unit := namespace_declaration, LCURLY, import_definition_place, class_definition_place, RCURLY
+compilation_unit := namespace_declaration, LBRACE, import_definition_place, class_definition_place, RBRACE
 NAMESPACE := "package"
 IMPORT := "import"
 

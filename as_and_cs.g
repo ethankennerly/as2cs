@@ -14,7 +14,7 @@ import_definition := ts?, IMPORT, ts, address, SEMI, EOL?
 
 class_definition_place := class_definition?, ts?
 class_definition := ts?, class_modifier*, CLASS, ts, identifier, class_base_clause?, 
-    ts?, LCURLY, member_expression*, ts?, RCURLY
+    ts?, LBRACE, member_expression*, ts?, RBRACE
 class_modifier := scope / FINAL, ts
 class_base := 
     (class_extends, interface_type_list_follows) / interface_type_list / 
@@ -31,7 +31,7 @@ member_declaration := ts, namespace_modifiers?, variable_declaration, ts?, SEMI
 
 namespace_modifier_place := namespace_modifiers?
 namespace_modifiers := (scope / STATIC / FINAL / OVERRIDE, ts)+
-function_body := ts?, LCURLY, statement*, ts?, RCURLY
+function_body := ts?, LBRACE, statement*, ts?, RBRACE
 function_declaration := function_modified / function_default
 function_signature := FUNCTION, ts, identifier, function_parameters
 function_definition := function_declaration, function_body
@@ -64,15 +64,20 @@ data_type := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT
 return_type := data_type / VOID
 
 statement := ts?, 
+    block /
     (
-        variable_declaration
-        / variable_assignment
-        / primary_expression
-    ), 
-    ts?, SEMI
+        (
+            variable_declaration
+            / primary_expression
+        ), 
+        ts?, SEMI
+    )
+
+block := LBRACE, statement*, RBRACE
 primary_expression := expression
 expression := 
     variable_assignment
+    / unary_expression
     / left_hand_side_expression
 
 left_hand_side_expression := 
@@ -145,8 +150,8 @@ AND := "&&"
 LNOT := "!"
 NULL := "null"
 DOT := "."
-LCURLY := "{"
-RCURLY := "}"
+LBRACE := "{"
+RBRACE := "}"
 LPAREN := "("
 RPAREN := ")"
 SEMI := ";"
