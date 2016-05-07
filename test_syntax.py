@@ -21,7 +21,7 @@ directions = [
 ]
 
 definitions = [
-     ('variable_declaration', [
+     ('data_declaration', [
         ['const path:String',
          'const string path'],
      ]),

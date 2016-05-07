@@ -27,8 +27,9 @@ interface_identifier := interface_prefix, identifier?
 I := "I"
 
 member_expression := function_definition / member_declaration
-member_declaration := ts, namespace_modifiers?, variable_declaration, ts?, SEMI
-
+member_declaration := ts, namespace_modifiers?, data_declaration, ts?, SEMI
+data_declaration := constant_declaration / variable_declaration
+CONSTANT := "const"
 namespace_modifier_place := namespace_modifiers?
 namespace_modifiers := (scope / STATIC / FINAL / OVERRIDE, ts)+
 function_body := ts?, LBRACE, statement*, ts?, RBRACE
@@ -78,7 +79,7 @@ statement := ts?,
     block /
     (
         (
-            variable_declaration
+            data_declaration
             / primary_expression
         )?, 
         ts?, SEMI

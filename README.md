@@ -99,13 +99,13 @@ Features
         string key = item.Key;
         text += key;
     }
+ * Constant declaration.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Constant declaration.
  * ActionScript type-casting to C# type-casting.
  * Explicit type-casting on access to a ArrayList to a data type.
  * ActionScript Array.concat to C# ArrayList.Clone.

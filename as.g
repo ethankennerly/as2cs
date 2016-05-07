@@ -13,6 +13,7 @@ function_modified := ts, namespace_modifiers, function_signature, (ts?, COLON, t
 function_default := ts, function_signature, (ts?, COLON, ts?, return_type)?
 
 variable_declaration := ts?, VARIABLE, ts, argument_declaration
+constant_declaration := ts?, CONSTANT, ts, argument_declaration
 argument_declared := identifier, (ts?, COLON, ts?, data_type)?
 argument_initialized := identifier, (ts?, COLON, ts?, data_type)?, argument_initializer
 collection_prefix := LIST, ts?, DOT

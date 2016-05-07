@@ -13,6 +13,7 @@ function_modified := ts, namespace_modifiers, return_type, ts, function_signatur
 function_default := ts, return_type, ts, function_signature
 
 variable_declaration := ts?, argument_declaration
+constant_declaration := ts?, CONSTANT, ts, argument_declaration
 argument_declared := data_type, ts, identifier
 argument_initialized := data_type, ts, identifier, argument_initializer
 collection_prefix := LIST
