@@ -85,7 +85,8 @@ statement := ts?,
 block := LBRACE, statement*, RBRACE
 primary_expression := expression
 expression := 
-    variable_assignment
+    array_literal
+    / variable_assignment
     / relational_expression
     / left_hand_side_expression
 

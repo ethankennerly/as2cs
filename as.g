@@ -21,6 +21,7 @@ LIST := "Vector"
 STRING_HASH_TABLE := "Object"
 HASH_TABLE := "Dictionary"
 OBJECT := "Object"
+array_literal := "[]"
 
 strict_equal_expression := expression, ts, STRICT_EQUAL, ts, expression
 strict_not_equal_expression := expression, ts, STRICT_NOT_EQUAL, ts, expression

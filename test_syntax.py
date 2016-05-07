@@ -21,6 +21,9 @@ directions = [
 ]
 
 definitions = [
+     ('expression', [
+        ['[]', 'new []{}'],
+     ]),
      ('data_type', [
         ['int', 'int'],
         ['String', 'string'],
