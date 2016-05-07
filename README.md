@@ -74,13 +74,14 @@ Features
  * Convert simple relational expressions verbatim.
  * If statement.
  * Shared assignment operators.
+ * Array and hash access.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Index access and assignment.
+ * New keyword.
  * ActionScript Vector to C# List data type.
  * ActionScript Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
@@ -102,8 +103,9 @@ Not supported
  * Declare multiple variables in a statement.
  * Variable return type declaration in ActionScript '\*'
  * ActionScript only allows literal keyword, string, number default in signature.
+ * Profile function hotspots in unit tests.
  * Reformat and reorder may insert some optional grammar, such as class base.
- * Reorder with nested.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
+ * Reorder with nested grammar.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
   This creates redundancy.  Example:
     contains_expression := expression, ts, IS_CONTAINED_IN, ts, container_expression
     contains_not_expression := LNOT, ts?, LPAREN, ts?, expression, ts, IS_CONTAINED_IN, ts, container_expression, ts?, RPAREN
@@ -169,6 +171,8 @@ Not supported
   Both have bitwise shift:
     >>
  * Validate that initializations are last in a function parameter list.
+ * JavaScript elision:
+    var a = [, , ,];
  * Everything else not explicitly mentioned as a feature.
 
 Reference code

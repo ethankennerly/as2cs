@@ -38,6 +38,9 @@ definitions = [
         ['salad', 'salad'],
         ['OIL', 'OIL'],
         ['_0._1._2', '_0._1._2'],
+        ['a[i]', 'a[i]'],
+        ['_0._1[a.b]._2', '_0._1[a.b]._2'],
+        ['_0._1[a % b]._2', '_0._1[a % b]._2'],
      ]),
      ('import_definition', [
         ['import com.finegamedesign.anagram.Model;',
@@ -142,6 +145,8 @@ definitions = [
          'a <<= 2'],
         ['a >>= 2',
          'a >>= 2'],
+        ['a[1 + i] = 2',
+         'a[1 + i] = 2'],
      ]),
      ('variable_declaration', [
         ['var path:String = "as.g"',

@@ -53,7 +53,12 @@ argument_initializer := ts?, ASSIGN, ts?, assignment_value
 assignment_value := expression
 argument_end := SEMI / COMMA / EOL / EOF / RPAREN
 variable_assignment := address, ts?, assignment_operator, ts?, assignment_value
-address := identifier, (ts?, DOT, ts?, identifier)*
+address := identifier, address_tail*
+address_tail := ts?, 
+    (DOT, ts?, identifier)
+    / (LBRACK, ts?, expression, ts?, RBRACK)
+LBRACK := "["
+RBRACK := "]"
 call_expression := address, ts?, LPAREN, ts?, call_parameters?, ts?, RPAREN
 call_parameters := expression, (ts?, COMMA, expression)*
 
