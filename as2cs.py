@@ -7,6 +7,7 @@ Usage:
 
 
 import codecs
+from collections import Iterable
 from os import path
 from pprint import pformat
 from pretty_print_code.pretty_print_code import format
@@ -433,6 +434,62 @@ def may_format(definition, text):
     return text
 
 
+def is_iterable(obj):
+    """
+    http://stackoverflow.com/questions/19943654/type-checking-an-iterable-type-that-is-not-a-string
+    """
+    return not isinstance(obj, str) and isinstance(obj, Iterable)
+
+
+def find_tag(taglist, target_tag):
+    """
+    >>> taglist = ((('other', None), ('collection_type', None)))
+    >>> find_tag(taglist, 'collection_type')
+    ('collection_type', None)
+    """
+    if not taglist:
+        return None
+    elif target_tag == taglist[0]:
+        return taglist
+    else:
+        for elements in taglist:
+            if is_iterable(elements):
+                tag = find_tag(elements, target_tag)
+                if tag:
+                    return tag
+
+
+def may_import_collections(taglist, text, definition, to):
+    r"""
+    Insert into C# compilation_unit only if there is a collection_type.
+    >>> taglist = ((('other', None), ('collection_type', None)))
+    >>> may_import_collections(taglist, 't', 'function_body', 'cs')
+    't'
+    >>> may_import_collections(taglist, 't', 'compilation_unit', 'as')
+    't'
+    >>> may_import_collections(taglist, 't', 'compilation_unit', 'cs')
+    'using System.Collections.Generic;\nt'
+    >>> may_import_collections(taglist, 't', 'compilation_unit', 'cs')
+    'using System.Collections.Generic;\nt'
+    >>> may_import_collections(taglist, 't', 'compilation_unit', 'as')
+    't'
+
+    During preprocessing, remove from C# being converted to ActionScript.
+    >>> from_cs = 'before\nusing System.Collections.Generic;\nafter'
+    >>> may_import_collections(taglist, from_cs, 'compilation_unit', 'as')
+    'before\nafter'
+    """
+    if 'compilation_unit' == definition:
+        import_statement = 'using System.Collections.Generic;\n'
+        if 'cs' == to:
+            tag = find_tag(taglist, 'collection_type')
+            if tag:
+                text = '%s%s' % (import_statement, text)
+        elif 'as' == to:
+            text = text.replace(import_statement, '')
+    return text
+
+
 def convert(input, definition = 'compilation_unit'):
     """
     Example of converting syntax from ActionScript to C#.
@@ -446,9 +503,11 @@ def convert(input, definition = 'compilation_unit'):
     source = cfg['source']
     to = cfg['to']
     parser = Parser(grammars[source], definition)
+    input = may_import_collections(None, input, definition, to)
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
     text = _recurse_tags(taglist, input, source, to)
+    text = may_import_collections(taglist, text, definition, to)
     text = may_format(definition, text)
     return text
 
@@ -525,6 +584,7 @@ set_tags(different_tags, open('cs.g').read(), True)
 for key in source_keys:
     different_tags[key] = False
 set_tags(different_tags, open('as_and_cs.g').read(), False)
+
 
 if '__main__' == __name__:
     import sys

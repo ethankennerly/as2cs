@@ -355,6 +355,8 @@ definitions = [
          'namespace N\n{\n    //c\n    public class C7{\n    }\n}'],
         ['/*c*/\npackage N\n{\npublic class C6{\n}\n}\n',
          '/*c*/\nnamespace N\n{\n    public class C6{\n    }\n}'],
+        ['package{ class C{ var a:Vector.<String>;}}', 
+         'using System.Collections.Generic;\nnamespace{ class C{ List<string> a;}}'],
      ]),
 ]
 

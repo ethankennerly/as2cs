@@ -79,14 +79,14 @@ Features
  * Ternary expression.
  * ActionScript Vector to C# List data type.
   http://stackoverflow.com/questions/3487690/multidimentional-vector-in-as3
+ * Prefix import of generic list.
+    using System.Collections.Generic;
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Prefix import of generic list.
-    using System.Collections.Generic;
  * ActionScript Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * Array literal.
