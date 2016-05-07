@@ -50,6 +50,9 @@ STRICT_NOT_EQUAL := "!=="
 
 typecast_expression := ts?, left_hand_side_expression, ts, AS, ts, data_type
 AS := "as"
+COLLECTION_LENGTH := "length"
+CLONE := "concat()"
+PUSH := "push"
 
 float_format := float
 

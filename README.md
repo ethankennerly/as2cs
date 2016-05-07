@@ -101,16 +101,20 @@ Features
     }
  * Constant declaration.
  * Cast type by ActionScript "as" keyword.
+ * Replace a few frequently used array properties and methods by pattern recognition only.
+  So other instances with these same methods or properties are also replaced.
+ * ActionScript Vector.length to C# List.Count.
+ * ActionScript Vector.concat() to C# List.Clone().
+ * ActionScript Vector.push to C# List.Add.
+ * ActionScript Array.concat() to C# ArrayList.Clone().
+ * ActionScript Array.push to C# ArrayList.Add.
+ * ActionScript Array.length to C# ArrayList.Count.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Explicit type-casting on access to a ArrayList to a data type.
- * ActionScript Array.concat to C# ArrayList.Clone.
- * ActionScript Array.push to C# ArrayList.Add.
- * ActionScript Array.length to C# ArrayList.Count.
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
@@ -123,6 +127,8 @@ Not supported
  * Variable return type declaration in ActionScript '\*'
  * C# typed Array to ActionScript typed Vector.
  * Hash literal without space before value in key value pair.
+ * Convert ActionScript hash to Dictionary with string-typed key.
+    Dictionary<string, object>
  * Dictionary iteration over keys:  for in with type.
   ActionScript:
     for (var key:String in items) {
@@ -133,9 +139,12 @@ Not supported
         string key = item.Key;
         text += key;
     }
+ * Recognize if the instance is not a vector or array to not replace.
+  The property "length" is used in a lot ways.
  * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
  * C# Hashtable literal with addresses to ActionScript.
  * Foreach statement.
+ * Explicit type-casting on access to a ArrayList to a data type.
  * Key iteration over an array (also "for in" syntax in ActionScript).
  * For in hashtable without a block.
  * ActionScript only allows literal keyword, string, number default in signature.

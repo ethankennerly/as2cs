@@ -1,5 +1,5 @@
-ts := (whitespace+ / comment_area)+
-comment_area := comment_line / comment_block
+ts := (whitespace / comment_area)+
+comment_area := comment_line+ / comment_block
 comment_block := COMMENT_START, comment_middle*, COMMENT_END
 comment_line := COMMENT_LINE_START, comment_line_content*, EOL
 comment_middle := -COMMENT_END
@@ -52,17 +52,18 @@ argument_list := argument_declaration, (ts?, COMMA, ts?, argument_declaration)*
 argument_declaration := argument_initialized / argument_declared
 argument_initializer := ts?, ASSIGN, ts?, assignment_value
 assignment_value := expression
-argument_end := SEMI / COMMA / EOL / EOF / RPAREN
 variable_assignment := address, ts?, assignment_operator, ts?, assignment_value
 address := (new_expression / identifier), address_tail*
 address_tail := ts?, 
-    (DOT, ts?, identifier)
+    (DOT, ts?, (replaced_property / identifier))
     / (LBRACK, ts?, expression, ts?, RBRACK)
 LBRACK := "["
 RBRACK := "]"
 call_expression := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
-
+# available_identifier := ?-replaced_property, alphaunder, alphanumunder*
+replaced_property := COLLECTION_LENGTH / CLONE / PUSH, ?(ts / -(alphanumunder / DOT))
 identifier := alphaunder, alphanumunder*
+
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
 data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / OBJECT / identifier

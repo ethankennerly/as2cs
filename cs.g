@@ -34,7 +34,7 @@ quoted_identifier := QUOTE, identifier, QUOTE
 for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, HASH_ENTRY, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, ts?, LBRACE, iterator, ASSIGN_KEY, ts, statement+, RBRACE
 variable_declared := ts?, argument_declared
 HASH_ENTRY := "DictionaryEntry _entry"
-ASSIGN_KEY := " = _entry.Key;"
+ASSIGN_KEY := " = (string)_entry.Key;"
 FOR_IN := "foreach"
 
 strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN
@@ -49,6 +49,9 @@ container_expression := container_address
 container_address := identifier, container_subaddress*
 container_subaddress := ts?, DOT, ts?, container_identifier
 container_identifier := ?-CONTAINS, alphaunder, alphanumunder*
+COLLECTION_LENGTH := "Count"
+CLONE := "Clone()"
+PUSH := "Add"
 
 typecast_expression := ts?, LPAREN, ts?, data_type, ts?, RPAREN, ts?, left_hand_side_expression
 
