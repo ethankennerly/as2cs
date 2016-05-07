@@ -77,18 +77,22 @@ Features
  * Array and hash access.
  * Create new object.
  * Ternary expression.
+ * ActionScript Vector to C# List data type.
+  http://stackoverflow.com/questions/3487690/multidimentional-vector-in-as3
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript Vector to C# List data type.
+ * Prefix import of generic list.
+    using System.Collections.Generic;
  * ActionScript Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * Array literal.
  * Hash literal.
- * C# nested data types, such as list of lists.
+ * Hash iteration:  for in.
+ * Array iteration:  foreach.
  * Constant declaration.
  * ActionScript type-casting to C# type-casting.
  * Overriding virtual functions in C#.
@@ -122,7 +126,7 @@ Not supported
     i ? 1 : (b ? c : 4)
  * ActionScript dynamic class to C# class.
  * Insert C# explicit cast to another data type, such as from float to integer.
- * C# Generic classes:
+ * C# Generic classes and interfaces:
     class B<U,V> {...}
     class G<T>: B<string,T[]> {...}
  * C# nested classes:
@@ -165,6 +169,7 @@ Not supported
  * Consistent prettify format that trims whitespace.
  * Prettify format from optional end of line and indentation in grammar.
  * Regular expressions.
+ * camelCase method names to CapitalCase method names.
  * ActionScript only allows one public class per package and one package per file.
  * C# does not have logical assignment.  ActionScript does.  Instead bitwise assignments exist.
  http://stackoverflow.com/questions/6346001/why-are-there-no-or-operators
@@ -179,6 +184,7 @@ Not supported
  * Validate that initializations are last in a function parameter list.
  * JavaScript elision:
     var a = [, , ,];
+ * Compiling bytecode.
  * Everything else not explicitly mentioned as a feature.
 
 Reference code

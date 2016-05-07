@@ -65,8 +65,9 @@ call_parameters := expression, (ts?, COMMA, expression)*
 identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-data_type := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT
+data_type := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT / collection_type / identifier
 return_type := data_type / VOID
+collection_type := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
 
 statement := ts?, 
     block /
@@ -86,7 +87,7 @@ expression :=
     / relational_expression
     / left_hand_side_expression
 
-new_expression := NEW, ts?, address, ts?, LPAREN, ts?, parameter_list?, ts?, RPAREN
+new_expression := NEW, ts?, (data_type / address), ts?, LPAREN, ts?, parameter_list?, ts?, RPAREN
 NEW := "new"
 parameter_list := expression, (ts?, COMMA, ts?, expression)*
 
