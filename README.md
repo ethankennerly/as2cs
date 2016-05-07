@@ -86,14 +86,13 @@ Features
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * ActionScript Array literal.
   http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
+ * Hash literal:  ActionScript JSON literal without quotes on keys.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript JSON literal.
- * ActionScript JSON literal without quotes on keys.
  * Hash iteration:  for in.
  * Array iteration:  foreach.
  * Constant declaration.
@@ -114,7 +113,9 @@ Not supported
  * Declare multiple variables in a statement.
  * Variable return type declaration in ActionScript '\*'
  * C# typed Array to ActionScript typed Vector.
+ * Hash literal without space before value in key value pair.
  * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
+ * C# Hashtable literal with addresses to ActionScript.
  * ActionScript only allows literal keyword, string, number default in signature.
  * Profile function hotspots in unit tests.
  * Reformat and reorder may insert some optional grammar, such as class base.

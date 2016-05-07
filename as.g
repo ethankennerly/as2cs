@@ -23,6 +23,10 @@ HASH_TABLE := "Dictionary"
 OBJECT := "Object"
 array_literal_prefix := LBRACK
 array_literal_suffix := RBRACK
+hash_literal_prefix := LBRACE
+hash_literal_suffix := RBRACE
+property := key, ts?, COLON, ts, expression
+quoted_identifier := identifier
 
 strict_equal_expression := expression, ts, STRICT_EQUAL, ts, expression
 strict_not_equal_expression := expression, ts, STRICT_NOT_EQUAL, ts, expression

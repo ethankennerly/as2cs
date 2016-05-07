@@ -12,7 +12,7 @@ from glob import glob
 from unittest import main, TestCase
 
 from as2cs import cfg, convert, compare_files, \
-    format_taglist, may_format, realpath
+    format_taglist, literals, may_format, realpath
 from pretty_print_code.pretty_print_code import format_difference
 
 directions = [
@@ -24,6 +24,8 @@ definitions = [
      ('expression', [
         ['[]', 'new ArrayList(){}'],
         ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
+        ['{}', 'new Hashtable(){}'],
+        ['{a: b, "1.0": 2.0}', 'new Hashtable(){{"a", b}, {"1.0", 2.0f}}'],
      ]),
      ('data_type', [
         ['int', 'int'],
@@ -476,6 +478,10 @@ class TestDefinitions(TestCase):
                     raise err
         cfg['source'] = original_source
         cfg['to'] = original_to
+
+    def test_quote(self):
+        self.assertEqual('"', literals['cs']['QUOTE'])
+        self.assertEqual('"', literals['as']['QUOTE'])
 
 
 if '__main__' == __name__:
