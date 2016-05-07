@@ -63,10 +63,16 @@ alphaunder := letter / UNDERSCORE
 data_type := INTEGER / STRING / BOOLEAN / FLOAT / OBJECT
 return_type := data_type / VOID
 
-statement := ts?, primary_expression, ts?, SEMI
+statement := ts?, 
+    (
+        variable_declaration
+        / variable_assignment
+        / primary_expression
+    ), 
+    ts?, SEMI
 primary_expression := expression
-expression := variable_declaration
-    / variable_assignment
+expression := 
+    variable_assignment
     / left_hand_side_expression
 
 left_hand_side_expression := 

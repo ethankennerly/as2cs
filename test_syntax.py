@@ -88,8 +88,8 @@ definitions = [
      ('argument_declaration', [
         ['path:String',
          'string path'],
-        ['index:int',
-         'int index'],
+        ['index:int = -1',
+         'int index = -1'],
      ]),
      ('variable_declaration', [
         ['var path:String',
@@ -104,6 +104,8 @@ definitions = [
          'string path, int index'],
         ['index:int, isEnabled:Boolean, a:Number',
          'int index, bool isEnabled, float a'],
+        ['path:String, index:int = -1',
+         'string path, int index = -1'],
      ]),
      ('function_declaration', [
         [' function f(path:String, index:int):void',
@@ -246,6 +248,8 @@ definitions = [
          '(a + 1.0f) >= y'],
         ['!(a.b + 1.0 == y - 1) && c',
          '!(a.b + 1.0f == y - 1) && c'],
+     ]),
+     ('if_statement', [
      ]),
      ('compilation_unit', [
         ['package{public class C{}}', 

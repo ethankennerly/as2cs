@@ -86,6 +86,7 @@ Not supported
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * Array literal.
  * Hash literal.
+ * Ternary assignment.
  * Constant declaration.
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
@@ -97,7 +98,9 @@ Not supported
  * Nested function definitions.
  * Complex conditional expressions on shift operators, bitwise operators.
  * ActionScript 3 convention of no return type in constructor.
+ * Declare multiple variables in a statement.
  * Variable return type declaration in ActionScript '\*'
+ * ActionScript only allows literal keyword, string, number default in signature.
  * Reformat and reorder may insert some optional grammar, such as class base.
  * Reorder with nested.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
   This creates redundancy.  Example:
@@ -119,6 +122,10 @@ Not supported
     {
         class B: A {}
     }
+ * Vim SimpleParse grammar syntax highlighter:
+    / instead of |
+    Comma required
+    := assignment operator
  * ActionScript 3 argument list '...' syntax
  * Convert extended class declaration that has no whitespace:
     class A:B {}
