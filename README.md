@@ -73,14 +73,14 @@ Features
  * ActionScript in operator to C# Contains only with some addresses.
  * Convert simple relational expressions verbatim.
  * If statement.
+ * Shared assignment operators.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * In-place assignment operators.
- * ActionScript type-casting to C# type-casting.
+ * Index access and assignment.
  * ActionScript Vector to C# List data type.
  * ActionScript Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
@@ -88,6 +88,7 @@ Not supported
  * Hash literal.
  * Ternary assignment.
  * Constant declaration.
+ * ActionScript type-casting to C# type-casting.
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
@@ -157,6 +158,16 @@ Not supported
  * Consistent prettify format that trims whitespace.
  * Prettify format from optional end of line and indentation in grammar.
  * ActionScript only allows one public class per package and one package per file.
+ * C# does not have logical assignment.  ActionScript does.  Instead bitwise assignments exist.
+ http://stackoverflow.com/questions/6346001/why-are-there-no-or-operators
+ http://help.adobe.com/en\_US/FlashPlatform/reference/actionscript/3/operators.html
+ * C# does not have bitwise unsigned shift:
+    >>>
+    >>>=
+  nor bitwise not:
+    ~=
+  Both have bitwise shift:
+    >>
  * Validate that initializations are last in a function parameter list.
  * Everything else not explicitly mentioned as a feature.
 

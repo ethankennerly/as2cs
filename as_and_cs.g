@@ -52,7 +52,7 @@ argument_declaration := argument_initialized / argument_declared
 argument_initializer := ts?, ASSIGN, ts?, assignment_value
 assignment_value := expression
 argument_end := SEMI / COMMA / EOL / EOF / RPAREN
-variable_assignment := address, ts?, ASSIGN, ts?, assignment_value
+variable_assignment := address, ts?, assignment_operator, ts?, assignment_value
 address := identifier, (ts?, DOT, ts?, identifier)*
 call_expression := address, ts?, LPAREN, ts?, call_parameters?, ts?, RPAREN
 call_parameters := expression, (ts?, COMMA, expression)*
@@ -78,7 +78,7 @@ block := LBRACE, statement*, RBRACE
 primary_expression := expression
 expression := 
     variable_assignment
-    / unary_expression
+    / relational_expression
     / left_hand_side_expression
 
 left_hand_side_expression := 
@@ -117,15 +117,17 @@ unary_expression :=
     / (PLUS2, ts?, unary_expression)
     / (MINUS2, ts?, unary_expression)
     / (LNOT, ts?, unary_expression)
+LNOT := "!"
 
 postfix_expression := left_hand_side_expression, (PLUS2 / MINUS2)?
 PLUS2 := "++"
 MINUS2 := "--"
 
 computational_operator :=
-    arithmetic_operator
-    / comparison_operator
+    comparison_operator
     / logical_operator
+    / assignable_operator
+    / BIT_NOT
 
 comparison_operator := equality_operator / relational_operator
 equality_operator := NOT_EQUAL / EQUAL
@@ -137,18 +139,30 @@ LE := "<="
 EQUAL := "=="
 NOT_EQUAL := "!="
 
-arithmetic_operator := PLUS / MINUS / ASTERISK / DIVIDE
+assignment_operator := assignable_operator?, ASSIGN
+ASSIGN := "="
+
+assignable_operator := BIT_AND / BIT_OR / BIT_XOR / PLUS / MINUS / TIMES / DIVIDE / MOD / LSHIFT / RSHIFT
 PLUS := "+"
 MINUS := "-"
-PERCENT := "%"
-ASTERISK := "*"
+MOD := "%"
+TIMES := "*"
 DIVIDE := "/"
+BIT_AND := "&"
+BIT_OR := "|"
+BIT_XOR := "^"
+PLUS := "+"
+MINUS := "-"
+TIMES := "*"
+LSHIFT := "<<"
+RSHIFT := ">>"
 
 logical_operator := OR / AND
 OR := "||"
 AND := "&&"
 
-LNOT := "!"
+BIT_NOT := "~"
+
 NULL := "null"
 DOT := "."
 LBRACE := "{"
@@ -160,7 +174,6 @@ COLON := ":"
 COMMA := ","
 EOL   := ("\r"?, "\n") / EOF
 SPACE := " "
-ASSIGN := "="
 UNDERSCORE := "_"
 QUOTE := "\""
 APOS := "'"
