@@ -21,6 +21,10 @@ directions = [
 ]
 
 definitions = [
+     ('function_definition', [
+        ['  function F(){i = index;}', 
+         '  function F(){i = index;}'],
+     ]),
      ('expression', [
         ['path as String',
          '(string)path'],
@@ -308,15 +312,15 @@ definitions = [
      ]),
      ('contains_expression', [
         ['oil in italian.salad',
-         'italian.salad.Contains(oil)'],
+         'italian.salad.ContainsKey(oil)'],
         ['Content in Container.Container',
-         'Container.Container.Contains(Content)'],
+         'Container.Container.ContainsKey(Content)'],
      ]),
      ('conditional_function', [
         ['oil in salad',
-         'salad.Contains(oil)'],
+         'salad.ContainsKey(oil)'],
         ['!(apple in basket)',
-         '!basket.Contains(apple)'],
+         '!basket.ContainsKey(apple)'],
      ]),
      ('relational_expression', [
         ['a.b.c >= x.y',

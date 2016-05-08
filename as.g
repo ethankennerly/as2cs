@@ -9,8 +9,8 @@ interface_type_list_follows := ts, IMPLEMENTS, ts, interface_identifier, interfa
 EXTENDS := "extends"
 IMPLEMENTS := "implements"
 
-function_modified := ts, namespace_modifiers, function_signature, (ts?, COLON, ts?, return_type)?
-function_default := ts, function_signature, (ts?, COLON, ts?, return_type)?
+function_modified := ts, namespace_modifiers, function_signature, ts?, COLON, ts?, return_type
+function_default := ts, function_signature, ts?, COLON, ts?, return_type
 
 variable_declaration := ts?, VARIABLE, ts, argument_declaration
 constant_declaration := ts?, CONSTANT, ts, argument_declaration

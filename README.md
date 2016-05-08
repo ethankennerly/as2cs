@@ -109,23 +109,31 @@ Features
  * ActionScript Array.concat() to C# ArrayList.Clone().
  * ActionScript Array.push to C# ArrayList.Add.
  * ActionScript Array.length to C# ArrayList.Count.
+ * No return type in constructor.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+ * Variable return type declaration in ActionScript '\*'
+ * Declare multiple variables in a statement.
+ * ActionScript and C# wrappers for common collection actions: clone, push, length.  
+  Written in target language.
+ * ActionScript Array.splice to C#.
+ * ActionScript Array.indexOf to C#.
+ * ActionScript delete a to C# .Remove(a).
+ * ActionScript clear(d) to C# d.Clear().
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
  * ActionScript is keyword.
  * ActionScript instanceof keyword.
  * JavaScript type keyword.
- * Nested function definitions.
- * ActionScript 3 convention of no return type in constructor.
- * Declare multiple variables in a statement.
- * Variable return type declaration in ActionScript '\*'
+ * Foreach statement.
+ * Return type omitted.
  * C# typed Array to ActionScript typed Vector.
+ * Post-syntax conversion, parse to replace corresponding function names and signatures.
  * Hash literal without space before value in key value pair.
  * Convert ActionScript hash to Dictionary with string-typed key.
     Dictionary<string, object>
@@ -142,8 +150,8 @@ Not supported
  * Recognize if the instance is not a vector or array to not replace.
   The property "length" is used in a lot ways.
  * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
- * C# Hashtable literal with addresses to ActionScript.
- * Foreach statement.
+ * C# Hashtable literal with dot.addresses to ActionScript.
+ * Nested function definitions.
  * Explicit type-casting on access to a ArrayList to a data type.
  * Key iteration over an array (also "for in" syntax in ActionScript).
  * For in hashtable without a block.
@@ -159,6 +167,7 @@ Not supported
     a===b
     object.ReferenceEquals(a,b)
  * Distinguish order of operators that will be translated verbatim.
+ * Logging.  Instead, wrap ActionScript trace and Unity C# Debug.Log in Toolkit.log.
  * Anonymous function.
  * C# static class to ActionScript class.
  * Ungrouped ternary repetition

@@ -44,7 +44,7 @@ contains_expression :=
     container_expression, ts?, DOT, ts?, CONTAINS, ts?, LPAREN, ts?, contained_expression, ts?, RPAREN
 contains_not_expression := LNOT, ts?, 
     container_expression, ts?, DOT, ts?, CONTAINS, ts?, LPAREN, ts?, contained_expression, ts?, RPAREN
-CONTAINS := "Contains"
+CONTAINS := "ContainsKey"
 container_expression := container_address
 container_address := identifier, container_subaddress*
 container_subaddress := ts?, DOT, ts?, container_identifier
