@@ -114,13 +114,21 @@ Features
  * Dynamic data type.
  * Keyword 'is'.
   https://msdn.microsoft.com/en-us/library/dd264741.aspx
+ * Limited use of 'typeof' function for JavaScript basic types only.  Caveat:  In JavaScript, this returns a string.  In C# this returns a type.  So this would be portable code:
+    typeof(a) == typeof("")
+  This would not be:
+    typeof(a) == "string"
+  Since JavaScript returns all instances as "object", this is also not portable:
+    var a:A = new A();
+    var b:B = new B();
+    typeof(a) == typeof(b)
+  http://stackoverflow.com/questions/310820/how-to-check-if-two-objects-are-of-the-same-type-in-actionscript
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * JavaScript typeof keyword.
  * ActionScript instanceof keyword.
  * Declare multiple variables in a statement.
  * Parse float and parse integer.
@@ -191,6 +199,8 @@ Not supported
     Comma required
     := assignment operator
  * ActionScript 3 argument list '...' syntax
+ * JavaScript typeof string to C# type.
+  http://stackoverflow.com/questions/310820/how-to-check-if-two-objects-are-of-the-same-type-in-actionscript
  * Convert extended class declaration that has no whitespace:
     class A:B {}
  * Reordering syntax from nested definitions.  

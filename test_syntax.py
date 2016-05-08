@@ -235,6 +235,8 @@ definitions = [
          'a || b'],
         ['new C(a, b)', 
          'new C(a, b)'],
+        ['typeof(index)', 
+         'typeof(index)'],
      ]),
      ('function_definition', [
         ['  function f():void{var i:int = index;}', 
