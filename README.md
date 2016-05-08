@@ -129,16 +129,18 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript instanceof keyword.
- * Declare multiple variables in a statement.
- * Parse float and parse integer.
+ * Parse float and parse integer.  However, C# throws exception if not perfectly formatted.
+  And whitespace is not permitted inside "int.Parse" or "float.Parse".
+  http://stackoverflow.com/questions/3960499/better-use-int-parse-or-convert-toint32
  * Foreach statement.
+ * Callbacks and delegates.
  * ActionScript and C# wrappers for common collection actions: clone, push, length.  
   Written in target language.
  * ActionScript Array.splice to C#.
  * ActionScript Array.indexOf to C#.
  * ActionScript delete a to C# .Remove(a).
  * ActionScript clear(d) to C# d.Clear().
+ * JavaScript "Math.floor" to Unity C# "Mathf.Floor".
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
@@ -219,13 +221,12 @@ Not supported
   Instead have at least one space or tab before the.
   Whitespace is required to retain when reformatted.
  * Default data-type when omitted in ActionScript to explicit data type in C#.
- * JavaScript "Math.floor" to Unity C# "Mathf.Floor".
- * typeof string format.
+ * Declare multiple variables in a statement, but C# does not permit assigning them.  Instead write one per statement.  This looks messy to me.
+  http://stackoverflow.com/questions/13374454/declare-and-assign-multiple-string-variables-at-the-same-time
  * Omitting semicolon at end of ActionScript.
  * Mixing literals and non-literals in grammar to be replaced.
  * Multiple occurences of items that are reordered.  
   Instead these can be grouped, like 'digits?' instead of 'digit\*'.
- * Callbacks and delegates.
  * Whitespace between grammar element and occurrence indicator.
  * Preprocessor directive 'include'
  * Consistent prettify format that trims whitespace.
@@ -233,6 +234,8 @@ Not supported
  * Regular expressions.
  * camelCase method names to CapitalCase method names.
  * ActionScript only allows one public class per package and one package per file.
+ * ActionScript 2 instanceof keyword.
+ * ActionScript 2.
  * Scope of variables declared a block are available outside the block in JavaScript.
  * C# does not have logical assignment.  ActionScript does.  Instead bitwise assignments exist.
  http://stackoverflow.com/questions/6346001/why-are-there-no-or-operators

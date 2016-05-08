@@ -55,15 +55,15 @@ argument_declaration := argument_initialized / argument_declared
 argument_initializer := ts?, ASSIGN, ts?, assignment_value
 assignment_value := expression
 variable_assignment := address, ts?, assignment_operator, ts?, assignment_value
-address := (new_expression / identifier), address_tail*
+address := (new_expression / replaced_address / identifier), address_tail*
 address_tail := ts?, 
     (DOT, ts?, (replaced_property / identifier))
     / (LBRACK, ts?, expression, ts?, RBRACK)
 LBRACK := "["
 RBRACK := "]"
 call_expression := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
-# available_identifier := ?-replaced_property, alphaunder, alphanumunder*
 replaced_property := COLLECTION_LENGTH / CLONE / PUSH, ?(ts / -(alphanumunder / DOT))
+replaced_address := PARSE_INT / PARSE_FLOAT
 identifier := alphaunder, alphanumunder*
 
 alphanumunder := digit / alphaunder

@@ -52,6 +52,8 @@ container_identifier := ?-CONTAINS, alphaunder, alphanumunder*
 COLLECTION_LENGTH := "Count"
 CLONE := "Clone()"
 PUSH := "Add"
+PARSE_INT := "int.Parse"
+PARSE_FLOAT := "float.Parse"
 
 # typecast_expression := ts?, LPAREN, ts?, data_type, ts?, RPAREN, ts?, left_hand_side_expression
 
