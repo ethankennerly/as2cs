@@ -21,15 +21,9 @@ directions = [
 ]
 
 definitions = [
-     ('function_definition', [
-        ['  function F(){i = index;}', 
-         '  function F(){i = index;}'],
-        ['  function f():*{}', 
-         '  dynamic function f(){}'],
-     ]),
      ('expression', [
-        ['path as String',
-         'path as string'],
+        ['path as a.b.string',
+         'path as a.b.string'],
         ['paths.length ',
          'paths.Count '],
         ['paths.push(p)',
@@ -65,6 +59,7 @@ definitions = [
         ['Array', 'ArrayList'],
         ['Object', 'Hashtable'],
         ['*', 'dynamic'],
+        ['A.B.C', 'A.B.C'],
      ]),
      ('identifier', [
         ['_a', '_a'],
@@ -126,6 +121,10 @@ definitions = [
          ' internal bool function isF(){}'],
         [' protected function getF():Number{}', 
          ' protected float function getF(){}'],
+        ['  function F(){i = index;}', 
+         '  function F(){i = index;}'],
+        ['  function f():*{}', 
+         '  dynamic function f(){}'],
      ]),
      ('argument_declaration', [
         ['path:String',
@@ -302,6 +301,10 @@ definitions = [
          'a >= b'],
      ]),
      ('conditional_expression', [
+        ['path is Boolean',
+         'path is bool'],
+        ['path is a.b.Boolean',
+         'path is a.b.Boolean'],
         ['.0 === null',
          'object.ReferenceEquals(.0f, null)'],
         ['.0 === ""',

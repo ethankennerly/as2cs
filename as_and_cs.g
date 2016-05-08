@@ -68,7 +68,7 @@ identifier := alphaunder, alphanumunder*
 
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT / identifier
+data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT / address
 return_type := data_type / VOID
 collection_type := collection / generic_collection 
 generic_collection := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
@@ -98,7 +98,7 @@ expression :=
     / relational_expression
     / left_hand_side_expression
 
-new_expression := NEW, ts?, (data_type / address), ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
+new_expression := NEW, ts?, data_type, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 NEW := "new"
 expression_list := expression, (ts?, COMMA, ts?, expression)*
 
@@ -125,6 +125,7 @@ ELSE := "else"
 
 conditional_expression :=
     conditional_function 
+    / is_expression
     / ternary_expression
     / relational_expression
     / address
@@ -149,6 +150,8 @@ unary_expression :=
 LNOT := "!"
 nullable_cast_expression := ts?, left_hand_side_expression, ts, AS, ts, data_type
 AS := "as"
+is_expression := ts?, left_hand_side_expression, ts, IS, ts, data_type
+IS := "is"
 
 postfix_expression := left_hand_side_expression, (PLUS2 / MINUS2)?
 PLUS2 := "++"

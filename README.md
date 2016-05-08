@@ -100,7 +100,8 @@ Features
         text += key;
     }
  * Constant declaration.
- * Cast type by ActionScript "as" keyword.
+ * Cast type by "as" keyword.
+  http://stackoverflow.com/questions/496096/casting-vs-using-the-as-keyword-in-the-clr
  * Replace a few frequently used array properties and methods by pattern recognition only.
   So other instances with these same methods or properties are also replaced.
  * ActionScript Vector.length to C# List.Count.
@@ -111,15 +112,14 @@ Features
  * ActionScript Array.length to C# ArrayList.Count.
  * No return type in constructor.
  * Dynamic data type.
+ * Keyword 'is'.
+  https://msdn.microsoft.com/en-us/library/dd264741.aspx
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript is keyword.
-  https://msdn.microsoft.com/en-us/library/dd264741.aspx
-  http://stackoverflow.com/questions/496096/casting-vs-using-the-as-keyword-in-the-clr
  * JavaScript typeof keyword.
  * ActionScript instanceof keyword.
  * Declare multiple variables in a statement.
