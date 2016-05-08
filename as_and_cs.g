@@ -79,7 +79,8 @@ math_property := ABS / ACOS / ASIN / ATAN / ATAN2
 identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-data_type := swap_type / INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT / address
+reserved_data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT
+data_type := swap_type / reserved_data_type / address
 return_type := data_type / VOID
 as_type := data_type
 cs_type := data_type
@@ -155,7 +156,8 @@ relational_expression := (ts?, unary_expression, relational_expression_tail*)
 relational_expression_tail := ts?, computational_operator, ts?, relational_expression
 
 unary_expression :=
-    nullable_cast_expression
+    cast_expression
+    / nullable_cast_expression
     / postfix_expression
     / (PLUS2, ts?, unary_expression)
     / (MINUS2, ts?, unary_expression)

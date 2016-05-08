@@ -29,9 +29,11 @@ Features
 
  * Example doctest of import.
  * Run discovered doctests and unit tests:
+
     python test.py
     # or
     python -m unittest discover
+
  * Grammar unit test format related to gUnit.
  * Merge grammar declaration files.
  * Transcribe 'import' example of common base grammar.
@@ -53,18 +55,22 @@ Features
  * Distinguish if C# implements or extends only by prefix.  
   Interfaces are conventionally be prefixed by "I" and uppercase letter.
   Example:
+
     class A : IB {}
     class A implements IB {}
     class A : B {}
     class A extends B {}
     class A : It {}
     class A extends It {}
+
  * Convert extended class declaration.
  * Example file of all of the above.
  * Grammar literals in CAPITAL\_CASE following ANTLR grammar conventions.
  * Grammar ordered approximately in same order as the elements appear in a file.
  * Grammar names in snake\_case following simpleparsegrammar conventions.  Vim sed:
+
     %s/\([a-z]\)\([A-Z]\)/\1_\L\2/gIce
+
   http://vim.wikia.com/wiki/Switching\_case\_of\_characters
  * Equality operators.
  * Strictly equals to ReferenceEquals.
@@ -80,8 +86,10 @@ Features
  * ActionScript Vector to C# List data type.
   http://stackoverflow.com/questions/3487690/multidimentional-vector-in-as3
  * Prefix import of C# collections.
+
     using System.Collections;
     using System.Collections.Generic;
+
  * ActionScript untyped Array to C# ArrayList data type.
  * ActionScript Object and Dictionary to C# Hashtable data type.
  * ActionScript Array literal.
@@ -91,16 +99,24 @@ Features
  * While loop iteration; break and continue keywords.
  * Hack Hashtable iteration over keys:  for in.
   ActionScript:
+
     for (var key:String in items) {
         text += key;
     }
+
   C#:
+
     foreach (DictionaryEntry item in items) {
         string key = item.Key;
         text += key;
     }
+
  * Constant declaration.
- * Cast type by "as" keyword.
+ * Cast some reserved data types.  ActionScript type-casting to C# type-casting by type function only for some reserved data types.  With custom data types, it is ambiguous of a type is cast or if an arbitrary function is called.  Instead the ActionScript "as" keyword is clear.  However, C# does not permit "as" used with non-nullable types, such as int or float.
+ * Cast type by "as" keyword.  Won't work for int or float.  Use explicit type instead.  Example:
+
+    Assets/Scripts/Model.cs(70,79): error CS0077: The `as' operator cannot be used with a non-nullable value type `float'
+ 
   http://stackoverflow.com/questions/496096/casting-vs-using-the-as-keyword-in-the-clr
  * Replace a few frequently used array properties and methods by pattern recognition only.
   So other instances with these same methods or properties are also replaced.
@@ -118,13 +134,19 @@ Features
  * Keyword 'is'.
   https://msdn.microsoft.com/en-us/library/dd264741.aspx
  * Limited use of 'typeof' function for JavaScript basic types only.  Caveat:  In JavaScript, this returns a string.  In C# this returns a type.  So this would be portable code:
+
     typeof(a) == typeof("")
+
   This would not be:
+
     typeof(a) == "string"
+
   Since JavaScript returns all instances as "object", this is also not portable:
+
     var a:A = new A();
     var b:B = new B();
     typeof(a) == typeof(b)
+
   http://stackoverflow.com/questions/310820/how-to-check-if-two-objects-are-of-the-same-type-in-actionscript
  * Parse float and parse integer.  However, C# throws exception if not perfectly formatted.
   And whitespace is not permitted inside "int.Parse" or "float.Parse".
@@ -134,25 +156,37 @@ Features
   Return type is data type.  Void is not supported data type, so use no type.
   The data type of the function object is in the preceding comment block with no whitespace.
   ActionScript:
+
     internal var /*<delegate>*/ ActionDelegate:/*<void>*/*;
     internal var onComplete:/*<ActionDelegate>*/Function; 
+
   C#:
+
     internal delegate /*<void>*/dynamic ActionDelegate();
     internal /*<Function>*/ActionDelegate onComplete;
+
   ActionScript:
+
     public var /*<delegate>*/ IsJustPressed:Boolean, letter:String;
     public function getPresses(justPressed:/*<IsJustPressed>*/Function):Array{}
+
   C#:
+
     public delegate bool IsJustPressed(string letter);
     public ArrayList getPresses(/*<Function>*/IsJustPressed justPressed){}
+
  * ActionScript "trace" to Unity C# Debug.Log with a single string as the argument.
  * JavaScript Math functions to Unity C# Mathf functions.
   http://help.adobe.com/en\_US/FlashPlatform/reference/actionscript/3/Math.html
   http://docs.unity3d.com/ScriptReference/Mathf.html
- * Random.  Careful:  Unity C# Random.value includes 1.0.  So wrapping in modulus:
+ * Random.  Careful:  Unity C# Random.value includes 1.0.  
+  Wrapping in modulus theoretically biases the distribution toward 0.
   ActionScript:
+
     Math.random()
+
   Unity C#:
+
     (Random.value % 1.0f)
 
 Not supported
@@ -160,6 +194,7 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+ * Insert "using UnityEngine" if converting to Mathf or Random.
 
  * Convert example Model.as from Anagram Attack.
 
@@ -171,17 +206,42 @@ Not supported
  * Post-syntax conversion, parse to replace corresponding function names and signatures.
  * Hash literal without space before value in key value pair.
  * Convert ActionScript hash to Dictionary with string-typed key.
-    Dictionary<string, object>
+
+    Dictionary<string, dynamic>
+
+ Some people are saying Unity 5 still does not support C# 4 'dynamic' keyword.
+ On my test of Unity 5.2, dynamic keyword compiled.
+ http://stackoverflow.com/questions/36079609/using-c-sharp-dynamic-typing-in-unity-5-3-1f
+ http://answers.unity3d.com/questions/686244/using-c-dynamic-typing-with-unity-434f1.html
  * Dictionary iteration over keys:  for in with type.
   ActionScript:
+
     for (var key:String in items) {
         text += key;
     }
+
   C#:
-    foreach (KeyValuePair<string, object> item in items) {
+
+    foreach (KeyValuePair<string, dynamic> item in items) {
         string key = item.Key;
         text += key;
     }
+
+ * Set this property by name.  This is slow in ActionScript and C#.
+ ActionScript:
+
+    this[key] = params[key];
+
+ C#:
+
+    this.GetType().GetProperty(key).SetValue(this, params[key]);
+
+ http://stackoverflow.com/questions/1196991/get-property-value-from-string-using-reflection-in-c-sharp
+
+ * Recognize if the C# owner is an array or collection, otherwise get/set property by name.  
+
+    this[key] = params[key];
+
  * Recognize if the instance is not a vector or array to not replace.
   The property "length" is used in a lot ways.
  * C# typed Array to ActionScript typed Vector.
@@ -196,7 +256,6 @@ Not supported
  * ActionScript only allows literal keyword, string, number default in signature.
  * Profile function hotspots in unit tests.
  * Foreach statement.
- * ActionScript type-casting to C# type-casting by type function.  With custom data types, it is ambiguous of a type is cast or if an arbitrary function is called.  Instead the ActionScript "as" keyword is clear.
  * Reformat and reorder may insert some optional grammar, such as class base.
  * Reorder with nested grammar.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
   This creates redundancy.  Example:
@@ -211,40 +270,53 @@ Not supported
   https://msdn.microsoft.com/en-us/library/0yw3tz5k.aspx
  * C# static class to ActionScript class.
  * Ungrouped ternary repetition
+
     i ? 1 : b ? c : 4
-  Instead:
+
+  Instead you could write:
+
     i ? 1 : (b ? c : 4)
+
  * ActionScript dynamic class to C# class.
  * Insert C# explicit cast to another data type, such as from float to integer.
  * C# Generic classes and interfaces:
+
     class B<U,V> {...}
     class G<T>: B<string,T[]> {...}
+
  * C# nested classes:
+
     class A
     {
         class B: A {}
     }
+
  * Vim SimpleParse grammar syntax highlighter:
+
     / instead of |
     Comma required
     := assignment operator
+
  * ActionScript 3 argument list '...' syntax
  * JavaScript typeof string to C# type.
   http://stackoverflow.com/questions/310820/how-to-check-if-two-objects-are-of-the-same-type-in-actionscript
  * Convert extended class declaration that has no whitespace:
+
     class A:B {}
+
  * Reordering syntax from nested definitions.  
   Example:  ActionScript 3 has a colon before data type.  Formatting scans this grammar.
+
     argumentDeclared := identifier, (ts?, COLON, ts?, dataType)?
     argumentDeclared := dataType, ts, identifier
-  To convert both ways between argument declarations:
-    path:String
-    string path
+
  * Reformatting with optional parameters.  
   Instead I used two optional definitions, one which requires the option.  C# example:
+
     functionDeclaration := functionModified / functionDefault
     functionModified := ts, namespaceModifiers, returnType, ts, functionSignature
     functionDefault := ts, returnType, ts, functionSignature
+
  * Member variable and function declarations without preceding whitespace.  
   Instead have at least one space or tab before the.
   Whitespace is required to retain when reformatted.
@@ -269,15 +341,23 @@ Not supported
  http://stackoverflow.com/questions/6346001/why-are-there-no-or-operators
  http://help.adobe.com/en\_US/FlashPlatform/reference/actionscript/3/operators.html
  * C# does not have bitwise unsigned shift:
+
     >>>
     >>>=
+
   nor bitwise not:
+
     ~=
+
   Both have bitwise shift:
+
     >>
+
  * Validate that initializations are last in a function parameter list.
  * JavaScript elision:
+
     var a = [, , ,];
+
  * C# pointers.
  * Compiling bytecode.
  * Everything else not explicitly mentioned as a feature.

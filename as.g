@@ -84,6 +84,8 @@ SIN := "sin"
 SQRT := "sqrt"
 TAN := "tan"
 
+cast_expression := ts?, reserved_data_type, ts?, LPAREN, ts?, left_hand_side_expression, ts?, RPAREN
+
 float_format := float
 
 UNDEFINED := "undefined"

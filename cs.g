@@ -85,7 +85,7 @@ SIN := "Sin"
 SQRT := "Sqrt"
 TAN := "Tan"
 
-# typecast_expression := ts?, LPAREN, ts?, data_type, ts?, RPAREN, ts?, left_hand_side_expression
+cast_expression := ts?, LPAREN, ts?, reserved_data_type, ts?, RPAREN, ts?, left_hand_side_expression
 
 float_format := float, float_suffix
 
