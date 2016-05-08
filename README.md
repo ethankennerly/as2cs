@@ -123,19 +123,31 @@ Features
     var b:B = new B();
     typeof(a) == typeof(b)
   http://stackoverflow.com/questions/310820/how-to-check-if-two-objects-are-of-the-same-type-in-actionscript
+ * Parse float and parse integer.  However, C# throws exception if not perfectly formatted.
+  And whitespace is not permitted inside "int.Parse" or "float.Parse".
+  http://stackoverflow.com/questions/3960499/better-use-int-parse-or-convert-toint32
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Parse float and parse integer.  However, C# throws exception if not perfectly formatted.
-  And whitespace is not permitted inside "int.Parse" or "float.Parse".
-  http://stackoverflow.com/questions/3960499/better-use-int-parse-or-convert-toint32
- * Foreach statement.
- * Callbacks and delegates.
- * ActionScript and C# wrappers for common collection actions: clone, push, length.  
-  Written in target language.
+ * Delegate type markup.  C# requires signature and return type.
+  In ActionScript, some of this can be specified with a compilable convention and comment markup.
+  Return type is data type.  Void is not supported data type, so use no type.
+  The data type of the function object is in the preceding comment block with no whitespace.
+  ActionScript:
+    internal var /*delegate*/ ActionDelegate;
+    internal var onComplete:/*ActionDelegate*/Function; 
+  C#:
+    internal delegate dynamic ActionDelegate();
+    internal ActionDelegate onComplete;
+  ActionScript:
+    public var /*delegate*/ IsJustPressed:Boolean, letter:String;
+    public function getPresses(justPressed:/*IsJustPressed*/Function):Array{}
+  C#:
+    public delegate bool IsJustPressed(string letter);
+    public ArrayList getPresses(/*Function*/IsJustPressed justPressed){}
  * ActionScript Array.splice to C#.
  * ActionScript Array.indexOf to C#.
  * ActionScript delete a to C# .Remove(a).
@@ -158,9 +170,11 @@ Not supported
         string key = item.Key;
         text += key;
     }
- * C# typed Array to ActionScript typed Vector.
  * Recognize if the instance is not a vector or array to not replace.
   The property "length" is used in a lot ways.
+ * C# typed Array to ActionScript typed Vector.
+ * ActionScript and C# wrappers for common collection actions: clone, push, length.  
+  Written in target language.
  * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
  * C# Hashtable literal with dot.addresses to ActionScript.
  * Nested function definitions.
@@ -169,6 +183,7 @@ Not supported
  * For in hashtable without a block.
  * ActionScript only allows literal keyword, string, number default in signature.
  * Profile function hotspots in unit tests.
+ * Foreach statement.
  * ActionScript type-casting to C# type-casting by type function.  With custom data types, it is ambiguous of a type is cast or if an arbitrary function is called.  Instead the ActionScript "as" keyword is clear.
  * Reformat and reorder may insert some optional grammar, such as class base.
  * Reorder with nested grammar.  Otherwise the expanded form is needed, since the raw grammar text is parsed.
@@ -181,6 +196,7 @@ Not supported
  * Distinguish order of operators that will be translated verbatim.
  * Logging.  Instead, wrap ActionScript trace and Unity C# Debug.Log in Toolkit.log.
  * Anonymous function.
+  https://msdn.microsoft.com/en-us/library/0yw3tz5k.aspx
  * C# static class to ActionScript class.
  * Ungrouped ternary repetition
     i ? 1 : b ? c : 4

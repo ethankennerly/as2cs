@@ -28,7 +28,7 @@ I := "I"
 
 member_expression := function_definition / member_declaration
 member_declaration := ts, namespace_modifiers?, data_declaration, ts?, SEMI
-data_declaration := constant_declaration / variable_declaration
+data_declaration := delegate_declaration / constant_declaration / variable_declaration
 CONSTANT := "const"
 namespace_modifier_place := namespace_modifiers?
 namespace_modifiers := (scope / STATIC / FINAL / OVERRIDE, ts)+
@@ -68,8 +68,10 @@ identifier := alphaunder, alphanumunder*
 
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT / address
+data_type := swap_type / INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT / address
 return_type := data_type / VOID
+as_type := data_type
+cs_type := data_type
 collection_type := collection / generic_collection 
 generic_collection := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
 collection := ARRAY_LIST / STRING_HASH_TABLE / HASH_TABLE

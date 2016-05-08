@@ -21,6 +21,16 @@ directions = [
 ]
 
 definitions = [
+     ('member_expression', [
+        ['  internal var /*delegate*/ ActionDelegate:/*void*/*;',
+         '  internal delegate /*dynamic*/void ActionDelegate();'],
+        ['  internal var onComplete:/*ActionDelegate*/Function;',
+         '  internal /*Function*/ActionDelegate onComplete;'],
+        ['  public var /*delegate*/ IsJustPressed:Boolean, letter:String;',
+         '  public delegate bool IsJustPressed(string letter);'],
+        ['  public function getPresses(justPressed:/*IsJustPressed*/Function):Array{}',
+         '  public ArrayList getPresses(/*Function*/IsJustPressed justPressed){}'],
+     ]),
      ('expression', [
         ['"as.g"', 
          '"as.g"'],

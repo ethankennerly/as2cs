@@ -12,10 +12,13 @@ IMPLEMENTS := "implements"
 function_modified := ts, namespace_modifiers, function_signature, ts?, COLON, ts?, return_type
 function_default := ts, function_signature, ts?, COLON, ts?, return_type
 
+delegate_declaration := ts?, VARIABLE, whitespace, DELEGATE, whitespace, argument_declared
+DELEGATE := "/*delegate*/"
+swap_type := COMMENT_START, cs_type, COMMENT_END, as_type
 variable_declaration := ts?, VARIABLE, ts, argument_declaration
 constant_declaration := ts?, CONSTANT, ts, argument_declaration
-argument_declared := identifier, (ts?, COLON, ts?, data_type)?
-argument_initialized := identifier, (ts?, COLON, ts?, data_type)?, argument_initializer
+argument_declared := identifier, (ts?, COLON, data_type)?
+argument_initialized := identifier, (ts?, COLON, data_type)?, argument_initializer
 collection_prefix := LIST, ts?, DOT
 ARRAY_LIST := "Array"
 LIST := "Vector"

@@ -12,6 +12,9 @@ FINAL := "sealed"
 function_modified := ts, namespace_modifiers, return_type, ts, function_signature
 function_default := ts, return_type, ts, function_signature
 
+delegate_declaration := whitespace?, DELEGATE, whitespace, argument_declared, LPAREN, RPAREN
+swap_type := COMMENT_START, as_type, COMMENT_END, cs_type
+DELEGATE := "delegate"
 variable_declaration := ts?, argument_declaration
 constant_declaration := ts?, CONSTANT, ts, argument_declaration
 argument_declared := data_type, ts, identifier
