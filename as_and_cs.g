@@ -66,10 +66,17 @@ address_tail := ts?,
 LBRACK := "["
 RBRACK := "]"
 call_expression := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
-replaced_property := COLLECTION_LENGTH / CLONE / PUSH / INDEX_OF / REMOVE_RANGE, ?(ts / -(alphanumunder / DOT))
-replaced_address := PARSE_INT / PARSE_FLOAT
-identifier := alphaunder, alphanumunder*
+replaced_address := PARSE_INT / PARSE_FLOAT / DEBUG_LOG / RANDOM / math_address
+replaced_property := collection_property,
+    ?(ts / -(alphanumunder / DOT))
+collection_property := COLLECTION_LENGTH / CLONE / PUSH / INDEX_OF / REMOVE_RANGE
 
+math_address := MATH, ts?, DOT, ts?, math_property
+math_property := ABS / ACOS / ASIN / ATAN / ATAN2
+    / CEIL / COS / EXP / FLOOR / LOG / MAX / MIN
+    / PI / POW / ROUND / SIN / SQRT / TAN
+
+identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
 data_type := swap_type / INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT / address

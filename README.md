@@ -145,14 +145,21 @@ Features
   C#:
     public delegate bool IsJustPressed(string letter);
     public ArrayList getPresses(/*<Function>*/IsJustPressed justPressed){}
+ * ActionScript "trace" to Unity C# Debug.Log with a single string as the argument.
+ * JavaScript Math functions to Unity C# Mathf functions.
+  http://help.adobe.com/en\_US/FlashPlatform/reference/actionscript/3/Math.html
+  http://docs.unity3d.com/ScriptReference/Mathf.html
+ * Random.  Careful:  Unity C# Random.value includes 1.0.  So wrapping in modulus:
+  ActionScript:
+    Math.random()
+  Unity C#:
+    (Random.value % 1.0f)
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * JavaScript "Math.floor" to Unity C# "Mathf.Floor".  Likewise:  max, min, pow
- * ActionScript "trace" to Unity C# Debug.Log with a single string as the argument.
 
  * Convert example Model.as from Anagram Attack.
 
