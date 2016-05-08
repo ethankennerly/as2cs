@@ -55,7 +55,9 @@ STRICT_NOT_EQUAL := "!=="
 
 COLLECTION_LENGTH := "length"
 CLONE := "concat()"
+INDEX_OF := "indexOf"
 PUSH := "push"
+REMOVE_RANGE := "splice"
 PARSE_INT := "parseInt"
 PARSE_FLOAT := "parseFloat"
 

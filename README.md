@@ -110,6 +110,9 @@ Features
  * ActionScript Array.concat() to C# ArrayList.Clone().
  * ActionScript Array.push to C# ArrayList.Add.
  * ActionScript Array.length to C# ArrayList.Count.
+ * ActionScript \*.indexOf to C# IndexOf.
+ * ActionScript \*.splice 1 to C# RemoveRange.  NOT compatible with adding elements:
+    array.splice(index, 1, added0, added1);
  * No return type in constructor.
  * Dynamic data type.
  * Keyword 'is'.
@@ -148,11 +151,13 @@ Not supported
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * ActionScript Array.splice to C#.
- * ActionScript Array.indexOf to C#.
+ * JavaScript "Math.floor" to Unity C# "Mathf.Floor".  Likewise:  max, min, pow
+ * ActionScript "trace" to Unity C# Debug.Log with a single string as the argument.
+
+ * Convert example Model.as from Anagram Attack.
+
  * ActionScript delete a to C# .Remove(a).
  * ActionScript clear(d) to C# d.Clear().
- * JavaScript "Math.floor" to Unity C# "Mathf.Floor".
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.

@@ -66,7 +66,7 @@ address_tail := ts?,
 LBRACK := "["
 RBRACK := "]"
 call_expression := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
-replaced_property := COLLECTION_LENGTH / CLONE / PUSH, ?(ts / -(alphanumunder / DOT))
+replaced_property := COLLECTION_LENGTH / CLONE / PUSH / INDEX_OF / REMOVE_RANGE, ?(ts / -(alphanumunder / DOT))
 replaced_address := PARSE_INT / PARSE_FLOAT
 identifier := alphaunder, alphanumunder*
 
