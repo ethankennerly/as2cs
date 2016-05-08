@@ -9,14 +9,16 @@ interface_type_list_follows := ts, IMPLEMENTS, ts, interface_identifier, interfa
 EXTENDS := "extends"
 IMPLEMENTS := "implements"
 
-function_modified := ts, namespace_modifiers, function_signature, ts?, COLON, ts?, return_type
+function_modified := ts, namespace_modifiers_place, function_signature, ts?, COLON, ts?, return_type
 function_default := ts, function_signature, ts?, COLON, ts?, return_type
+function_signature := FUNCTION, ts, identifier, function_parameters
 
-delegate_declaration := ts?, VARIABLE, whitespace, DELEGATE, whitespace, argument_declared
-DELEGATE := "/*delegate*/"
-swap_type := COMMENT_START, cs_type, COMMENT_END, as_type
-variable_declaration := ts?, VARIABLE, ts, argument_declaration
-constant_declaration := ts?, CONSTANT, ts, argument_declaration
+delegate_argument_declaration := VARIABLE, whitespace, DELEGATE, whitespace, argument_declared, ts?, COMMA, whitespace, argument_list
+delegate_no_argument_declaration := VARIABLE, whitespace, DELEGATE, whitespace, argument_declared
+DELEGATE := "/*<delegate>*/"
+swap_type := MARKUP_START, cs_type, MARKUP_END, as_type
+variable_declaration := ts?, VARIABLE, whitespace, argument_declaration
+constant_declaration := ts?, CONSTANT, whitespace, argument_declaration
 argument_declared := identifier, (ts?, COLON, data_type)?
 argument_initialized := identifier, (ts?, COLON, data_type)?, argument_initializer
 collection_prefix := LIST, ts?, DOT

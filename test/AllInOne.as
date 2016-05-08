@@ -29,7 +29,7 @@ package com.finegamedesign.anagram
         public var x:Number;
         public var y:Number;
 
-        public function AllInOne(x:Number=.0, y:Number=0.0, index:int=-1):void  // return type required.
+        public function AllInOne(x:Number=.0, y:Number=0.0, index:int=-1)
         {
             this.x = x;
             this.y = y;

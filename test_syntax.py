@@ -21,16 +21,6 @@ directions = [
 ]
 
 definitions = [
-     ('member_expression', [
-        ['  internal var /*delegate*/ ActionDelegate:/*void*/*;',
-         '  internal delegate /*dynamic*/void ActionDelegate();'],
-        ['  internal var onComplete:/*ActionDelegate*/Function;',
-         '  internal /*Function*/ActionDelegate onComplete;'],
-        ['  public var /*delegate*/ IsJustPressed:Boolean, letter:String;',
-         '  public delegate bool IsJustPressed(string letter);'],
-        ['  public function getPresses(justPressed:/*IsJustPressed*/Function):Array{}',
-         '  public ArrayList getPresses(/*Function*/IsJustPressed justPressed){}'],
-     ]),
      ('expression', [
         ['"as.g"', 
          '"as.g"'],
@@ -130,7 +120,7 @@ definitions = [
         ['//c', '//c'],
         ['// var i:int;', '// var i:int;'],
      ]),
-     ('namespace_modifiers', [
+     ('namespace_modifiers_place', [
         ['public ', 
          'public '],
         ['private static ', 
@@ -140,25 +130,25 @@ definitions = [
      ]),
      ('function_declaration', [
         ['  function f():void', 
-         '  void function f()'],
+         '  void f()'],
         ['    function g( ):void', 
-         '    void function g( )'],
+         '    void g( )'],
      ]),
      ('function_definition', [
         ['  function f():void{}', 
-         '  void function f(){}'],
+         '  void f(){}'],
         [' function f():void{}', 
-         ' void function f(){}'],
+         ' void f(){}'],
         [' public function f():void{}', 
-         ' public void function f(){}'],
+         ' public void f(){}'],
         [' internal function isF():Boolean{}', 
-         ' internal bool function isF(){}'],
+         ' internal bool isF(){}'],
         [' protected function getF():Number{}', 
-         ' protected float function getF(){}'],
-        ['  function F(){i = index;}', 
-         '  function F(){i = index;}'],
-        ['  function f():*{}', 
-         '  dynamic function f(){}'],
+         ' protected float getF(){}'],
+        ['    function F(){i = index;}', 
+         '    F(){i = index;}'],
+        ['    function f():*{}', 
+         '    dynamic f(){}'],
      ]),
      ('argument_declaration', [
         ['path:String',
@@ -192,9 +182,9 @@ definitions = [
      ]),
      ('function_declaration', [
         [' function f(path:String, index:int):void',
-         ' void function f(string path, int index)'],
+         ' void f(string path, int index)'],
         [' private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
-         ' private bool function isF(int index, bool isEnabled, float a)'],
+         ' private bool isF(int index, bool isEnabled, float a)'],
      ]),
      ('variable_assignment', [
         ['path = "as.g"',
@@ -236,9 +226,9 @@ definitions = [
      ]),
      ('function_declaration', [
         [' function f(path:String, index:int = -1):void',
-         ' void function f(string path, int index = -1)'],
+         ' void f(string path, int index = -1)'],
         [' private function isF(index:int, isEnabled:Boolean, a:Number=NaN):Boolean',
-         ' private bool function isF(int index, bool isEnabled, float a=NaN)'],
+         ' private bool isF(int index, bool isEnabled, float a=NaN)'],
      ]),
      ('number_format', [
         ['125', 
@@ -252,11 +242,11 @@ definitions = [
      ]),
      ('function_definition', [
         ['  function f():void{var i:int = index;}', 
-         '  void function f(){int i = index;}'],
+         '  void f(){int i = index;}'],
         ['  function f():void{i = index;}', 
-         '  void function f(){i = index;}'],
+         '  void f(){i = index;}'],
         ['  function f():void{var i:int = Math.floor(index);}', 
-         '  void function f(){int i = Math.floor(index);}'],
+         '  void f(){int i = Math.floor(index);}'],
      ]),
      ('member_declaration', [
         ['  var path:String = "as.g";',
@@ -387,7 +377,7 @@ definitions = [
      ]),
      ('function_definition', [
         ['  function f():void{if (a){}}', 
-         '  void function f(){if (a){}}'],
+         '  void f(){if (a){}}'],
      ]),
      ('iteration_statement', [
         ['for (i=0; i<L;i++){}',
@@ -438,6 +428,16 @@ definitions = [
          '/*c*/\nnamespace N\n{\n    public class C6{\n    }\n}'],
         ['package{ class C{ var a:Vector.<String>;}}', 
          'using System.Collections.Generic;\nnamespace{ class C{ List<string> a;}}'],
+     ]),
+     ('member_expression', [
+        ['  internal var /*<delegate>*/ ActionDelegate:/*<void>*/*;',
+         '  internal delegate /*<dynamic>*/void ActionDelegate();'],
+        ['  internal var onComplete:/*<ActionDelegate>*/Function;',
+         '  internal /*<Function>*/ActionDelegate onComplete;'],
+        ['  public var /*<delegate>*/ IsJustPressed:Boolean, letter:String;',
+         '  public delegate bool IsJustPressed(string letter);'],
+        ['  public function getPresses(justPressed:/*<IsJustPressed>*/Function):Array{}',
+         '  public ArrayList getPresses(/*<Function>*/IsJustPressed justPressed){}'],
      ]),
 ]
 

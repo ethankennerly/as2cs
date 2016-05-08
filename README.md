@@ -126,28 +126,28 @@ Features
  * Parse float and parse integer.  However, C# throws exception if not perfectly formatted.
   And whitespace is not permitted inside "int.Parse" or "float.Parse".
   http://stackoverflow.com/questions/3960499/better-use-int-parse-or-convert-toint32
+ * Markup delegate type.  C# requires signature and return type.
+  In ActionScript, some of this can be specified with a compilable convention and comment markup.
+  Return type is data type.  Void is not supported data type, so use no type.
+  The data type of the function object is in the preceding comment block with no whitespace.
+  ActionScript:
+    internal var /*<delegate>*/ ActionDelegate:/*<void>*/*;
+    internal var onComplete:/*<ActionDelegate>*/Function; 
+  C#:
+    internal delegate /*<void>*/dynamic ActionDelegate();
+    internal /*<Function>*/ActionDelegate onComplete;
+  ActionScript:
+    public var /*<delegate>*/ IsJustPressed:Boolean, letter:String;
+    public function getPresses(justPressed:/*<IsJustPressed>*/Function):Array{}
+  C#:
+    public delegate bool IsJustPressed(string letter);
+    public ArrayList getPresses(/*<Function>*/IsJustPressed justPressed){}
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Delegate type markup.  C# requires signature and return type.
-  In ActionScript, some of this can be specified with a compilable convention and comment markup.
-  Return type is data type.  Void is not supported data type, so use no type.
-  The data type of the function object is in the preceding comment block with no whitespace.
-  ActionScript:
-    internal var /*delegate*/ ActionDelegate;
-    internal var onComplete:/*ActionDelegate*/Function; 
-  C#:
-    internal delegate dynamic ActionDelegate();
-    internal ActionDelegate onComplete;
-  ActionScript:
-    public var /*delegate*/ IsJustPressed:Boolean, letter:String;
-    public function getPresses(justPressed:/*IsJustPressed*/Function):Array{}
-  C#:
-    public delegate bool IsJustPressed(string letter);
-    public ArrayList getPresses(/*Function*/IsJustPressed justPressed){}
  * ActionScript Array.splice to C#.
  * ActionScript Array.indexOf to C#.
  * ActionScript delete a to C# .Remove(a).

@@ -15,7 +15,7 @@ namespace com.finegamedesign.anagram
         /**
          * Set cache.
          */
-        internal static void function setTest()
+        internal static void setTest()
         {
             // Comment is not converted.
             // trace("setTest: " + _cache);
@@ -28,7 +28,7 @@ namespace com.finegamedesign.anagram
         public float x;
         public float y;
         
-        public void function AllInOne(float x=.0f, float y=0.0f, int index=-1)  // return type required.
+        public AllInOne(float x=.0f, float y=0.0f, int index=-1)
         {
             this.x = x;
             this.y = y;

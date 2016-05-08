@@ -586,6 +586,8 @@ replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as
 reorder_defaults = {'as': {}, 'cs': {}}
 reorder_defaults['cs']['ts'] = literals['cs']['SPACE']
 reorder_defaults['as']['ts'] = literals['as']['SPACE']
+reorder_defaults['cs']['whitespace'] = literals['cs']['SPACE']
+reorder_defaults['as']['whitespace'] = literals['as']['SPACE']
 reorder_tags = unique_tag_orders(as_grammar, cs_grammar)
 
 different_tags = {}

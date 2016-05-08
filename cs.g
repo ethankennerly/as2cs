@@ -9,14 +9,16 @@ interface_first := ts, interface_identifier
 interface_type_list_follows := ts?, COMMA, ts, interface_identifier, interface_next_place
 FINAL := "sealed"
 
-function_modified := ts, namespace_modifiers, return_type, ts, function_signature
+function_modified := ts, namespace_modifiers_place, return_type, ts, function_signature
 function_default := ts, return_type, ts, function_signature
+function_signature := identifier, function_parameters
 
-delegate_declaration := whitespace?, DELEGATE, whitespace, argument_declared, LPAREN, RPAREN
-swap_type := COMMENT_START, as_type, COMMENT_END, cs_type
+delegate_argument_declaration := DELEGATE, whitespace, argument_declared, LPAREN, argument_list, RPAREN
+delegate_no_argument_declaration := DELEGATE, whitespace, argument_declared, LPAREN, RPAREN
+swap_type := MARKUP_START, as_type, MARKUP_END, cs_type
 DELEGATE := "delegate"
-variable_declaration := ts?, argument_declaration
-constant_declaration := ts?, CONSTANT, ts, argument_declaration
+variable_declaration := whitespace?, argument_declaration
+constant_declaration := whitespace?, CONSTANT, whitespace, argument_declaration
 argument_declared := data_type, ts, identifier
 argument_initialized := data_type, ts, identifier, argument_initializer
 collection_prefix := LIST
