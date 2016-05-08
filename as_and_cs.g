@@ -68,7 +68,7 @@ identifier := alphaunder, alphanumunder*
 
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / OBJECT / identifier
+data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT / identifier
 return_type := data_type / VOID
 collection_type := collection / generic_collection 
 generic_collection := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
@@ -141,12 +141,14 @@ relational_expression := (ts?, unary_expression, relational_expression_tail*)
 relational_expression_tail := ts?, computational_operator, ts?, relational_expression
 
 unary_expression :=
-    typecast_expression
+    nullable_cast_expression
     / postfix_expression
     / (PLUS2, ts?, unary_expression)
     / (MINUS2, ts?, unary_expression)
     / (LNOT, ts?, unary_expression)
 LNOT := "!"
+nullable_cast_expression := ts?, left_hand_side_expression, ts, AS, ts, data_type
+AS := "as"
 
 postfix_expression := left_hand_side_expression, (PLUS2 / MINUS2)?
 PLUS2 := "++"

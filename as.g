@@ -48,8 +48,6 @@ literal_keyword := NULL / UNDEFINED
 STRICT_EQUAL := "==="
 STRICT_NOT_EQUAL := "!=="
 
-typecast_expression := ts?, left_hand_side_expression, ts, AS, ts, data_type
-AS := "as"
 COLLECTION_LENGTH := "length"
 CLONE := "concat()"
 PUSH := "push"
@@ -62,5 +60,6 @@ STRING := "String"
 BOOLEAN := "Boolean"
 FLOAT := "Number"
 VARIABLE := "var"
+DYNAMIC_TYPE := "*"
 FINAL := "final"
 IS_CONTAINED_IN := "in"

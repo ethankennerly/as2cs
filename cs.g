@@ -53,7 +53,7 @@ COLLECTION_LENGTH := "Count"
 CLONE := "Clone()"
 PUSH := "Add"
 
-typecast_expression := ts?, LPAREN, ts?, data_type, ts?, RPAREN, ts?, left_hand_side_expression
+# typecast_expression := ts?, LPAREN, ts?, data_type, ts?, RPAREN, ts?, left_hand_side_expression
 
 float_format := float, float_suffix
 
@@ -64,5 +64,6 @@ BOOLEAN := "bool"
 FLOAT := "float"
 float_suffix := "f" / "F"
 OBJECT := "object"
+DYNAMIC_TYPE := "dynamic"
 UNDEFINED := NULL
 

@@ -24,10 +24,12 @@ definitions = [
      ('function_definition', [
         ['  function F(){i = index;}', 
          '  function F(){i = index;}'],
+        ['  function f():*{}', 
+         '  dynamic function f(){}'],
      ]),
      ('expression', [
         ['path as String',
-         '(string)path'],
+         'path as string'],
         ['paths.length ',
          'paths.Count '],
         ['paths.push(p)',
@@ -62,6 +64,7 @@ definitions = [
         ['Custom', 'Custom'],
         ['Array', 'ArrayList'],
         ['Object', 'Hashtable'],
+        ['*', 'dynamic'],
      ]),
      ('identifier', [
         ['_a', '_a'],
@@ -141,6 +144,8 @@ definitions = [
          'List<List<bool>> v = new List<List<bool>>(2)'],
         ['var v:Vector.<Vector.<CustomType>> = new Vector.<Vector.<CustomType>>(2)',
          'List<List<CustomType>> v = new List<List<CustomType>>(2)'],
+        ['var a:*',
+         'dynamic a'],
      ]),
      ('argument_list', [
         ['path:String',

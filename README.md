@@ -110,14 +110,21 @@ Features
  * ActionScript Array.push to C# ArrayList.Add.
  * ActionScript Array.length to C# ArrayList.Count.
  * No return type in constructor.
+ * Dynamic data type.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Variable return type declaration in ActionScript '\*'
+ * ActionScript is keyword.
+  https://msdn.microsoft.com/en-us/library/dd264741.aspx
+  http://stackoverflow.com/questions/496096/casting-vs-using-the-as-keyword-in-the-clr
+ * JavaScript typeof keyword.
+ * ActionScript instanceof keyword.
  * Declare multiple variables in a statement.
+ * Parse float and parse integer.
+ * Foreach statement.
  * ActionScript and C# wrappers for common collection actions: clone, push, length.  
   Written in target language.
  * ActionScript Array.splice to C#.
@@ -127,12 +134,6 @@ Not supported
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
- * ActionScript is keyword.
- * ActionScript instanceof keyword.
- * JavaScript type keyword.
- * Foreach statement.
- * Return type omitted.
- * C# typed Array to ActionScript typed Vector.
  * Post-syntax conversion, parse to replace corresponding function names and signatures.
  * Hash literal without space before value in key value pair.
  * Convert ActionScript hash to Dictionary with string-typed key.
@@ -147,6 +148,7 @@ Not supported
         string key = item.Key;
         text += key;
     }
+ * C# typed Array to ActionScript typed Vector.
  * Recognize if the instance is not a vector or array to not replace.
   The property "length" is used in a lot ways.
  * Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
@@ -235,6 +237,7 @@ Not supported
  * Validate that initializations are last in a function parameter list.
  * JavaScript elision:
     var a = [, , ,];
+ * C# pointers.
  * Compiling bytecode.
  * Everything else not explicitly mentioned as a feature.
 
