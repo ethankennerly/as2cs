@@ -205,10 +205,12 @@ definitions = [
          'string path, int index = -1'],
      ]),
      ('function_declaration', [
-        [' function f(path:String, index:int):void',
-         ' void f(string path, int index)'],
-        [' private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
-         ' private bool isF(int index, bool isEnabled, float a)'],
+        ['  function f(path:String, index:int):void',
+         '  void f(string path, int index)'],
+        ['  private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
+         '  private bool isF(int index, bool isEnabled, float a)'],
+        ['\n\n  private static function shuffle(cards:Array):void',
+         '\n\n  private static void shuffle(ArrayList cards)'],
      ]),
      ('variable_assignment', [
         ['path = "as.g"',

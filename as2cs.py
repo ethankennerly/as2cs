@@ -11,6 +11,7 @@ from collections import Iterable
 from os import path
 from pprint import pformat
 from pretty_print_code.pretty_print_code import format
+from simpleparse.error import ParserSyntaxError
 from simpleparse.parser import Parser
 from simpleparse.simpleparsegrammar import declaration
 from simpleparse.common import strings, comments, numbers, chartypes, SOURCES
@@ -547,9 +548,20 @@ def analogous_paths(source_paths):
 
 
 def convert_files(source_paths):
-    for source_path, to_path in analogous_paths(source_paths):
-        convert_file(source_path, to_path)
-
+    try:
+        for source_path, to_path in analogous_paths(source_paths):
+            convert_file(source_path, to_path)
+    except ParserSyntaxError as err:
+        message = 'Path %s: production %s\nexpected %s at position %s' % (
+            source_path, err.production, err.expected, err.position)
+        if err.buffer:
+            context = err.buffer[max(0, err.position-20):err.position]
+            context += ' >>!<< '
+            context += err.buffer[err.position:err.position+20]
+            message += ' of %s. context:\n%s' % (len(err.buffer), context)
+        print message
+        import pdb
+        pdb.set_trace()
 
 def compare_file(source_path, to_path):
     text = codecs.open(source_path, 'r', 'utf-8').read()

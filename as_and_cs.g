@@ -31,14 +31,14 @@ interface_prefix := I, uppercasechar, identifier?
 interface_identifier := interface_prefix, identifier?
 I := "I"
 
-member_expression := function_definition / member_declaration
+member_expression := (function_definition / member_declaration)
 member_declaration := ts?, namespace_modifiers_place, data_declaration, ts?, SEMI
 data_declaration := delegate_declaration / constant_declaration / variable_declaration
 delegate_declaration := delegate_argument_declaration / delegate_no_argument_declaration
 CONSTANT := "const"
 namespace_modifiers_place := (namespace_modifier, (ts, namespace_modifier)*, whitespace)?
 namespace_modifier := scope / STATIC / FINAL / OVERRIDE
-function_body := ts?, LBRACE, statement*, ts?, RBRACE
+function_body := ts?, LBRACE, !, statement*, ts?, RBRACE
 function_declaration := function_modified / constructor / function_default
 constructor := ts?, namespace_modifiers_place, function_signature
 function_definition := function_declaration, function_body
@@ -213,7 +213,7 @@ AND := "&&"
 BIT_NOT := "~"
 
 iteration_statement := for_in_statement / for_statement / do_statement / while_statement
-for_statement := ts?, FOR, ts?, LPAREN, statement, statement, expression_list?, RPAREN, statement
+for_statement := ts?, FOR, ts?, LPAREN, statement, statement, expression_list?, RPAREN, !, statement
 FOR := "for"
 while_statement := ts?, WHILE, conditional_clause, statement
 WHILE := "while"

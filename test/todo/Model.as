@@ -2,6 +2,17 @@ package com.finegamedesign.anagram
 {
     public class Model
     {
+        private static function shuffle(cards:Array):void
+        {
+            for (var i:int = cards.length - 1; 1 <= i; i--)
+            {
+                var r:int = Math.random() * (i + 1);
+                var swap:* = cards[r];
+                cards[r] = cards[i];
+                cards[i] = swap;
+            }
+        }
+
         internal var helpState:String;
         internal var letterMax:int = 10;
         internal var inputs:Array = [];
@@ -9,7 +20,7 @@ package com.finegamedesign.anagram
          * From letter graphic.
          */
         internal var letterWidth:Number = 42.0;
-        internal var /*<delegate>*/ ActionDelegate:/*void*/*;
+        internal var /*<delegate>*/ ActionDelegate:/*<void>*/*;
         internal var onComplete:/*<ActionDelegate>*/Function; 
         internal var /*<delegate>*/ IsJustPressed:Boolean, letter:String;
         internal var help:String;
@@ -35,25 +46,22 @@ package com.finegamedesign.anagram
             trial(levels.getParams());
         }
 
-        private static function shuffle(cards:Array):void
-        {
-            for (var i:int = cards.length - 1; 1 <= i; i--)
-            {
-                var r:int = Math.random() * (i + 1);
-                var swap:* = cards[r];
-                cards[r] = cards[i];
-                cards[i] = swap;
-            }
-        }
-
-        internal function trial(params:Object):void
+        internal function trial(parameters:Object):void
         {
             wordPosition = 0.0;
             help = "";
             wordWidthPerSecond = -0.01;
-            for (var key:String in params)
-            {
-                this[key] = params[key];
+            if (null != parameters["text"]) {
+                text = String(parameters["text"]);
+            }
+            if (null != parameters["help"]) {
+                help = String(parameters["help"]);
+            }
+            if (null != parameters["wordWidthPerSecond"]) {
+                wordWidthPerSecond = Number(parameters["wordWidthPerSecond"]);
+            }
+            if (null != parameters["wordPosition"]) {
+                wordPosition = Number(parameters["wordPosition"]);
             }
             available = text.split("");
             word = available.concat()
@@ -99,7 +107,7 @@ package com.finegamedesign.anagram
 
         internal function scaleToScreen(screenWidth:Number):void
         {
-            scale = screenWidth / this.width;
+            scale = screenWidth / width;
         }
 
         /**

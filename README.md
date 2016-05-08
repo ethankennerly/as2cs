@@ -189,22 +189,17 @@ Features
 
     (Random.value % 1.0f)
 
+ * Context when function body not parsed.
+
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Insert "using UnityEngine" if converting to Mathf or Random.
-
  * Convert example Model.as from Anagram Attack.
 
- * ActionScript delete a to C# .Remove(a).
- * ActionScript clear(d) to C# d.Clear().
- * Overriding virtual functions in C#.
-  http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
- * Interface definition.
- * Post-syntax conversion, parse to replace corresponding function names and signatures.
- * Hash literal without space before value in key value pair.
+ * Insert "using UnityEngine" if converting to Mathf or Random.
+
  * Convert ActionScript hash to Dictionary with string-typed key.
 
     Dictionary<string, dynamic>
@@ -227,6 +222,13 @@ Not supported
         text += key;
     }
 
+ * ActionScript delete a to C# .Remove(a).
+ * ActionScript clear(d) to C# d.Clear().
+ * Overriding virtual functions in C#.
+  http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
+ * Interface definition.
+ * Post-syntax conversion, parse to replace corresponding function names and signatures.
+ * Hash literal without space before value in key value pair.
  * Set this property by name.  This is slow in ActionScript and C#.
  ActionScript:
 
