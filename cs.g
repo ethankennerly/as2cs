@@ -28,18 +28,18 @@ array_literal_suffix := RBRACE
 NEW_ARRAY_LIST := "new ArrayList()"
 LIST := "List"
 HASH_TABLE := "Hashtable"
-STRING_HASH_TABLE := "Hashtable"
+STRING_HASH_TABLE := "Dictionary<string, dynamic>"
 hash_literal_prefix := NEW_HASH_TABLE, ts?, LBRACE
 hash_literal_suffix := RBRACE
-NEW_HASH_TABLE := "new Hashtable()"
+NEW_HASH_TABLE := "new Dictionary<string, dynamic>()"
 property := LBRACE, ts?, key, ts?, COMMA, ts, expression, ts?, RBRACE
 quoted_identifier := QUOTE, identifier, QUOTE
 
 
-for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, HASH_ENTRY, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, ts?, LBRACE, iterator, ASSIGN_KEY, ts, statement+, RBRACE
+for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, STRING_HASH_ENTRY, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, ts?, LBRACE, iterator, ASSIGN_KEY, ts, statement+, RBRACE
 variable_declared := ts?, argument_declared
-HASH_ENTRY := "DictionaryEntry _entry"
-ASSIGN_KEY := " = (string)_entry.Key;"
+STRING_HASH_ENTRY := "KeyValuePair<string, dynamic> _entry"
+ASSIGN_KEY := " = _entry.Key;"
 FOR_IN := "foreach"
 
 strict_equal_expression := REFERENCE_EQUAL, ts?, LPAREN, ts?, expression, COMMA, ts, expression, ts?, RPAREN

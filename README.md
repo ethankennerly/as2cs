@@ -91,26 +91,10 @@ Features
         using System.Collections.Generic;
 
 * ActionScript untyped Array to C# ArrayList data type.
-* ActionScript Object and Dictionary to C# Hashtable data type.
 * ActionScript Array literal.
   http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
-* Nested hash literal:  ActionScript JSON literal without quotes on keys.
 * For loop iteration.  Grammar is more permissive than a compiled for loop.
 * While loop iteration; break and continue keywords.
-* Hack Hashtable iteration over keys:  for in.
-  ActionScript:
-
-        for (var key:String in items) {
-            text += key;
-        }
-
-  C#:
-
-        foreach (DictionaryEntry item in items) {
-            string key = item.Key;
-            text += key;
-        }
-
 * Constant declaration.
 * Cast some reserved data types.  ActionScript type-casting to C# type-casting by type function only for some reserved data types.  With custom data types, it is ambiguous of a type is cast or if an arbitrary function is called.  Instead the ActionScript "as" keyword is clear.  However, C# does not permit "as" used with non-nullable types, such as int or float.
 * Cast type by "as" keyword.  Won't work for int or float.  Use explicit type instead.  Example:
@@ -193,13 +177,7 @@ Features
 * Return statement.
 * Convert example TestSyntaxModel.as from Anagram Attack.
 * Insert "using UnityEngine" if converting to Mathf or Random.
-
-Not supported
-=============
-
-* If you'd like to request a pull or fork to add a feature, that'd be appreciated!
-
-* Convert ActionScript hash to Dictionary with string-typed key.
+* Convert ActionScript hash to Dictionary with string-typed key.  Import generics.
 
         Dictionary<string, dynamic>
 
@@ -221,9 +199,35 @@ Not supported
             text += key;
         }
 
+* ActionScript Dictionary to C# Hashtable data type.
+
+
+Not supported
+=============
+
+* If you'd like to request a pull or fork to add a feature, that'd be appreciated!
+
+* When cloning ArrayList in C#, cast the type.
+
+        word = (ArrayList)available.Clone();
+
+* When copying vector, cast the type.
+
+        List<string> copy = new List<string>(original);
+
+  http://stackoverflow.com/questions/1952185/how-do-i-copy-items-from-list-to-list-without-foreach
 * ActionScript string.length to C# String.Length
 * ActionScript string.toLowerCase to C# String.ToLower
 * ActionScript lastIndexOf to C# LastIndexOf
+* ActionScript pop to C#.
+
+        var letter:String = inputs.pop();
+
+  C#:
+
+        string letter = (string) inputs[inputs.Count - 1];
+        inputs.RemoveAt(inputs.Count - 1);
+
 * Set ActionScript array.length to C#.  Could use splice instead.
 
         inputs.length = 0;
@@ -242,9 +246,9 @@ Not supported
 
 * Pass Unity 5.2 compiler check of TestSyntaxModel.cs when copied to Assets folder.
 
-        python as2cs.py test/TestSyntaxModel.as
-        cp -p test/TestSyntaxModel.cs ../../unity/anagram/Assets/Scripts/
+        bash test_copy_to_unity.sh
 
+* Explicit type-casting on access to a ArrayList to a data type.  Instead you can use an ActionScript Vector.
 * Match whitespace when empty array literal, hash literal and following newline.
 
   Expected:
@@ -257,11 +261,16 @@ Not supported
                 ]
                 ;
 
+* ActionScript typed Vector literal to C# typed list literal.
 * ActionScript delete a to C# .Remove(a).
 * ActionScript clear(d) to C# d.Clear().
 * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
 * Interface definition.
+* ActionScript single-quoted strings to C# double-quoted strings, with escaping subquotes.  C# reserves single-quoted strings for single-characters.  Instead, you can replace in ActionScript the single-quotes with double-quotes.  Example ActionScript:
+
+            trial({'help': 'Hello world'});
+
 * Post-syntax conversion, parse to replace corresponding function names and signatures.
 * Notify ActionScript 'base' as identifier.  C# reserves 'base'
 * Hash literal without space before value in key value pair.
@@ -285,10 +294,8 @@ Not supported
 * C# typed Array to ActionScript typed Vector.
 * ActionScript and C# wrappers for common collection actions: clone, push, length.  
   Written in target language.
-* Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.
 * C# Hashtable literal with dot.addresses to ActionScript.
 * Nested function definitions.
-* Explicit type-casting on access to a ArrayList to a data type.
 * Key iteration over an array (also "for in" syntax in ActionScript).
 * For in hashtable without a block.
 * ActionScript only allows literal keyword, string, number default in signature.
@@ -336,6 +343,9 @@ Not supported
         := assignment operator
 
 * ActionScript 3 argument list '...' syntax
+* Recognize if C# needs to be converted to ActionScript Dictionary, or if an Object suffices.  Recognize if iterating a dictionary with string key or a general hashtable.
+* Markup ActionScript Dictionary to C# with explicit types of keys and values if possible.  Not ActionScript Dictionary to C# Dictionary\<dynamic, dynamic\>:  This was frowned upon as being slow and error-prone:
+  http://stackoverflow.com/questions/13566915/dictionarydynamic-dynamic-value-items-cant-be-accessed-c-sharp
 * JavaScript typeof string to C# type.
   http://stackoverflow.com/questions/310820/how-to-check-if-two-objects-are-of-the-same-type-in-actionscript
 * Convert extended class declaration that has no whitespace:

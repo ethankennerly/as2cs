@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 namespace com.finegamedesign.anagram
 {
     public class TestSyntaxModel
@@ -43,20 +44,29 @@ namespace com.finegamedesign.anagram
         internal string state;
         internal Levels levels = new Levels();
         private ArrayList available;
-        private Hashtable repeat = new Hashtable(){
+        private Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){
         }
         ;
         private ArrayList selects;
-        private Hashtable wordHash;
+        private Dictionary<string, dynamic> wordHash;
         private bool isVerbose = false;
         
         public TestSyntaxModel()
         {
-            wordHash = new Words().init();
-            trial(levels.getParams());
+            wordHash = new Dictionary<string, dynamic>(){
+                {
+                    "aa", true}
+            }
+            ;
+            // trial(levels.getParams());
+            trial(new Dictionary<string, dynamic>(){
+                {
+                    "help", "Hello world"}
+            }
+            );
         }
         
-        internal void trial(Hashtable parameters)
+        internal void trial(Dictionary<string, dynamic> parameters)
         {
             wordPosition = 0.0f;
             help = "";
@@ -88,11 +98,11 @@ namespace com.finegamedesign.anagram
                 // 1.5;
                 // 1.75;
                 2.0f;
-                float baseRate = Mathf.Max(1, letterMax - text.Count);
+                int baseRate = Mathf.Max(1, letterMax - text.Count);
                 wordWidthPerSecond *= Mathf.Pow(baseRate, power);
             }
             selects = word.Clone();
-            repeat = new Hashtable(){
+            repeat = new Dictionary<string, dynamic>(){
             }
             ;
             if (isVerbose) Debug.Log("Model.trial: word[0]: <" + word[0] + ">");
@@ -198,7 +208,7 @@ namespace com.finegamedesign.anagram
             ArrayList presses = new ArrayList(){
             }
             ;
-            Hashtable letters = new Hashtable(){
+            Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
             }
             ;
             for (int i = 0; i < available.Count; i++)
@@ -226,7 +236,7 @@ namespace com.finegamedesign.anagram
          */
         internal ArrayList press(ArrayList presses)
         {
-            Hashtable letters = new Hashtable(){
+            Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
             }
             ;
             ArrayList selectsNow = new ArrayList(){
@@ -317,7 +327,10 @@ namespace com.finegamedesign.anagram
                         if (complete)
                         {
                             completes = word.Clone();
-                            trial(levels.up());
+                            // trial(levels.up());
+                            trial(new Dictionary<string, dynamic>(){
+                            }
+                            );
                             state = "complete";
                             if (null != onComplete)
                             {
@@ -348,7 +361,10 @@ namespace com.finegamedesign.anagram
         internal void cheatLevelUp(int add)
         {
             score = 0;
-            trial(levels.up(add));
+            // trial(levels.up(add));
+            trial(new Dictionary<string, dynamic>(){
+            }
+            );
             wordPosition = 0.0f;
         }
     }

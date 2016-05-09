@@ -463,7 +463,7 @@ def find_tag(taglist, target_tag):
 def may_import(taglist, text, definition, to):
     r"""
     Insert into C# compilation_unit only if there is a generic_collection.
-    >>> taglist = ((('other', None), ('generic_collection', None)))
+    >>> taglist = ((('hash_table', None), ('generic_collection', None)))
     >>> may_import(taglist, 't', 'function_body', 'cs')
     't'
     >>> may_import(taglist, 't', 'compilation_unit', 'as')
@@ -487,18 +487,27 @@ def may_import(taglist, text, definition, to):
     'before\nafter'
     """
     if 'compilation_unit' == definition:
-        import_statements = (
-            ('generic_collection', 'using System.Collections.Generic;\n'),
-            ('collection', 'using System.Collections;\n'),
-            ('unity_address', 'using UnityEngine;\n'),
-        )
-        for tag, import_statement in import_statements:
-            if 'cs' == to:
-                found = find_tag(taglist, tag)
-                if found:
-                    text = '%s%s' % (import_statement, text)
-            elif 'as' == to:
-                text = text.replace(import_statement, '')
+        import_statements = [
+            ('using System.Collections.Generic;\n', [
+                'generic_collection', 
+                'string_hash_literal',
+            ]), 
+            ('using System.Collections;\n', [
+                'collection', 
+            ]),
+            ('using UnityEngine;\n', [
+                'unity_address',
+            ]),
+        ]
+        for import_statement, tags in import_statements:
+            for tag in tags:
+                if 'cs' == to:
+                    found = find_tag(taglist, tag)
+                    if found:
+                        text = '%s%s' % (import_statement, text)
+                        break
+                elif 'as' == to:
+                    text = text.replace(import_statement, '')
     return text
 
 

@@ -42,8 +42,9 @@ package com.finegamedesign.anagram
 
         public function TestSyntaxModel()
         {
-            wordHash = new Words().init();
-            trial(levels.getParams());
+            wordHash = {"aa": true};
+            // trial(levels.getParams());
+            trial({"help": "Hello world"});
         }
 
         internal function trial(parameters:Object):void
@@ -78,7 +79,7 @@ package com.finegamedesign.anagram
                                    // 1.5;
                                    // 1.75;
                                    2.0;
-                var baseRate:Number = Math.max(1, letterMax - text.length);
+                var baseRate:int = Math.max(1, letterMax - text.length);
                 wordWidthPerSecond *= Math.pow(baseRate, power);
             }
             selects = word.concat();
@@ -295,7 +296,8 @@ package com.finegamedesign.anagram
                         if (complete)
                         {
                             completes = word.concat();
-                            trial(levels.up());
+                            // trial(levels.up());
+                            trial({});
                             state = "complete";
                             if (null != onComplete)
                             {
@@ -326,7 +328,8 @@ package com.finegamedesign.anagram
         internal function cheatLevelUp(add:int):void
         {
             score = 0;
-            trial(levels.up(add));
+            // trial(levels.up(add));
+            trial({});
             wordPosition = 0.0;
         }
     }

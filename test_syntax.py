@@ -15,6 +15,7 @@ from as2cs import cfg, convert, compare_files, \
     format_taglist, literals, may_format, realpath
 from pretty_print_code.pretty_print_code import format_difference
 
+
 directions = [
     ['as', 'cs', 0, 1],
     ['cs', 'as', 1, 0],
@@ -92,10 +93,10 @@ definitions = [
      ('expression', [
         ['[]', 'new ArrayList(){}'],
         ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
-        ['{}', 'new Hashtable(){}'],
-        ['{a: b, "1.0": 2.0}', 'new Hashtable(){{"a", b}, {"1.0", 2.0f}}'],
-        ['{a: {b: "1.0"}}', 'new Hashtable(){{"a", new Hashtable(){{"b", "1.0"}}}}'],
-        ['[{a: b}]', 'new ArrayList(){new Hashtable(){{"a", b}}}'],
+        ['{}', 'new Dictionary<string, dynamic>(){}'],
+        ['{a: b, "1.0": 2.0}', 'new Dictionary<string, dynamic>(){{"a", b}, {"1.0", 2.0f}}'],
+        ['{a: {b: "1.0"}}', 'new Dictionary<string, dynamic>(){{"a", new Dictionary<string, dynamic>(){{"b", "1.0"}}}}'],
+        ['[{a: b}]', 'new ArrayList(){new Dictionary<string, dynamic>(){{"a", b}}}'],
         ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],
      ]),
      ('data_type', [
@@ -105,7 +106,7 @@ definitions = [
         ['Number', 'float'],
         ['Custom', 'Custom'],
         ['Array', 'ArrayList'],
-        ['Object', 'Hashtable'],
+        ['Object', 'Dictionary<string, dynamic>'],
         ['*', 'dynamic'],
         ['A.B.C', 'A.B.C'],
      ]),
@@ -431,9 +432,9 @@ definitions = [
         ['do {i++; j--;}while(false)',
          'do {i++; j--;}while(false)'],
         ['for(var key:String in items){text += key;}',
-         'foreach(DictionaryEntry _entry in items){string key = (string)_entry.Key; text += key;}'],
+         'foreach(KeyValuePair<string, dynamic> _entry in items){string key = _entry.Key; text += key;}'],
         ['for(key in items){text += key;}',
-         'foreach(DictionaryEntry _entry in items){key = (string)_entry.Key; text += key;}'],
+         'foreach(KeyValuePair<string, dynamic> _entry in items){key = _entry.Key; text += key;}'],
         ['for (var i:int = cards.length - 1; 1 <= i; i--){}',
          'for (int i = cards.Count - 1; 1 <= i; i--){}'],
      ]),
