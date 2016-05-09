@@ -1,6 +1,6 @@
 package com.finegamedesign.anagram
 {
-    public class Model
+    public class TestSyntaxModel
     {
         private static function shuffle(cards:Array):void
         {
@@ -40,7 +40,7 @@ package com.finegamedesign.anagram
         private var wordHash:Object;
         private var isVerbose:Boolean = false;
 
-        public function Model()
+        public function TestSyntaxModel()
         {
             wordHash = new Words().init();
             trial(levels.getParams());
@@ -64,7 +64,7 @@ package com.finegamedesign.anagram
                 wordPosition = Number(parameters["wordPosition"]);
             }
             available = text.split("");
-            word = available.concat()
+            word = available.concat();
             if ("" == help)
             {
                 shuffle(word);
@@ -78,8 +78,8 @@ package com.finegamedesign.anagram
                                    // 1.5;
                                    // 1.75;
                                    2.0;
-                var base:Number = Math.max(1, letterMax - text.length);
-                wordWidthPerSecond *= Math.pow(base, power);
+                var baseRate:Number = Math.max(1, letterMax - text.length);
+                wordWidthPerSecond *= Math.pow(baseRate, power);
             }
             selects = word.concat();
             repeat = {};

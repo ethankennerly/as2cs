@@ -190,16 +190,35 @@ Features
     (Random.value % 1.0f)
 
  * Context when function body not parsed.
+ * Return statement.
+ * Convert example TestSyntaxModel.as from Anagram Attack.
+ * Insert "using UnityEngine" if converting to Mathf or Random.
 
 Not supported
 =============
 
  * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
- * Convert example Model.as from Anagram Attack.
+ * ActionScript string.length to C# String.Length
+ * ActionScript string.toLowerCase to C# String.ToLower
+ * ActionScript lastIndexOf to C# LastIndexOf
+ * Set ActionScript array.length to C#.  Could use splice instead.
 
- * Insert "using UnityEngine" if converting to Mathf or Random.
+    inputs.length = 0;
 
+    inputs.RemoveRange(0, inputs.Count);
+
+ * ActionScript join to C#.  May want string List or wrapper instead of:
+
+    var submission:String = inputs.join("");
+
+    string submission = string.Join("", ((string []) inputs.ToArray(typeof(string))));
+
+ * Pass Unity 5.2 compiler check of TestSyntaxModel.cs when copied to Assets folder.
+
+    python as2cs.py test/TestSyntaxModel.as
+    cp -p test/TestSyntaxModel.cs ../../unity/anagram/Assets/Scripts/
+    
  * Convert ActionScript hash to Dictionary with string-typed key.
 
     Dictionary<string, dynamic>
@@ -222,12 +241,25 @@ Not supported
         text += key;
     }
 
+ * Match whitespace when empty array literal, hash literal and following newline.
+
+  Expected:
+
+            var selectsNow:Array = [];
+
+  Got:
+
+            var selectsNow:Array = [
+            ]
+            ;
+
  * ActionScript delete a to C# .Remove(a).
  * ActionScript clear(d) to C# d.Clear().
  * Overriding virtual functions in C#.
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
  * Interface definition.
  * Post-syntax conversion, parse to replace corresponding function names and signatures.
+ * Notify ActionScript 'base' as identifier.  C# reserves 'base'
  * Hash literal without space before value in key value pair.
  * Set this property by name.  This is slow in ActionScript and C#.
  ActionScript:

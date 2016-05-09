@@ -460,36 +460,37 @@ def find_tag(taglist, target_tag):
                     return tag
 
 
-def may_import_collections(taglist, text, definition, to):
+def may_import(taglist, text, definition, to):
     r"""
     Insert into C# compilation_unit only if there is a generic_collection.
     >>> taglist = ((('other', None), ('generic_collection', None)))
-    >>> may_import_collections(taglist, 't', 'function_body', 'cs')
+    >>> may_import(taglist, 't', 'function_body', 'cs')
     't'
-    >>> may_import_collections(taglist, 't', 'compilation_unit', 'as')
+    >>> may_import(taglist, 't', 'compilation_unit', 'as')
     't'
-    >>> may_import_collections(taglist, 't', 'compilation_unit', 'cs')
+    >>> may_import(taglist, 't', 'compilation_unit', 'cs')
     'using System.Collections.Generic;\nt'
-    >>> may_import_collections(taglist, 't', 'compilation_unit', 'cs')
+    >>> may_import(taglist, 't', 'compilation_unit', 'cs')
     'using System.Collections.Generic;\nt'
-    >>> may_import_collections(taglist, 't', 'compilation_unit', 'as')
+    >>> may_import(taglist, 't', 'compilation_unit', 'as')
     't'
     >>> taglist = ((('generic_collection', None), ('collection', None)))
-    >>> may_import_collections(taglist, 't', 'compilation_unit', 'cs')
+    >>> may_import(taglist, 't', 'compilation_unit', 'cs')
     'using System.Collections;\nusing System.Collections.Generic;\nt'
 
     During preprocessing, remove from C# being converted to ActionScript.
     >>> from_cs = 'before\nusing System.Collections.Generic;\nafter'
-    >>> may_import_collections(taglist, from_cs, 'compilation_unit', 'as')
+    >>> may_import(taglist, from_cs, 'compilation_unit', 'as')
     'before\nafter'
     >>> from_cs = 'before\nusing System.Collections;\nafter'
-    >>> may_import_collections(taglist, from_cs, 'compilation_unit', 'as')
+    >>> may_import(taglist, from_cs, 'compilation_unit', 'as')
     'before\nafter'
     """
     if 'compilation_unit' == definition:
         import_statements = (
             ('generic_collection', 'using System.Collections.Generic;\n'),
             ('collection', 'using System.Collections;\n'),
+            ('unity_address', 'using UnityEngine;\n'),
         )
         for tag, import_statement in import_statements:
             if 'cs' == to:
@@ -514,11 +515,11 @@ def convert(input, definition = 'compilation_unit'):
     source = cfg['source']
     to = cfg['to']
     parser = Parser(grammars[source], definition)
-    input = may_import_collections(None, input, definition, to)
+    input = may_import(None, input, definition, to)
     taglist = parser.parse(input)
     taglist = [(definition, 0, taglist[-1], taglist[1])]
     text = _recurse_tags(taglist, input, source, to)
-    text = may_import_collections(taglist, text, definition, to)
+    text = may_import(taglist, text, definition, to)
     text = may_format(definition, text)
     return text
 
@@ -552,12 +553,13 @@ def convert_files(source_paths):
         for source_path, to_path in analogous_paths(source_paths):
             convert_file(source_path, to_path)
     except ParserSyntaxError as err:
-        message = 'Path %s: production %s\nexpected %s at position %s' % (
+        message = 'Path %s:\nproduction %s\nexpected %s\nposition %s' % (
             source_path, err.production, err.expected, err.position)
         if err.buffer:
-            context = err.buffer[max(0, err.position-20):err.position]
+            radius = 80
+            context = err.buffer[max(0, err.position - radius):err.position]
             context += ' >>!<< '
-            context += err.buffer[err.position:err.position+20]
+            context += err.buffer[err.position:err.position + radius]
             message += ' of %s. context:\n%s' % (len(err.buffer), context)
         print message
         import pdb

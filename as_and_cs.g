@@ -15,7 +15,7 @@ MARKUP_END := COMMENT_MARKUP_END, COMMENT_END
 
 namespace_declaration := ts?, NAMESPACE, (ts, address)?, ts?
 import_definition_place := import_definition*
-import_definition := ts?, IMPORT, ts, address, SEMI, EOL?
+import_definition := ts?, IMPORT, ts, address, SEMICOLON, EOL?
 
 class_definition_place := class_definition?, ts?
 class_definition := ts?, class_modifier*, CLASS, ts, identifier, class_base_clause?, 
@@ -32,7 +32,7 @@ interface_identifier := interface_prefix, identifier?
 I := "I"
 
 member_expression := (function_definition / member_declaration)
-member_declaration := ts?, namespace_modifiers_place, data_declaration, ts?, SEMI
+member_declaration := ts?, namespace_modifiers_place, data_declaration, ts?, SEMICOLON
 data_declaration := delegate_declaration / constant_declaration / variable_declaration
 delegate_declaration := delegate_argument_declaration / delegate_no_argument_declaration
 CONSTANT := "const"
@@ -66,9 +66,10 @@ address_tail := ts?,
 LBRACK := "["
 RBRACK := "]"
 call_expression := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
-replaced_address := PARSE_INT / PARSE_FLOAT / DEBUG_LOG / RANDOM / math_address
+replaced_address := PARSE_INT / PARSE_FLOAT / unity_address
+unity_address := DEBUG_LOG / RANDOM / math_address
 replaced_property := collection_property,
-    ?(ts / -(alphanumunder / DOT))
+    EOF / ?-(alphanumunder / DOT)
 collection_property := COLLECTION_LENGTH / CLONE / PUSH / INDEX_OF / REMOVE_RANGE
 
 math_address := MATH, ts?, DOT, ts?, math_property
@@ -93,17 +94,22 @@ property_list := property, (ts?, COMMA, ts?, property)*
 key := quoted_identifier / literal
 
 statement := ts?, 
-    block /
-    (
-        (
-            data_declaration
-            / primary_expression
-        )?, 
-        ts?, SEMI
-    )
+    block 
     / if_statement
+    / iteration_statement
+    / (
+        (
+            return_expression
+            / data_declaration
+            / primary_expression
+        ), 
+        ts?, !, SEMICOLON
+    )
+    / (ts?, SEMICOLON)
 
-block := LBRACE, statement*, RBRACE
+block := LBRACE, !, statement*, ts?, RBRACE
+return_expression := ts?, RETURN, ts, expression
+RETURN := "return"
 primary_expression := expression
 expression := 
     array_literal
@@ -213,7 +219,7 @@ AND := "&&"
 BIT_NOT := "~"
 
 iteration_statement := for_in_statement / for_statement / do_statement / while_statement
-for_statement := ts?, FOR, ts?, LPAREN, statement, statement, expression_list?, RPAREN, !, statement
+for_statement := ts?, FOR, ts?, LPAREN, !, statement, statement, expression_list?, RPAREN, statement
 FOR := "for"
 while_statement := ts?, WHILE, conditional_clause, statement
 WHILE := "while"
@@ -226,7 +232,7 @@ LBRACE := "{"
 RBRACE := "}"
 LPAREN := "("
 RPAREN := ")"
-SEMI := ";"
+SEMICOLON := ";"
 COLON := ":"
 COMMA := ","
 EOL   := ("\r"?, "\n") / EOF

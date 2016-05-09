@@ -52,16 +52,16 @@ definitions = [
          '(int)path'],
         ['Number(path)',
          '(float)path'],
-        ['paths.length ',
-         'paths.Count '],
+        ['paths.length',
+         'paths.Count'],
         ['paths.push(p)',
          'paths.Add(p)'],
         ['paths.indexOf(p)',
          'paths.IndexOf(p)'],
         ['paths.splice(p, 1)',
          'paths.RemoveRange(p, 1)'],
-        ['paths.concat() ',
-         'paths.Clone() '],
+        ['paths.concat()',
+         'paths.Clone()'],
         ['paths.lengths',
          'paths.lengths'],
         ['paths.length.i',
@@ -249,6 +249,10 @@ definitions = [
          'string path = "as.g"'],
         ['var index:int = 16',
          'int index = 16'],
+        ['var swap:* = cards[r]',
+         'dynamic swap = cards[r]'],
+        ['var r:int = Math.random() * (i + 1)',
+         'int r = (Random.value % 1.0f) * (i + 1)'],
      ]),
      ('function_declaration', [
         [' function f(path:String, index:int = -1):void',
@@ -392,6 +396,8 @@ definitions = [
         ['{a = 0; b = "c";}', '{a = 0; b = "c";}'],
         ['i++;', 'i++;'],
         ['--i;', '--i;'],
+        ['for (i=0; i<L;i++){}',
+         'for (i=0; i<L;i++){}'],
      ]),
      ('if_statement', [
         ['if (a) {a = x; c = 1.0;}',
@@ -428,6 +434,8 @@ definitions = [
          'foreach(DictionaryEntry _entry in items){string key = (string)_entry.Key; text += key;}'],
         ['for(key in items){text += key;}',
          'foreach(DictionaryEntry _entry in items){key = (string)_entry.Key; text += key;}'],
+        ['for (var i:int = cards.length - 1; 1 <= i; i--){}',
+         'for (int i = cards.Count - 1; 1 <= i; i--){}'],
      ]),
      ('compilation_unit', [
         ['package{public class C{}}', 
@@ -516,8 +524,8 @@ def print_expected(expected, got, input, definition, index, err):
     print
     print 'Converting from %s to %s' % (cfg['source'], cfg['to'])
     print definition, index
-    print 'Input:'
-    print input
+    print 'Input (first 200 characters):'
+    print input[:200]
     print 'Difference (expected to got):'
     print difference
     print 'Tag parts (first 500 characters):'
