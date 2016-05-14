@@ -9,7 +9,7 @@ namespace com.finegamedesign.anagram
         {
             for (int i = cards.Count - 1; 1 <= i; i--)
             {
-                int r = (Random.value % 1.0f) * (i + 1);
+                int r = (int)Mathf.Floor((Random.value % 1.0f) * (i + 1));
                 dynamic swap = cards[r];
                 cards[r] = cards[i];
                 cards[i] = swap;
@@ -84,7 +84,7 @@ namespace com.finegamedesign.anagram
                 wordPosition = (float)parameters["wordPosition"];
             }
             available = text.split("");
-            word = available.Clone();
+            word = new ArrayList(available);
             if ("" == help)
             {
                 shuffle(word);
@@ -101,7 +101,7 @@ namespace com.finegamedesign.anagram
                 int baseRate = Mathf.Max(1, letterMax - text.Count);
                 wordWidthPerSecond *= Mathf.Pow(baseRate, power);
             }
-            selects = word.Clone();
+            selects = new ArrayList(word);
             repeat = new Dictionary<string, dynamic>(){
             }
             ;
@@ -185,7 +185,7 @@ namespace com.finegamedesign.anagram
             {
                 wordPosition += outputKnockback;
                 shuffle(word);
-                selects = word.Clone();
+                selects = new ArrayList(word);
                 for (int i = 0; i < inputs.Count; i++)
                 {
                     string letter = inputs[i];
@@ -326,7 +326,7 @@ namespace com.finegamedesign.anagram
                         prepareKnockback(submission.Count, complete);
                         if (complete)
                         {
-                            completes = word.Clone();
+                            completes = new ArrayList(word);
                             // trial(levels.up());
                             trial(new Dictionary<string, dynamic>(){
                             }
@@ -343,12 +343,12 @@ namespace com.finegamedesign.anagram
                         }
                     }
                 }
-                outputs = inputs.Clone();
+                outputs = new ArrayList(inputs);
             }
             if (isVerbose) Debug.Log("Model.submit: " + submission + ". Accepted " + accepted);
             inputs.Count = 0;
-            available = word.Clone();
-            selects = word.Clone();
+            available = new ArrayList(word);
+            selects = new ArrayList(word);
             return state;
         }
         

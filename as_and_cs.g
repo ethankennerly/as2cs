@@ -65,12 +65,19 @@ address_tail := ts?,
     / (LBRACK, ts?, expression, ts?, RBRACK)
 LBRACK := "["
 RBRACK := "]"
-call_expression := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
+call_expression := reordered_call / (address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN)
+
+clone_address := (new_expression / replaced_address / identifier), clone_address_tail*
+clone_address_tail := ts?, 
+    # (DOT, ts?, CLONE_CALL)
+    (DOT, ts?, not_clone_identifier)
+    # / (LBRACK, ts?, expression, ts?, RBRACK)
+not_clone_identifier := ?-CLONE_CALL, alphaunder, alphanumunder*
 replaced_address := PARSE_INT / PARSE_FLOAT / unity_address
 unity_address := DEBUG_LOG / RANDOM / math_address
 replaced_property := collection_property,
     EOF / ?-(alphanumunder / DOT)
-collection_property := COLLECTION_LENGTH / CLONE / PUSH / INDEX_OF / REMOVE_RANGE
+collection_property := COLLECTION_LENGTH / CLONE_CALL / PUSH / INDEX_OF / REMOVE_RANGE
 
 math_address := MATH, ts?, DOT, ts?, math_property
 math_property := ABS / ACOS / ASIN / ATAN / ATAN2

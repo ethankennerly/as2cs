@@ -6,7 +6,7 @@ package com.finegamedesign.anagram
         {
             for (var i:int = cards.length - 1; 1 <= i; i--)
             {
-                var r:int = Math.random() * (i + 1);
+                var r:int = int(Math.floor(Math.random() * (i + 1)));
                 var swap:* = cards[r];
                 cards[r] = cards[i];
                 cards[i] = swap;

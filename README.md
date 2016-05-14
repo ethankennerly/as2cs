@@ -200,6 +200,17 @@ Features
         }
 
 * ActionScript Dictionary to C# Hashtable data type.
+* When cloning ArrayList in C#, make a new ArrayList.
+
+        word = available.concat();
+
+  Or:
+
+        word = new ArrayList(available);
+
+* When copying vector, cast the type.
+
+        List<string> copy = new List<string>(original);
 
 
 Not supported
@@ -207,25 +218,27 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
-* When cloning ArrayList in C#, cast the type.
-
-        word = (ArrayList)available.Clone();
-
-* When copying vector, cast the type.
-
-        List<string> copy = new List<string>(original);
-
   http://stackoverflow.com/questions/1952185/how-do-i-copy-items-from-list-to-list-without-foreach
 * ActionScript string.length to C# String.Length
 * ActionScript string.toLowerCase to C# String.ToLower
 * ActionScript lastIndexOf to C# LastIndexOf
+* Access ArrayList explicitly convert to type.  ActionScript:
+
+        var inputs:Array = [];
+        var letter:String = inputs[i];
+
+  C#:
+
+        ArrayList inputs = new ArrayList(){};
+        string letter = (string)inputs[i];
+
 * ActionScript pop to C#.
 
         var letter:String = inputs.pop();
 
   C#:
 
-        string letter = (string) inputs[inputs.Count - 1];
+        string letter = (string)inputs[inputs.Count - 1];
         inputs.RemoveAt(inputs.Count - 1);
 
 * Set ActionScript array.length to C#.  Could use splice instead.
@@ -248,8 +261,13 @@ Not supported
 
         bash test_copy_to_unity.sh
 
+* Pass Unity 5.2 compiler check with Anagram Attack:  Levels.cs.
+
+* Pass Unity 5.2 compiler check with all portable model and controller files from Anagram Attack.
+
 * Explicit type-casting on access to a ArrayList to a data type.  Instead you can use an ActionScript Vector.
 * Match whitespace when empty array literal, hash literal and following newline.
+ In C# there are curly braces.  When the curly braces are empty or a single line, put on a single line.  
 
   Expected:
 

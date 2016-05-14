@@ -55,10 +55,13 @@ container_address := identifier, container_subaddress*
 container_subaddress := ts?, DOT, ts?, container_identifier
 container_identifier := ?-CONTAINS, alphaunder, alphanumunder*
 COLLECTION_LENGTH := "Count"
-CLONE := "Clone()"
+CLONE_CALL := "Clone()"
 INDEX_OF := "IndexOf"
 REMOVE_RANGE := "RemoveRange"
 PUSH := "Add"
+
+reordered_call := NEW_ARRAYLIST, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
+NEW_ARRAYLIST := "new ArrayList"
 
 PARSE_INT := "int.Parse"
 PARSE_FLOAT := "float.Parse"

@@ -22,6 +22,12 @@ directions = [
 ]
 
 definitions = [
+     ('reordered_call', [
+        ['a.concat()',
+         'new ArrayList(a)'],
+        ['a.b.c.concat()',
+         'new ArrayList(a.b.c)'],
+     ]),
      ('expression', [
         ['"as.g"', 
          '"as.g"'],
@@ -62,7 +68,7 @@ definitions = [
         ['paths.splice(p, 1)',
          'paths.RemoveRange(p, 1)'],
         ['paths.concat()',
-         'paths.Clone()'],
+         'new ArrayList(paths)'],
         ['paths.lengths',
          'paths.lengths'],
         ['paths.length.i',

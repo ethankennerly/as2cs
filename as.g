@@ -54,10 +54,12 @@ STRICT_EQUAL := "==="
 STRICT_NOT_EQUAL := "!=="
 
 COLLECTION_LENGTH := "length"
-CLONE := "concat()"
+CLONE_CALL := "concat()"
 INDEX_OF := "indexOf"
 PUSH := "push"
 REMOVE_RANGE := "splice"
+
+reordered_call := clone_address, ts?, DOT, ts?, CLONE_CALL
 
 PARSE_INT := "parseInt"
 PARSE_FLOAT := "parseFloat"
