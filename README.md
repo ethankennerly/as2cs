@@ -211,16 +211,15 @@ Features
 
         bash test_copy_to_unity.sh
 
+* Pass Unity 5.2 compiler check with Anagram Attack:  Levels.cs.
+
 
 Not supported
 =============
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
-* Pass Unity 5.2 compiler check with Anagram Attack:  Levels.cs.
-
-* Pass Unity 5.2 compiler check with all portable model and controller files from Anagram Attack.
-
+* Do not reformat braces and lines in comments.
 * ActionScript string.length to C# String.Length.  Instead DataUtil.Length is available.  Replace:
   Vim sed:
 

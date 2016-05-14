@@ -45,8 +45,7 @@ package com.finegamedesign.anagram
         public function TestSyntaxModel()
         {
             wordHash = {"aa": true};
-            // trial(levels.getParams());
-            trial({"help": "Hello world"});
+            trial(levels.getParams());
         }
 
         internal function trial(parameters:Object):void
@@ -298,8 +297,7 @@ package com.finegamedesign.anagram
                         if (complete)
                         {
                             completes = DataUtil.CloneList(word);
-                            // trial(levels.up());
-                            trial({});
+                            trial(levels.up());
                             state = "complete";
                             if (null != onComplete)
                             {
@@ -330,8 +328,7 @@ package com.finegamedesign.anagram
         internal function cheatLevelUp(add:int):void
         {
             score = 0;
-            // trial(levels.up(add));
-            trial({});
+            trial(levels.up(add));
             wordPosition = 0.0;
         }
     }

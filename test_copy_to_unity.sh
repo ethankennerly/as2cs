@@ -1,4 +1,5 @@
 #!/usr/bin/bash
 
-python as2cs.py test/TestSyntaxModel.as && cp -p test/TestSyntaxModel.cs ../../unity/anagram/Assets/Scripts/
+python as2cs.py test/TestSyntax*.as \
+&& cp -p test/TestSyntax*.cs ../../unity/anagram/Assets/Scripts/
 cp -p DataUtil.cs ../../unity/anagram/Assets/Scripts/

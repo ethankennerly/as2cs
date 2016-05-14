@@ -53,12 +53,7 @@ namespace com.finegamedesign.anagram
                     "aa", true}
             }
             ;
-            // trial(levels.getParams());
-            trial(new Dictionary<string, dynamic>(){
-                {
-                    "help", "Hello world"}
-            }
-            );
+            trial(levels.getParams());
         }
         
         internal void trial(Dictionary<string, dynamic> parameters)
@@ -316,10 +311,7 @@ namespace com.finegamedesign.anagram
                         if (complete)
                         {
                             completes = DataUtil.CloneList(word);
-                            // trial(levels.up());
-                            trial(new Dictionary<string, dynamic>(){
-                            }
-                            );
+                            trial(levels.up());
                             state = "complete";
                             if (null != onComplete)
                             {
@@ -350,10 +342,7 @@ namespace com.finegamedesign.anagram
         internal void cheatLevelUp(int add)
         {
             score = 0;
-            // trial(levels.up(add));
-            trial(new Dictionary<string, dynamic>(){
-            }
-            );
+            trial(levels.up(add));
             wordPosition = 0.0f;
         }
     }
