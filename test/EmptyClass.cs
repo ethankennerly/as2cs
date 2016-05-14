@@ -1,6 +1,6 @@
-using com.finegamedesign.anagram.Model;
-using com.finegamedesign.anagram.Controller;
-using com.finegamedesign.anagram.View;
+using com.finegamedesign.anagram/*<Model>*/;
+using com.finegamedesign.anagram/*<Controller>*/;
+using com.finegamedesign.anagram/*<View>*/;
 /**
  * Example of comment.
  */

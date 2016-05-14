@@ -206,6 +206,10 @@ Features
 * ActionScript Dictionary to C# Hashtable data type.
 * ActionScript string.toLowerCase to C# String.ToLower
 * ActionScript lastIndexOf to C# LastIndexOf
+* DataUtil.as and DataUtil.cs wrapper for consistent API.
+* Pass Unity 5.2 compiler check of TestSyntaxModel.cs when copied to Assets folder.
+
+        bash test_copy_to_unity.sh
 
 
 Not supported
@@ -213,18 +217,16 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
-* Cast data type or default to ArrayList when cloning.
-  ActionScript:
+* Pass Unity 5.2 compiler check with Anagram Attack:  Levels.cs.
 
-            var word:Vector.<String>;
-            available = word.concat();
+* Pass Unity 5.2 compiler check with all portable model and controller files from Anagram Attack.
 
-  C#:
+* ActionScript string.length to C# String.Length.  Instead DataUtil.Length is available.  Replace:
+  Vim sed:
 
-            List<string> word;
-            available = (List<string>)word.Cone();
+        %s/\([A-Za-z]\+\)\.length\>/DataUtil.Length(\1)/gIce
 
-* ActionScript string.length to C# String.Length
+  Recognize data type is a collection.  Only convert length to Count if so.
 * Split string into an array of strings without a delimiter.  
   ActionScript:
 
@@ -293,14 +295,6 @@ Not supported
 * Explicitly cast float to int.  Example without cast that C# compiler rejects:
 
         int r = (Random.value % 1.0f) * (i + 1);
-
-* Pass Unity 5.2 compiler check of TestSyntaxModel.cs when copied to Assets folder.
-
-        bash test_copy_to_unity.sh
-
-* Pass Unity 5.2 compiler check with Anagram Attack:  Levels.cs.
-
-* Pass Unity 5.2 compiler check with all portable model and controller files from Anagram Attack.
 
 * Explicit type-casting on access to a ArrayList to a data type.  Instead you can use an ActionScript Vector.
 * Match whitespace when empty array literal, hash literal and following newline.
@@ -372,6 +366,9 @@ Not supported
 
         MARKUP_START := COMMENT_START, COMMENT_MARKUP_START
         MARKUP_END := COMMENT_MARKUP_END, COMMENT_END
+
+* Dynamic (\*) input parameter. My Unity 5.2 C# did not accept dynamic input parameter.
+  http://stackoverflow.com/questions/26070365/c-sharp-unity-internal-compiler-error-system-runtime-compilerservices-callsi
 
 * C# static class to ActionScript class.
 * Ungrouped ternary repetition

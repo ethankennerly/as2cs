@@ -4,12 +4,12 @@ package com.finegamedesign.anagram
 
     public class TestSyntaxModel
     {
-        private static function shuffle(cards:*):void
+        private static function shuffle(cards:Vector.<String>):void
         {
-            for (var i:int = cards.length - 1; 1 <= i; i--)
+            for (var i:int = DataUtil.Length(cards) - 1; 1 <= i; i--)
             {
                 var r:int = int(Math.floor(Math.random() * (i + 1)));
-                var swap:* = cards[r];
+                var swap:String = cards[r];
                 cards[r] = cards[i];
                 cards[i] = swap;
             }
@@ -66,7 +66,7 @@ package com.finegamedesign.anagram
             if (null != parameters["wordPosition"]) {
                 wordPosition = Number(parameters["wordPosition"]);
             }
-            available = text.split("");
+            available = DataUtil.Split(text, "");
             word = DataUtil.CloneList(available);
             if ("" == help)
             {
@@ -81,7 +81,7 @@ package com.finegamedesign.anagram
                                    // 1.5;
                                    // 1.75;
                                    2.0;
-                var baseRate:int = Math.max(1, letterMax - text.length);
+                var baseRate:int = Math.max(1, letterMax - DataUtil.Length(text));
                 wordWidthPerSecond *= Math.pow(baseRate, power);
             }
             selects = DataUtil.CloneList(word);
@@ -140,7 +140,7 @@ package com.finegamedesign.anagram
 
         internal function mayKnockback():Boolean
         {
-            return 0 < outputKnockback && 1 <= outputs.length;
+            return 0 < outputKnockback && 1 <= DataUtil.Length(outputs);
         }
 
         /**
@@ -167,7 +167,7 @@ package com.finegamedesign.anagram
                 wordPosition += outputKnockback;
                 shuffle(word);
                 selects = DataUtil.CloneList(word);
-                for (var i:int = 0; i < inputs.length; i++)
+                for (var i:int = 0; i < DataUtil.Length(inputs); i++)
                 {
                     var letter:String = inputs[i];
                     var selected:int = selects.indexOf(letter);
@@ -188,7 +188,7 @@ package com.finegamedesign.anagram
         {
             var presses:Vector.<String> = new Vector.<String>();
             var letters:Object = {};
-            for (var i:int = 0; i < available.length; i++) 
+            for (var i:int = 0; i < DataUtil.Length(available); i++) 
             {
                 var letter:String = available[i];
                 if (letter in letters)
@@ -215,7 +215,7 @@ package com.finegamedesign.anagram
         {
             var letters:Object = {};
             var selectsNow:Vector.<int> = new Vector.<int>();
-            for (var i:int = 0; i < presses.length; i++) 
+            for (var i:int = 0; i < DataUtil.Length(presses); i++) 
             {
                 var letter:String = presses[i];
                 if (letter in letters)
@@ -245,9 +245,9 @@ package com.finegamedesign.anagram
         internal function backspace():Vector.<int>
         {
             var selectsNow:Vector.<int> = new Vector.<int>();
-            if (1 <= inputs.length)
+            if (1 <= DataUtil.Length(inputs))
             {
-                var letter:String = inputs.pop();
+                var letter:String = DataUtil.Pop(inputs);
                 available.push(letter);
                 var selected:int = selects.lastIndexOf(letter.toLowerCase());
                 if (0 <= selected)
@@ -267,10 +267,10 @@ package com.finegamedesign.anagram
          */
         internal function submit():String
         {
-            var submission:String = inputs.join("");
+            var submission:String = DataUtil.Join(inputs, "");
             var accepted:Boolean = false;
             state = "wrong";
-            if (1 <= submission.length)
+            if (1 <= DataUtil.Length(submission))
             {
                 if (submission in wordHash)
                 {
@@ -293,8 +293,8 @@ package com.finegamedesign.anagram
                         repeat[submission] = true;
                         accepted = true;
                         scoreUp(submission);
-                        var complete:Boolean = text.length == submission.length;
-                        prepareKnockback(submission.length, complete);
+                        var complete:Boolean = DataUtil.Length(text) == DataUtil.Length(submission);
+                        prepareKnockback(DataUtil.Length(submission), complete);
                         if (complete)
                         {
                             completes = DataUtil.CloneList(word);
@@ -315,15 +315,15 @@ package com.finegamedesign.anagram
                 outputs = DataUtil.CloneList(inputs);
             }
             if (isVerbose) trace("Model.submit: " + submission + ". Accepted " + accepted);
-            inputs.length = 0;
+            DataUtil.Clear(inputs);
             available = DataUtil.CloneList(word);
-            selects = DataUtil.CloneList(concat);
+            selects = DataUtil.CloneList(word);
             return state;
         }
 
         private function scoreUp(submission:String):void
         {
-            points = submission.length;
+            points = DataUtil.Length(submission);
             score += points;
         }
 
