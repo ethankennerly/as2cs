@@ -75,9 +75,12 @@ clone_address_tail := ts?,
 not_clone_identifier := ?-CLONE_CALL, alphaunder, alphanumunder*
 replaced_address := PARSE_INT / PARSE_FLOAT / unity_address
 unity_address := DEBUG_LOG / RANDOM / math_address
-replaced_property := collection_property,
+replaced_property := 
+    string_property / collection_property,
     EOF / ?-(alphanumunder / DOT)
-collection_property := COLLECTION_LENGTH / CLONE_CALL / PUSH / INDEX_OF / REMOVE_RANGE
+string_property := TO_LOWER_CASE
+collection_property := COLLECTION_LENGTH / CLONE_CALL / PUSH 
+    / INDEX_OF / LAST_INDEX_OF / REMOVE_RANGE
 
 math_address := MATH, ts?, DOT, ts?, math_property
 math_property := ABS / ACOS / ASIN / ATAN / ATAN2

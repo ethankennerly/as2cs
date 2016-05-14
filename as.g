@@ -56,8 +56,10 @@ STRICT_NOT_EQUAL := "!=="
 COLLECTION_LENGTH := "length"
 CLONE_CALL := "concat()"
 INDEX_OF := "indexOf"
+LAST_INDEX_OF := "lastIndexOf"
 PUSH := "push"
 REMOVE_RANGE := "splice"
+TO_LOWER_CASE := "toLowerCase"
 
 reordered_call := clone_address, ts?, DOT, ts?, CLONE_CALL
 

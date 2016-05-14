@@ -208,9 +208,8 @@ Features
 
         word = new ArrayList(available);
 
-* When copying vector, cast the type.
-
-        List<string> copy = new List<string>(original);
+* ActionScript string.toLowerCase to C# String.ToLower
+* ActionScript lastIndexOf to C# LastIndexOf
 
 
 Not supported
@@ -218,11 +217,19 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+* When copying vector, cast the type.  ActionScript:
+
+        var original:Vector.<String>;
+        var copy:Vector.<String> = original.concat();
+
+  C#:
+
+        List<string> original;
+        List<string> copy = new List<string>(original);
+
   http://stackoverflow.com/questions/1952185/how-do-i-copy-items-from-list-to-list-without-foreach
 * ActionScript string.length to C# String.Length
-* ActionScript string.toLowerCase to C# String.ToLower
-* ActionScript lastIndexOf to C# LastIndexOf
-* Access ArrayList explicitly convert to type.  ActionScript:
+* Access ArrayList explicitly convert to type.  Instead use a vector.  ActionScript:
 
         var inputs:Array = [];
         var letter:String = inputs[i];

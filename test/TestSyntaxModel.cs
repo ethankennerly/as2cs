@@ -192,7 +192,7 @@ namespace com.finegamedesign.anagram
                     int selected = selects.IndexOf(letter);
                     if (0 <= selected)
                     {
-                        selects[selected] = letter.toLowerCase();
+                        selects[selected] = letter.ToLower();
                     }
                 }
                 outputKnockback = 0;
@@ -262,7 +262,7 @@ namespace com.finegamedesign.anagram
                     if (0 <= selected)
                     {
                         selectsNow.Add(selected);
-                        selects[selected] = letter.toLowerCase();
+                        selects[selected] = letter.ToLower();
                     }
                 }
             }
@@ -278,7 +278,7 @@ namespace com.finegamedesign.anagram
             {
                 string letter = inputs.pop();
                 available.Add(letter);
-                int selected = selects.lastIndexOf(letter.toLowerCase());
+                int selected = selects.LastIndexOf(letter.ToLower());
                 if (0 <= selected)
                 {
                     selectsNow.Add(selected);

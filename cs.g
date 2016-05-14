@@ -57,8 +57,10 @@ container_identifier := ?-CONTAINS, alphaunder, alphanumunder*
 COLLECTION_LENGTH := "Count"
 CLONE_CALL := "Clone()"
 INDEX_OF := "IndexOf"
-REMOVE_RANGE := "RemoveRange"
+LAST_INDEX_OF := "LastIndexOf"
 PUSH := "Add"
+REMOVE_RANGE := "RemoveRange"
+TO_LOWER_CASE := "ToLower"
 
 reordered_call := NEW_ARRAYLIST, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
 NEW_ARRAYLIST := "new ArrayList"
