@@ -422,8 +422,18 @@ def argument_declared_data_type(data_types, text, taglist):
     ...     ('identifier', 4, 5, None), 
     ... ])]
     >>> argument_declared_data_type(data_types, 'int a', taglist)
+
+    Convert type to target syntax.
     >>> data_types
-    {'a': 'INTEGER'}
+    {'a': 'int'}
+    >>> taglist = [('argument_declared', 0, 17, [
+    ...     ('identifier', 0, 1, None), 
+    ...     ('COLON', 1, 2, None), 
+    ...     ('data_type', 2, 17, None), 
+    ... ])]
+    >>> argument_declared_data_type(data_types, 'v:Vector.<String>', taglist)
+    >>> print pformat(data_types)
+    {'a': 'int', 'v': 'List<string>'}
     """
     data_type = None
     identifier = None
@@ -431,28 +441,38 @@ def argument_declared_data_type(data_types, text, taglist):
         if 'argument_declared' == tag:
             for t, b, e, p in parts:
                 if 'data_type' == t:
-                    sub_parts = p
-                    sub_begin = b
-                    sub_end = e
-                    sub_tag = t
-                    while sub_parts:
-                        sub_parts = sub_parts[0]
-                        sub_tag, sub_begin, sub_end, sub_parts = sub_parts
-                    data_type = sub_tag
+                    data_type = text[b:e]
+                    data_type = convert(data_type, 'data_type')
                 elif 'identifier' == t:
                     identifier = text[b:e]
     if data_type and identifier:
         data_types[identifier] = data_type
 
 
-def declared_type(literals, data_types, tag, input, taglist):
+def declared_type(literals, data_types, declared_tag, input, taglist):
     """
-    TODO:  Replace literal with data type of recognized identifier.
-    >>> declared_type({}, {}, 'declared_type', '', [])
+    Replace literal with data type of recognized identifier.
+    >>> literals = {}
+    >>> data_types = {}
+    >>> input = 'a'
+    >>> taglist = [('ignored', 0, 0, None), ('clone_address', 0, 1, None)]
+    >>> declared_type(literals, data_types, 'declared_type', input, taglist)
+    >>> literals
+    {}
+    >>> data_types['a'] = 'List<string>'
+    >>> declared_type(literals, data_types, 'declared_type', input, taglist)
+    >>> literals
+    {'declared_type': 'List<string>'}
     """
     data_type = None
+    if 'declared_type' == declared_tag:
+        for tag, begin, end, parts in taglist:
+            if 'clone_address' == tag:
+                identifier = input[begin:end]
+                if identifier in data_types:
+                    data_type = data_types[identifier]
     if data_type:
-        literals['declared_type'] = literals[data_type]
+        literals['declared_type'] = data_type
 
 
 def _recurse_tags(taglist, input, source, to):
@@ -568,7 +588,7 @@ def convert(input, definition = 'compilation_unit'):
     Example of converting syntax from ActionScript to C#.
 
     >>> print convert('import com.finegamedesign.anagram.Model;', 'import_definition')
-    using com.finegamedesign.anagram.Model;
+    using com.finegamedesign.anagram/*<Model>*/;
 
     Related to grammar unit testing specification (gUnit)
     https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing

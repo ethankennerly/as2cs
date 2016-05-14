@@ -2,6 +2,8 @@ compilation_unit := import_definition_place, namespace_declaration,
     LBRACE, class_definition_place, RBRACE
 IMPORT := "using"
 NAMESPACE := "namespace"
+import_suffix := ""
+import_class_clause := MARKUP_START, namespace_identifier, MARKUP_END, SEMICOLON
 
 class_base_clause := ts, COLON, class_base
 class_extends := ts, class_identifier
@@ -62,7 +64,8 @@ PUSH := "Add"
 REMOVE_RANGE := "RemoveRange"
 TO_LOWER_CASE := "ToLower"
 
-reordered_call := LPAREN, ts?, declared_type, ts?, RPAREN, ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
+collection_clone := ts?, NEW, ts, collection_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
+reordered_call := ts?, NEW, ts, declared_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
 declared_type := "ArrayList"
 NEW_ARRAYLIST := "new ArrayList"
 

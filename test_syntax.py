@@ -24,9 +24,9 @@ directions = [
 definitions = [
      ('reordered_call', [
         ['a.concat()',
-         '(ArrayList)a.Clone()'],
+         'new ArrayList(a)'],
         ['a.b.c.concat()',
-         '(ArrayList)a.b.c.Clone()'],
+         'new ArrayList(a.b.c)'],
      ]),
      ('expression', [
         ['"as.g"', 
@@ -68,7 +68,7 @@ definitions = [
         ['paths.splice(p, 1)',
          'paths.RemoveRange(p, 1)'],
         ['paths.concat()',
-         '(ArrayList)paths.Clone()'],
+         'new ArrayList(paths)'],
         ['paths.lengths',
          'paths.lengths'],
         ['paths.length.i',
@@ -119,6 +119,7 @@ definitions = [
         ['Object', 'Dictionary<string, dynamic>'],
         ['*', 'dynamic'],
         ['A.B.C', 'A.B.C'],
+        ['Vector.<String>', 'List<string>'],
      ]),
      ('identifier', [
         ['_a', '_a'],
@@ -137,13 +138,11 @@ definitions = [
      ]),
      ('import_definition', [
         ['import com.finegamedesign.anagram.Model;',
-         'using com.finegamedesign.anagram.Model;'],
-        ['import _2;',
-         'using _2;'],
-        ['import _;',
-         'using _;'],
-        ['import A;',
-         'using A;'],
+         'using com.finegamedesign.anagram/*<Model>*/;'],
+        ['import _._2;',
+         'using _/*<_2>*/;'],
+        ['import _.*;',
+         'using _/*<*>*/;'],
      ]),
      ('class_definition', [
         ['class C{}', 'class C{}'],
@@ -448,10 +447,6 @@ definitions = [
         ['for (var i:int = cards.length - 1; 1 <= i; i--){}',
          'for (int i = cards.Count - 1; 1 <= i; i--){}'],
      ]),
-     ('block', [
-        ['{var word:Vector.<String>;    available = word.concat();}',
-         '{List<string> word;    available = (List<string>)word.Clone();}'],
-     ]),
      ('compilation_unit', [
         ['package{public class C{}}', 
          'namespace{\n    public class C{\n    }\n}'],
@@ -459,8 +454,8 @@ definitions = [
          'namespace{\n    class C{\n    }\n}'],
         ['package{public class C{\n}}',
          'namespace{\n    public class C{\n    }\n}'],
-        ['package{\n    import A;\n\npublic class C{\n}}',
-         'using A;\nnamespace{\n    public class C{\n    }\n}'],
+        ['package{\n    import A.B;\n\npublic class C{\n}}',
+         'using A/*<B>*/;\nnamespace{\n    public class C{\n    }\n}'],
         ['package{\npublic class C1{}}',
          'namespace{\n    public class C1{\n    }\n}'],
         ['package{public class C2{}\n}',
@@ -487,6 +482,10 @@ definitions = [
          '  public delegate bool IsJustPressed(string letter);'],
         ['  public function getPresses(justPressed:/*<IsJustPressed>*/Function):Array{}',
          '  public ArrayList getPresses(/*<Function>*/IsJustPressed justPressed){}'],
+     ]),
+     ('block', [
+        ['{var word:Vector.<String>;    available = word.concat();}',
+         '{List<string> word;    available = new List<string>(word);}'],
      ]),
 ]
 

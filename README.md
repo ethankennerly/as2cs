@@ -40,6 +40,7 @@ Features
 * Replace literal 'import' with 'using' by grammar.
 * Reformat an example variable declaration by grammar.
 * Convert trivial package with one import.
+* Markup class suffix from import.
 * Convert empty base class declaration.
 * Convert basic example variables bi-directionally:  C# to ActionScript.
 * Convert simple namespace from C# to ActionScript.
@@ -367,6 +368,11 @@ Not supported
 * Logging.  Instead, wrap ActionScript trace and Unity C# Debug.Log in Toolkit.log.
 * Anonymous function.
   https://msdn.microsoft.com/en-us/library/0yw3tz5k.aspx
+* Combine literal from multiple literals: 
+
+        MARKUP_START := COMMENT_START, COMMENT_MARKUP_START
+        MARKUP_END := COMMENT_MARKUP_END, COMMENT_END
+
 * C# static class to ActionScript class.
 * Ungrouped ternary repetition
 

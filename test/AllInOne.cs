@@ -1,6 +1,6 @@
-using com.finegamedesign.anagram.Model;
+using com.finegamedesign.anagram/*<Model>*/;
 /*import com.finegamedesign.anagram.Controller;*/
-using com.finegamedesign.anagram.View;
+using com.finegamedesign.anagram/*<View>*/;
 /**
  * This file demos every feature supported by as2cs.
  * The C# version is auto-generated from the ActionScript.

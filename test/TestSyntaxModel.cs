@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
+using com.finegamedesign.utils/*<Model>*/;
 namespace com.finegamedesign.anagram
 {
     public class TestSyntaxModel
     {
-        private static void shuffle(ArrayList cards)
+        private static void shuffle(dynamic cards)
         {
             for (int i = cards.Count - 1; 1 <= i; i--)
             {
@@ -27,14 +29,10 @@ namespace com.finegamedesign.anagram
         internal /*<Function>*/ActionDelegate onComplete;
         internal delegate bool IsJustPressed(string letter);
         internal string help;
-        internal ArrayList outputs = new ArrayList(){
-        }
-        ;
-        internal ArrayList completes = new ArrayList(){
-        }
-        ;
+        internal List<string> outputs = new List<string>();
+        internal List<string> completes = new List<string>();
         internal string text;
-        internal ArrayList word;
+        internal List<string> word;
         internal float wordPosition = 0.0f;
         internal float wordPositionScaled = 0.0f;
         internal int points = 0;
@@ -45,7 +43,7 @@ namespace com.finegamedesign.anagram
         private Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){
         }
         ;
-        private ArrayList selects;
+        private List<string> selects;
         private Dictionary<string, dynamic> wordHash;
         private bool isVerbose = false;
         
@@ -82,7 +80,7 @@ namespace com.finegamedesign.anagram
                 wordPosition = (float)parameters["wordPosition"];
             }
             available = text.split("");
-            word = new ArrayList(available);
+            word = DataUtil.CloneList(available);
             if ("" == help)
             {
                 shuffle(word);
@@ -99,7 +97,7 @@ namespace com.finegamedesign.anagram
                 int baseRate = Mathf.Max(1, letterMax - text.Count);
                 wordWidthPerSecond *= Mathf.Pow(baseRate, power);
             }
-            selects = new ArrayList(word);
+            selects = DataUtil.CloneList(word);
             repeat = new Dictionary<string, dynamic>(){
             }
             ;
@@ -183,7 +181,7 @@ namespace com.finegamedesign.anagram
             {
                 wordPosition += outputKnockback;
                 shuffle(word);
-                selects = new ArrayList(word);
+                selects = DataUtil.CloneList(word);
                 for (int i = 0; i < inputs.Count; i++)
                 {
                     string letter = inputs[i];
@@ -228,16 +226,14 @@ namespace com.finegamedesign.anagram
         
         /**
          * If letter not available, disable typing it.
-         * @return array of word indexes.
+         * @return Vector of word indexes.
          */
-        internal ArrayList press(List<string> presses)
+        internal List<int> press(List<string> presses)
         {
             Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
             }
             ;
-            ArrayList selectsNow = new ArrayList(){
-            }
-            ;
+            List<int> selectsNow = new List<int>();
             for (int i = 0; i < presses.Count; i++)
             {
                 string letter = presses[i];
@@ -265,11 +261,9 @@ namespace com.finegamedesign.anagram
             return selectsNow;
         }
         
-        internal ArrayList backspace()
+        internal List<int> backspace()
         {
-            ArrayList selectsNow = new ArrayList(){
-            }
-            ;
+            List<int> selectsNow = new List<int>();
             if (1 <= inputs.Count)
             {
                 string letter = inputs.pop();
@@ -322,7 +316,7 @@ namespace com.finegamedesign.anagram
                         prepareKnockback(submission.Count, complete);
                         if (complete)
                         {
-                            completes = new ArrayList(word);
+                            completes = DataUtil.CloneList(word);
                             // trial(levels.up());
                             trial(new Dictionary<string, dynamic>(){
                             }
@@ -339,12 +333,12 @@ namespace com.finegamedesign.anagram
                         }
                     }
                 }
-                outputs = new ArrayList(inputs);
+                outputs = DataUtil.CloneList(inputs);
             }
             if (isVerbose) Debug.Log("Model.submit: " + submission + ". Accepted " + accepted);
             inputs.Count = 0;
-            available = new ArrayList(word);
-            selects = new ArrayList(word);
+            available = DataUtil.CloneList(word);
+            selects = DataUtil.CloneList(concat);
             return state;
         }
         

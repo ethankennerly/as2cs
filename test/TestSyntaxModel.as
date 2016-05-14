@@ -1,8 +1,10 @@
 package com.finegamedesign.anagram
 {
+    import com.finegamedesign.utils.Model;
+
     public class TestSyntaxModel
     {
-        private static function shuffle(cards:Array):void
+        private static function shuffle(cards:*):void
         {
             for (var i:int = cards.length - 1; 1 <= i; i--)
             {
@@ -24,10 +26,10 @@ package com.finegamedesign.anagram
         internal var onComplete:/*<ActionDelegate>*/Function; 
         internal var /*<delegate>*/ IsJustPressed:Boolean, letter:String;
         internal var help:String;
-        internal var outputs:Array = [];
-        internal var completes:Array = [];
+        internal var outputs:Vector.<String> = new Vector.<String>();
+        internal var completes:Vector.<String> = new Vector.<String>();
         internal var text:String;
-        internal var word:Array;
+        internal var word:Vector.<String>;
         internal var wordPosition:Number = 0.0;
         internal var wordPositionScaled:Number = 0.0;
         internal var points:int = 0;
@@ -36,7 +38,7 @@ package com.finegamedesign.anagram
         internal var levels:Levels = new Levels();
         private var available:Vector.<String>;
         private var repeat:Object = {};
-        private var selects:Array;
+        private var selects:Vector.<String>;
         private var wordHash:Object;
         private var isVerbose:Boolean = false;
 
@@ -65,7 +67,7 @@ package com.finegamedesign.anagram
                 wordPosition = Number(parameters["wordPosition"]);
             }
             available = text.split("");
-            word = available.concat();
+            word = DataUtil.CloneList(available);
             if ("" == help)
             {
                 shuffle(word);
@@ -82,7 +84,7 @@ package com.finegamedesign.anagram
                 var baseRate:int = Math.max(1, letterMax - text.length);
                 wordWidthPerSecond *= Math.pow(baseRate, power);
             }
-            selects = word.concat();
+            selects = DataUtil.CloneList(word);
             repeat = {};
             if (isVerbose) trace("Model.trial: word[0]: <" + word[0] + ">");
         }
@@ -164,7 +166,7 @@ package com.finegamedesign.anagram
             {
                 wordPosition += outputKnockback;
                 shuffle(word);
-                selects = word.concat();
+                selects = DataUtil.CloneList(word);
                 for (var i:int = 0; i < inputs.length; i++)
                 {
                     var letter:String = inputs[i];
@@ -207,12 +209,12 @@ package com.finegamedesign.anagram
 
         /**
          * If letter not available, disable typing it.
-         * @return array of word indexes.
+         * @return Vector of word indexes.
          */
-        internal function press(presses:Vector.<String>):Array
+        internal function press(presses:Vector.<String>):Vector.<int>
         {
             var letters:Object = {};
-            var selectsNow:Array = [];
+            var selectsNow:Vector.<int> = new Vector.<int>();
             for (var i:int = 0; i < presses.length; i++) 
             {
                 var letter:String = presses[i];
@@ -240,9 +242,9 @@ package com.finegamedesign.anagram
             return selectsNow;
         }
 
-        internal function backspace():Array
+        internal function backspace():Vector.<int>
         {
-            var selectsNow:Array = [];
+            var selectsNow:Vector.<int> = new Vector.<int>();
             if (1 <= inputs.length)
             {
                 var letter:String = inputs.pop();
@@ -295,7 +297,7 @@ package com.finegamedesign.anagram
                         prepareKnockback(submission.length, complete);
                         if (complete)
                         {
-                            completes = word.concat();
+                            completes = DataUtil.CloneList(word);
                             // trial(levels.up());
                             trial({});
                             state = "complete";
@@ -310,12 +312,12 @@ package com.finegamedesign.anagram
                         }
                     }
                 }
-                outputs = inputs.concat();
+                outputs = DataUtil.CloneList(inputs);
             }
             if (isVerbose) trace("Model.submit: " + submission + ". Accepted " + accepted);
             inputs.length = 0;
-            available = word.concat();
-            selects = word.concat();
+            available = DataUtil.CloneList(word);
+            selects = DataUtil.CloneList(concat);
             return state;
         }
 

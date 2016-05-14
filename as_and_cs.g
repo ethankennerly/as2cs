@@ -10,12 +10,16 @@ COMMENT_START := "/*"
 COMMENT_END := "*/"
 COMMENT_MARKUP_START := "<"
 COMMENT_MARKUP_END := ">"
-MARKUP_START := COMMENT_START, COMMENT_MARKUP_START
-MARKUP_END := COMMENT_MARKUP_END, COMMENT_END
+MARKUP_START := "/*<"
+MARKUP_END := ">*/"
 
 namespace_declaration := ts?, NAMESPACE, (ts, address)?, ts?
 import_definition_place := import_definition*
-import_definition := ts?, IMPORT, ts, address, SEMICOLON, EOL?
+import_definition := ts?, IMPORT, ts, import_address, EOL?
+import_address := identifier, (import_class_clause / import_subaddress)+
+import_subaddress := ts?, DOT, ts?, identifier
+namespace_identifier := GLOB_ALL / identifier
+GLOB_ALL := "*"
 
 class_definition_place := class_definition?, ts?
 class_definition := ts?, class_modifier*, CLASS, ts, identifier, class_base_clause?, 
@@ -69,9 +73,7 @@ call_expression := reordered_call / (address, ts?, LPAREN, ts?, expression_list?
 
 clone_address := (new_expression / replaced_address / identifier), clone_address_tail*
 clone_address_tail := ts?, 
-    # (DOT, ts?, CLONE_CALL)
     (DOT, ts?, not_clone_identifier)
-    # / (LBRACK, ts?, expression, ts?, RBRACK)
 not_clone_identifier := ?-CLONE_CALL, alphaunder, alphanumunder*
 replaced_address := PARSE_INT / PARSE_FLOAT / unity_address
 unity_address := DEBUG_LOG / RANDOM / math_address
@@ -172,7 +174,9 @@ relational_expression := (ts?, unary_expression, relational_expression_tail*)
 relational_expression_tail := ts?, computational_operator, ts?, relational_expression
 
 unary_expression :=
-    cast_expression
+    reordered_call
+    / collection_clone
+    / cast_expression
     / nullable_cast_expression
     / postfix_expression
     / (PLUS2, ts?, unary_expression)

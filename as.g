@@ -1,6 +1,7 @@
 compilation_unit := namespace_declaration, LBRACE, import_definition_place, class_definition_place, RBRACE
 NAMESPACE := "package"
 IMPORT := "import"
+import_class_clause := DOT, namespace_identifier, SEMICOLON
 
 class_base_clause := class_base
 class_extends := ts, EXTENDS, ts, class_identifier
@@ -61,7 +62,8 @@ PUSH := "push"
 REMOVE_RANGE := "splice"
 TO_LOWER_CASE := "toLowerCase"
 
-reordered_call := clone_address, ts?, DOT, ts?, CLONE_CALL
+collection_clone := ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
+reordered_call := ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
 
 PARSE_INT := "parseInt"
 PARSE_FLOAT := "parseFloat"
