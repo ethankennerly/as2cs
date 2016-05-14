@@ -40,8 +40,8 @@ namespace com.finegamedesign.anagram
         internal Levels levels = new Levels();
         private List<string> available;
         private Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){
-        }
-        ;
+}
+;
         private List<string> selects;
         private Dictionary<string, dynamic> wordHash;
         private bool isVerbose = false;
@@ -52,7 +52,7 @@ namespace com.finegamedesign.anagram
                 {
                     "aa", true}
             }
-            ;
+;
             trial(levels.getParams());
         }
         
@@ -93,8 +93,8 @@ namespace com.finegamedesign.anagram
             }
             selects = DataUtil.CloneList(word);
             repeat = new Dictionary<string, dynamic>(){
-            }
-            ;
+}
+;
             if (isVerbose) Debug.Log("Model.trial: word[0]: <" + word[0] + ">");
         }
         
@@ -197,8 +197,8 @@ namespace com.finegamedesign.anagram
         {
             List<string> presses = new List<string>();
             Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
-            }
-            ;
+}
+;
             for (int i = 0; i < DataUtil.Length(available); i++)
             {
                 string letter = available[i];
@@ -225,8 +225,8 @@ namespace com.finegamedesign.anagram
         internal List<int> press(List<string> presses)
         {
             Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
-            }
-            ;
+}
+;
             List<int> selectsNow = new List<int>();
             for (int i = 0; i < DataUtil.Length(presses); i++)
             {

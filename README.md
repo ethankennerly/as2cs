@@ -219,7 +219,21 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+* Match whitespace when empty array literal, hash literal and following newline.
+ In C# there are curly braces.  When the curly braces are empty or a single line, put on a single line.  
+
+  Expected:
+
+                var selectsNow:Array = [];
+
+  Got:
+
+                var selectsNow:Array = [
+                ]
+                ;
+
 * Do not reformat braces and lines in comments.
+* Example conversion of Mother Nature game jam.
 * ActionScript string.length to C# String.Length.  Instead DataUtil.Length is available.  Replace:
   Vim sed:
 
@@ -296,19 +310,6 @@ Not supported
         int r = (Random.value % 1.0f) * (i + 1);
 
 * Explicit type-casting on access to a ArrayList to a data type.  Instead you can use an ActionScript Vector.
-* Match whitespace when empty array literal, hash literal and following newline.
- In C# there are curly braces.  When the curly braces are empty or a single line, put on a single line.  
-
-  Expected:
-
-                var selectsNow:Array = [];
-
-  Got:
-
-                var selectsNow:Array = [
-                ]
-                ;
-
 * ActionScript typed Vector literal to C# typed list literal.
 * ActionScript delete a to C# .Remove(a).
 * ActionScript clear(d) to C# d.Clear().

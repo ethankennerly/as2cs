@@ -540,8 +540,8 @@ def print_expected(expected, got, input, definition, index, err):
     print definition, index
     print 'Input (first 200 characters):'
     print input[:200]
-    print 'Difference (expected to got):'
-    print difference
+    print 'Difference (expected to got, first 500 characters):'
+    print difference[:500]
     print 'Tag parts (first 500 characters):'
     print format_taglist(input, definition)[:500]
 

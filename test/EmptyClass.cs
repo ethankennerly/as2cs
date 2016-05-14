@@ -8,5 +8,5 @@ namespace com.finegamedesign.anagram {
     // This class is empty.
     public class EmptyClass
     {
-    }
+}
 }

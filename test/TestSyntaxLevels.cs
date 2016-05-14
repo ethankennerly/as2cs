@@ -541,7 +541,7 @@ namespace com.finegamedesign.anagram
                     "text", "WIN"}
             }
         }
-        ;
+;
         
         internal Dictionary<string, dynamic> getParams()
         {
