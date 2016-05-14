@@ -15,7 +15,7 @@ package com.finegamedesign.anagram
 
         internal var helpState:String;
         internal var letterMax:int = 10;
-        internal var inputs:Array = [];
+        internal var inputs:Vector.<String> = new Vector.<String>();
         /**
          * From letter graphic.
          */
@@ -34,7 +34,7 @@ package com.finegamedesign.anagram
         internal var score:int = 0;
         internal var state:String;
         internal var levels:Levels = new Levels();
-        private var available:Array;
+        private var available:Vector.<String>;
         private var repeat:Object = {};
         private var selects:Array;
         private var wordHash:Object;
@@ -182,9 +182,9 @@ package com.finegamedesign.anagram
         /**
          * @param   justPressed     Filter signature justPressed(letter):Boolean.
          */
-        internal function getPresses(justPressed:/*<IsJustPressed>*/Function):Array
+        internal function getPresses(justPressed:/*<IsJustPressed>*/Function):Vector.<String>
         {
-            var presses:Array = [];
+            var presses:Vector.<String> = new Vector.<String>();
             var letters:Object = {};
             for (var i:int = 0; i < available.length; i++) 
             {
@@ -209,7 +209,7 @@ package com.finegamedesign.anagram
          * If letter not available, disable typing it.
          * @return array of word indexes.
          */
-        internal function press(presses:Array):Array
+        internal function press(presses:Vector.<String>):Array
         {
             var letters:Object = {};
             var selectsNow:Array = [];

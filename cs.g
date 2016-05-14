@@ -62,7 +62,8 @@ PUSH := "Add"
 REMOVE_RANGE := "RemoveRange"
 TO_LOWER_CASE := "ToLower"
 
-reordered_call := NEW_ARRAYLIST, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
+reordered_call := cast_this_type, ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
+cast_this_type := "(ArrayList)"
 NEW_ARRAYLIST := "new ArrayList"
 
 PARSE_INT := "int.Parse"

@@ -112,7 +112,10 @@ Features
 * ActionScript Array.length to C# ArrayList.Count.
 * ActionScript \*.indexOf to C# IndexOf.
 * ActionScript \*.splice 1 to C# RemoveRange.  NOT compatible with adding elements:
+
         array.splice(index, 1, added0, added1);
+
+  Alternatively, Flash 19 supports removeAt and insertAt.
 * No return type in constructor.
 * Dynamic data type.
 * Keyword 'is'.
@@ -200,14 +203,6 @@ Features
         }
 
 * ActionScript Dictionary to C# Hashtable data type.
-* When cloning ArrayList in C#, make a new ArrayList.
-
-        word = available.concat();
-
-  Or:
-
-        word = new ArrayList(available);
-
 * ActionScript string.toLowerCase to C# String.ToLower
 * ActionScript lastIndexOf to C# LastIndexOf
 
@@ -217,18 +212,52 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
-* When copying vector, cast the type.  ActionScript:
+* Cast data type or default to ArrayList when cloning.
+  ActionScript:
 
-        var original:Vector.<String>;
-        var copy:Vector.<String> = original.concat();
+            var word:Vector.<String>;
+            available = word.concat();
 
   C#:
 
-        List<string> original;
-        List<string> copy = new List<string>(original);
+            List<string> word;
+            available = (List<string>)word.Cone();
 
-  http://stackoverflow.com/questions/1952185/how-do-i-copy-items-from-list-to-list-without-foreach
 * ActionScript string.length to C# String.Length
+* Split string into an array of strings without a delimiter.  
+  ActionScript:
+
+            var letters:Array;
+            letters = text.split("");
+
+  C#:
+
+            using System.Linq;
+            ...
+            ArrayList letters;
+            letters = text.ToCharArray().Select(c => c.ToString()).ToArray();
+
+ http://stackoverflow.com/questions/1485237/split-string-in-c-sharp-without-delimiter-sort-of
+ http://stackoverflow.com/questions/7936235/how-to-convert-a-char-array-to-a-string-array
+ http://stackoverflow.com/questions/7089048/lambda-expression-for-enumerable-select
+  An alternative would be to specify a C# character array in ActionScript markup:
+
+            var letters:/*<char[]>*/Array;
+            letters = text.split("");
+
+  C#:
+
+            char[] letters;
+            letters = text.ToCharArray();
+
+  Another alternative is a utility function:
+
+            letters = Toolkit.split(text);
+
+  C#:
+
+            letters = Toolkit.split(text);
+
 * Access ArrayList explicitly convert to type.  Instead use a vector.  ActionScript:
 
         var inputs:Array = [];

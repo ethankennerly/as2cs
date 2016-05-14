@@ -24,9 +24,9 @@ directions = [
 definitions = [
      ('reordered_call', [
         ['a.concat()',
-         'new ArrayList(a)'],
+         '(ArrayList)a.Clone()'],
         ['a.b.c.concat()',
-         'new ArrayList(a.b.c)'],
+         '(ArrayList)a.b.c.Clone()'],
      ]),
      ('expression', [
         ['"as.g"', 
@@ -68,7 +68,7 @@ definitions = [
         ['paths.splice(p, 1)',
          'paths.RemoveRange(p, 1)'],
         ['paths.concat()',
-         'new ArrayList(paths)'],
+         '(ArrayList)paths.Clone()'],
         ['paths.lengths',
          'paths.lengths'],
         ['paths.length.i',
@@ -447,6 +447,10 @@ definitions = [
          'foreach(KeyValuePair<string, dynamic> _entry in items){key = _entry.Key; text += key;}'],
         ['for (var i:int = cards.length - 1; 1 <= i; i--){}',
          'for (int i = cards.Count - 1; 1 <= i; i--){}'],
+     ]),
+     ('block', [
+        ['{var word:Vector.<String>;    available = word.concat();}',
+         '{List<string> word;    available = (List<string>)word.Clone();}'],
      ]),
      ('compilation_unit', [
         ['package{public class C{}}', 

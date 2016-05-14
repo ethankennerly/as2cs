@@ -18,9 +18,7 @@ namespace com.finegamedesign.anagram
         
         internal string helpState;
         internal int letterMax = 10;
-        internal ArrayList inputs = new ArrayList(){
-        }
-        ;
+        internal List<string> inputs = new List<string>();
         /**
          * From letter graphic.
          */
@@ -43,7 +41,7 @@ namespace com.finegamedesign.anagram
         internal int score = 0;
         internal string state;
         internal Levels levels = new Levels();
-        private ArrayList available;
+        private List<string> available;
         private Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){
         }
         ;
@@ -203,11 +201,9 @@ namespace com.finegamedesign.anagram
         /**
          * @param   justPressed     Filter signature justPressed(letter):Boolean.
          */
-        internal ArrayList getPresses(/*<Function>*/IsJustPressed justPressed)
+        internal List<string> getPresses(/*<Function>*/IsJustPressed justPressed)
         {
-            ArrayList presses = new ArrayList(){
-            }
-            ;
+            List<string> presses = new List<string>();
             Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
             }
             ;
@@ -234,7 +230,7 @@ namespace com.finegamedesign.anagram
          * If letter not available, disable typing it.
          * @return array of word indexes.
          */
-        internal ArrayList press(ArrayList presses)
+        internal ArrayList press(List<string> presses)
         {
             Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
             }

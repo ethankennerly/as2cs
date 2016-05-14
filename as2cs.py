@@ -404,6 +404,37 @@ def affix(begin, end, parts, input, is_pre):
     return text
 
 
+def argument_declared_data_type(data_types, text, taglist):
+    """
+    Remember data_type of a 'argument_declared' clause.
+    >>> taglist = [('letter', 0, 1, None), ('digits', 1, 3, None)]
+    >>> data_types = {}
+    >>> argument_declared_data_type(data_types, 'a:int', taglist)
+    >>> data_types
+    {}
+    >>> taglist = [('argument_declared', 0, 5, [
+    ...     ('identifier', 0, 1, None), 
+    ...     ('COLON', 1, 2, None), 
+    ...     ('data_type', 2, 5, None), 
+    ...     ])]
+    >>> argument_declared_data_type(data_types, 'a:int', taglist)
+    >>> data_types
+    {'a': 'int'}
+    """
+    data_type = None
+    identifier = None
+    for tag, begin, end, parts in taglist:
+        if 'argument_declared' == tag:
+            for t, b, e, p in parts:
+                if 'data_type' == t:
+                    data_type = text[b:e]
+                elif 'identifier' == t:
+                    identifier = text[b:e]
+    if data_type and identifier:
+        data_types[identifier] = data_type
+
+data_types = {}
+
 def _recurse_tags(taglist, input, source, to):
     """
     Reorder tags.
@@ -413,6 +444,7 @@ def _recurse_tags(taglist, input, source, to):
     reorders = reorder_tags[source][to]
     replaces = replace_tags[source][to]
     text = ''
+    argument_declared_data_type(data_types, input, taglist)
     for tag, begin, end, parts in taglist:
         if tag in replaces:
             text += replaces.get(tag)
