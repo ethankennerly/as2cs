@@ -366,6 +366,7 @@ def reorder_taglist(taglist, tag, input, source, to):
                 used_indexes[r] = True
                 break
         else:
+            declared_type(literals[to], data_types, order_tag, input, unordered)
             for verbatim in literals, reorder_defaults:
                 if order_tag in verbatim[to]:
                     insert_text = verbatim[to][order_tag]
@@ -406,20 +407,23 @@ def affix(begin, end, parts, input, is_pre):
 
 def argument_declared_data_type(data_types, text, taglist):
     """
-    Remember data_type of a 'argument_declared' clause.
+    Remember language agnostic data_type of a 'argument_declared' clause.
     >>> taglist = [('letter', 0, 1, None), ('digits', 1, 3, None)]
     >>> data_types = {}
-    >>> argument_declared_data_type(data_types, 'a:int', taglist)
+    >>> argument_declared_data_type(data_types, 'int a', taglist)
     >>> data_types
     {}
     >>> taglist = [('argument_declared', 0, 5, [
-    ...     ('identifier', 0, 1, None), 
-    ...     ('COLON', 1, 2, None), 
-    ...     ('data_type', 2, 5, None), 
-    ...     ])]
-    >>> argument_declared_data_type(data_types, 'a:int', taglist)
+    ...     ('data_type', 0, 3, 
+    ...         [('reserved_data_type', 0, 3, 
+    ...            [('INTEGER', 0, 3, None)]
+    ...         )]
+    ...     ), 
+    ...     ('identifier', 4, 5, None), 
+    ... ])]
+    >>> argument_declared_data_type(data_types, 'int a', taglist)
     >>> data_types
-    {'a': 'int'}
+    {'a': 'INTEGER'}
     """
     data_type = None
     identifier = None
@@ -427,13 +431,29 @@ def argument_declared_data_type(data_types, text, taglist):
         if 'argument_declared' == tag:
             for t, b, e, p in parts:
                 if 'data_type' == t:
-                    data_type = text[b:e]
+                    sub_parts = p
+                    sub_begin = b
+                    sub_end = e
+                    sub_tag = t
+                    while sub_parts:
+                        sub_parts = sub_parts[0]
+                        sub_tag, sub_begin, sub_end, sub_parts = sub_parts
+                    data_type = sub_tag
                 elif 'identifier' == t:
                     identifier = text[b:e]
     if data_type and identifier:
         data_types[identifier] = data_type
 
-data_types = {}
+
+def declared_type(literals, data_types, tag, input, taglist):
+    """
+    TODO:  Replace literal with data type of recognized identifier.
+    >>> declared_type({}, {}, 'declared_type', '', [])
+    """
+    data_type = None
+    if data_type:
+        literals['declared_type'] = literals[data_type]
+
 
 def _recurse_tags(taglist, input, source, to):
     """
@@ -606,6 +626,7 @@ def convert_files(source_paths):
         import pdb
         pdb.set_trace()
 
+
 def compare_file(source_path, to_path):
     text = codecs.open(source_path, 'r', 'utf-8').read()
     got = convert(text)
@@ -651,6 +672,8 @@ set_tags(different_tags, open('cs.g').read(), True)
 for key in source_keys:
     different_tags[key] = False
 set_tags(different_tags, open('as_and_cs.g').read(), False)
+
+data_types = {}
 
 
 if '__main__' == __name__:
