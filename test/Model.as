@@ -1,7 +1,7 @@
 package 
 {
     /**
-     * Portable.  Independent of Flash.
+     * Portable.  Independent of platform.
      */
     public class Model
     {

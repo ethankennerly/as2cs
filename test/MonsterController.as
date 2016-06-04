@@ -1,7 +1,7 @@
 package 
 {
     /**
-     * Portable.  Independent of Flash.
+     * Portable.  Independent of platform.
      */
     public class MonsterController
     {
@@ -18,7 +18,7 @@ package
             model.represent(View.represent(view));
             classNameCounts = {
                 "Explosion": model.length
-            }
+            };
             for (var g:int = 1; g < model.gridClassNames.length; g++)
             {
                 var className:String = model.gridClassNames[g];

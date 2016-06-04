@@ -13,6 +13,21 @@ https://pypi.python.org/pypi/SimpleParse/
 
 Test discovery depends on Python 2.7 or higher.
 
+Usage
+=====
+
+ActionScript to C#:
+
+        python as2cs.py file.as
+
+C# to ActionScript:
+
+        python as2cs.py file.cs
+
+Overwrites file with corresponding extension.
+
+Since C# is strict about explicitly typing, you probably want to explicitly type ActionScript Arrays into Vectors.  This script converts Object hashes into `Dictionary<string, dynamic>`.
+
 Documentation
 =============
 
@@ -27,6 +42,8 @@ http://simpleparse.sourceforge.net/simpleparse\_grammars.html
 Features
 ========
 
+* Convert model from game jam.  <https://github.com/ethankennerly/unconventional-weapon>
+* Example conversion of game jam model and controller.  <https://github.com/ethankennerly/monster>
 * Example doctest of import.
 * Run discovered doctests and unit tests:
 
@@ -265,8 +282,6 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
-* Example conversion of Mother Nature game jam.
-* Unquoted keys in ActionScript hash literal.
 * Match whitespace when empty array literal, hash literal and following newline.
  In C# there are curly braces.  When the curly braces are empty or a single line, put on a single line.  
 
@@ -280,6 +295,7 @@ Not supported
                 ]
                 ;
 
+* Match whitespace in roundtrip conversion.  Instead there might be extra new lines.
 * Call as2cs.py from a different directory than as2cs.py directory.
 * Do not reformat braces and lines in comments.
 * ActionScript string.length to C# String.Length.  Instead DataUtil.Length is available.  Replace:
