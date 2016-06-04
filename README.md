@@ -231,6 +231,33 @@ Features
 
         Assert.AreEqual(expected, got, message)
 
+* ASUnit-to-NUnit test function.  Expects namespace is public.
+  ActionScript:
+
+        public function testThis():void
+
+  C#:
+
+        [Test] public void testThis()
+
+* ASUnit-to-NUnit test class.  Any namespace.
+  ActionScript:
+
+        internal class TestThis extends TestCase{}
+
+  C#:
+
+        [TestFixture] internal class TestThis{}
+
+* ASUnit-to-NUnit import.  Any namespace.
+  ActionScript:
+
+        import asunit.framework.TestCase;
+
+  C#:
+
+        using NUnit.Framework;
+
 
 
 Not supported
@@ -238,30 +265,7 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
-* ASUnit-to-NUnit test function.  Expects namespace is public.
-  ActionScript:
-
-        public function testThis():void {}
-
-  C#:
-
-        [Test] public void testThis() {}
-
-* ASUnit-to-NUnit test class and import.  Any namespace.
-  ActionScript:
-
-        package p{
-            import asunit.framework.TestCase;
-            internal class TestThis() extends TestCase {}
-        }
-
-  C#:
-
-        using NUnit.Framework;
-        namespace p{
-            [TestFixture] internal class TestThis() {}
-        }
-
+* Example conversion of Mother Nature game jam.
 * Unquoted keys in ActionScript hash literal.
 * Match whitespace when empty array literal, hash literal and following newline.
  In C# there are curly braces.  When the curly braces are empty or a single line, put on a single line.  
@@ -278,7 +282,6 @@ Not supported
 
 * Call as2cs.py from a different directory than as2cs.py directory.
 * Do not reformat braces and lines in comments.
-* Example conversion of Mother Nature game jam.
 * ActionScript string.length to C# String.Length.  Instead DataUtil.Length is available.  Replace:
   Vim sed:
 

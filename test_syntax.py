@@ -448,20 +448,14 @@ definitions = [
          'for (int i = cards.Count - 1; 1 <= i; i--){}'],
      ]),
      ('compilation_unit', [
-        ['package{public class C{}}', 
-         'namespace{\n    public class C{\n    }\n}'],
-        ['package{class C{}}',
-         'namespace{\n    class C{\n    }\n}'],
-        ['package{public class C{\n}}',
-         'namespace{\n    public class C{\n    }\n}'],
-        ['package{\n    import A.B;\n\npublic class C{\n}}',
-         'using A/*<B>*/;\nnamespace{\n    public class C{\n    }\n}'],
-        ['package{\npublic class C1{}}',
-         'namespace{\n    public class C1{\n    }\n}'],
-        ['package{public class C2{}\n}',
-         'namespace{\n    public class C2{\n    }\n}'],
-        ['package{\npublic class C3{\n}\n}',
-         'namespace{\n    public class C3{\n    }\n}'],
+        ['package P{\n    import A.B;\n\npublic class C{\n}}',
+         'using A/*<B>*/;\nnamespace P{\n    public class C{\n    }\n}'],
+        ['package P{\npublic class C1{}}',
+         'namespace P{\n    public class C1{\n    }\n}'],
+        ['package P{public class C2{}\n}',
+         'namespace P{\n    public class C2{\n    }\n}'],
+        ['package N{\npublic class C3{\n}\n}',
+         'namespace N{\n    public class C3{\n    }\n}'],
         ['package N\n{\npublic class C4{\n}\n}\n',
          'namespace N\n{\n    public class C4{\n    }\n}'],
         ['//c\npackage N\n{\npublic class C5{\n}\n}\n',
@@ -470,8 +464,8 @@ definitions = [
          'namespace N\n{\n    //c\n    public class C7{\n    }\n}'],
         ['/*c*/\npackage N\n{\npublic class C6{\n}\n}\n',
          '/*c*/\nnamespace N\n{\n    public class C6{\n    }\n}'],
-        ['package{ class C{ var a:Vector.<String>;}}', 
-         'using System.Collections.Generic;\nnamespace{ class C{ List<string> a;}}'],
+        ['package N{ class C{ var a:Vector.<String>;}}', 
+         'using System.Collections.Generic;\nnamespace N{ class C{ List<string> a;}}'],
      ]),
      ('member_expression', [
         ['  internal var /*<delegate>*/ ActionDelegate:/*<void>*/*;',
@@ -487,13 +481,43 @@ definitions = [
         ['{var word:Vector.<String>;    available = word.concat();}',
          '{List<string> word;    available = new List<string>(word);}'],
      ]),
+     ('compilation_unit', [
+        ['package{public class C{}}', 
+         'public class C{\n    }'],
+        ['package{class C{}}',
+         'class C{\n    }'],
+        ['package{public class C{\n}}',
+         'public class C{\n    }'],
+     ]),
+
+     # ASUnit to NUnit:
+
      ('call_expression', [
         ['assertEquals(expected, got)',
          'Assert.AreEqual(expected, got)'],
         ['assertEquals(message, expected, got)',
          'Assert.AreEqual(expected, got, message)'],
      ]),
+     ('function_declaration', [
+        ['  public function testThis():void',
+         '  [Test] public void This()'],
+     ]),
+     ('class_definition', [
+        ['internal class TestThis extends TestCase{}',
+         '[TestFixture] internal class TestThis{}'],
+     ]),
+     ('import_definition', [
+        ['import asunit.framework.TestCase;',
+         'using NUnit.Framework;'],
+     ]),
+
+     ('compilation_unit', [
+        ['package{class C{var repeat:Object = {};}}', 
+         'using System.Collections.Generic;\n' + \
+         'class C{Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};}'],
+     ]),
 ]
+
 
 one_ways = {
     'as': {'cs': [

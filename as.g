@@ -1,8 +1,14 @@
-compilation_unit := namespace_declaration, LBRACE, import_definition_place, class_definition_place, RBRACE
+namespace_declared := namespace_declaration, LBRACE, import_definition_place, class_definition_place, RBRACE
+namespace_default := NAMESPACE, ts?, LBRACE, import_definition_place, class_definition_place, RBRACE
 NAMESPACE := "package"
 IMPORT := "import"
 import_class_clause := DOT, namespace_identifier, SEMICOLON
+UNIT_TEST_ADDRESS := "asunit.framework.TestCase"
 
+test_class := ts?, scope, 
+    whitespace, CLASS, whitespace, identifier, 
+    whitespace, EXTENDS_TEST_CASE, class_block
+EXTENDS_TEST_CASE := "extends TestCase"
 class_base_clause := class_base
 class_extends := ts, EXTENDS, ts, class_identifier
 interface_first := ts, IMPLEMENTS, ts, interface_identifier
@@ -13,6 +19,11 @@ IMPLEMENTS := "implements"
 function_modified := ts, namespace_modifiers_place, function_signature, ts?, COLON, ts?, return_type
 function_default := ts, function_signature, ts?, COLON, ts?, return_type
 function_signature := FUNCTION, ts, identifier, function_parameters
+
+test_function := whitespace, PUBLIC, whitespace, FUNCTION, whitespace, test_function_identifier, ts?, LPAREN, ts?, RPAREN, ts?, COLON, ts?, VOID
+test_function_identifier := TEST_PREFIX, identifier
+TEST_PREFIX := "test"
+
 
 delegate_argument_declaration := VARIABLE, whitespace, DELEGATE, whitespace, argument_declared, ts?, COMMA, whitespace, argument_list
 delegate_no_argument_declaration := VARIABLE, whitespace, DELEGATE, whitespace, argument_declared

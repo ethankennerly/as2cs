@@ -1,3 +1,4 @@
+compilation_unit := namespace_declared / namespace_default
 ts := (whitespace / comment_area)+
 comment_area := comment_line+ / comment_block
 comment_block := comment_start, comment_middle*, COMMENT_END
@@ -13,17 +14,21 @@ COMMENT_MARKUP_END := ">"
 MARKUP_START := "/*<"
 MARKUP_END := ">*/"
 
-namespace_declaration := ts?, NAMESPACE, (ts, address)?, ts?
+namespace_declaration := ts?, NAMESPACE, ts, address, ts?
 import_definition_place := import_definition*
 import_definition := ts?, IMPORT, ts, import_address, EOL?
-import_address := identifier, (import_class_clause / import_subaddress)+
+import_address := (import_address_replaced, SEMICOLON) /
+    (identifier, (import_class_clause / import_subaddress)+)
+import_address_replaced := UNIT_TEST_ADDRESS
 import_subaddress := ts?, DOT, ts?, identifier
 namespace_identifier := GLOB_ALL / identifier
 GLOB_ALL := "*"
 
 class_definition_place := class_definition?, ts?
-class_definition := ts?, class_modifier*, CLASS, ts, identifier, class_base_clause?, 
-    ts?, LBRACE, member_expression*, ts?, RBRACE
+class_definition := test_class 
+    / (ts?, class_modifier*, CLASS, ts, identifier, class_base_clause?, 
+        class_block)
+class_block := ts?, LBRACE, member_expression*, ts?, RBRACE
 class_modifier := scope / FINAL, ts
 class_base := 
     (class_extends, interface_type_list_follows) / interface_type_list / 
@@ -43,7 +48,7 @@ CONSTANT := "const"
 namespace_modifiers_place := (namespace_modifier, (ts, namespace_modifier)*, whitespace)?
 namespace_modifier := scope / STATIC / FINAL / OVERRIDE
 function_body := ts?, LBRACE, !, statement*, ts?, RBRACE
-function_declaration := function_modified / constructor / function_default
+function_declaration := test_function / function_modified / constructor / function_default
 constructor := ts?, namespace_modifiers_place, function_signature
 function_definition := function_declaration, function_body
 function_parameters := ts?, LPAREN, whitespace?, argument_list?, ts?, RPAREN

@@ -1,9 +1,16 @@
-compilation_unit := import_definition_place, namespace_declaration, 
+namespace_declared := import_definition_place, namespace_declaration, 
     LBRACE, class_definition_place, RBRACE
+namespace_default := import_definition_place, class_definition_place
 IMPORT := "using"
 NAMESPACE := "namespace"
 import_suffix := ""
 import_class_clause := MARKUP_START, namespace_identifier, MARKUP_END, SEMICOLON
+UNIT_TEST_ADDRESS := "NUnit.Framework"
+
+test_class := ts?, TEST_FIXTURE_TAG, whitespace, scope, 
+    whitespace, CLASS, whitespace, identifier, 
+    class_block
+TEST_FIXTURE_TAG := "[TestFixture]"
 
 class_base_clause := ts, COLON, class_base
 class_extends := ts, class_identifier
@@ -69,6 +76,10 @@ clone_call := ts?, NEW, ts, declared_type, ts?, LPAREN, ts?, clone_address, ts?,
 
 declared_type := "ArrayList"
 NEW_ARRAYLIST := "new ArrayList"
+
+test_function := whitespace, TEST_TAG, whitespace, PUBLIC, whitespace, VOID, whitespace, test_function_identifier, ts?, LPAREN, ts?, RPAREN
+test_function_identifier := identifier
+TEST_TAG := "[Test]"
 
 assert_equals_with_message_call := ASSERT_EQUALS, ts?, LPAREN, 
     ts?, expected_expression, 

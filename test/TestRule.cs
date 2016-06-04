@@ -1,12 +1,9 @@
-using asunit.framework/*<TestCase>*/;
+using NUnit.Framework;
 namespace com.finegamedesign.powerplant
 {
-    /**
-     * @author Ethan Kennerly
-     */
-    public class TestRule : TestCase
+    [TestFixture] public class TestRule
     {
-        public void testPlayCard()
+        [Test] public void PlayCard()
         {
             Rule rule = new Rule();
             rule.contract = 12;
@@ -22,7 +19,7 @@ namespace com.finegamedesign.powerplant
             Assert.AreEqual(3, Calculate.power(rule.yourField));
         }
         
-        public void testEqualsContract()
+        [Test] public void EqualsContract()
         {
             Rule rule = new Rule();
             rule.contract = 12;
@@ -45,7 +42,7 @@ namespace com.finegamedesign.powerplant
             Assert.AreEqual(false, rule.equalsContract(false));
         }
         
-        public void testTallestStack()
+        [Test] public void TallestStack()
         {
             Rule rule = new Rule();
             Assert.AreEqual(0, rule.tallestStack());
@@ -63,7 +60,7 @@ namespace com.finegamedesign.powerplant
             Assert.AreEqual(4, rule.tallestStack());
         }
         
-        public void testScore()
+        [Test] public void Score()
         {
             Rule rule = new Rule();
             rule.contract = 12;
