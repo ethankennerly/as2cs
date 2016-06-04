@@ -5,18 +5,20 @@
  * http://answers.unity3d.com/questions/610988/unit-testing-unity-test-tools-v10-namespace-nunit.html
  */
 using NUnit.Framework;
-[TestFixture]
-internal class TestToolkit
-{
-    [Test]
-    public void ParseIndex()
+namespace testSyntax{
+    [TestFixture]
+    internal class TestToolkit
     {
-        Assert.AreEqual(-1, Toolkit.ParseIndex(""));
-        Assert.AreEqual(-1, Toolkit.ParseIndex("a"));
-        Assert.AreEqual(-1, Toolkit.ParseIndex("b_"));
-        Assert.AreEqual(2, Toolkit.ParseIndex("c_2"));
-        Assert.AreEqual(3, Toolkit.ParseIndex("d_3_0"));
-        Assert.AreEqual(-1, Toolkit.ParseIndex("_e_3_1"));
-        Assert.AreEqual(4, Toolkit.ParseIndex("_4_2"));
+        [Test]
+        public void ParseIndex()
+        {
+            Assert.AreEqual(-1, Toolkit.ParseIndex(""));
+            Assert.AreEqual(-1, Toolkit.ParseIndex("a"));
+            Assert.AreEqual(-1, Toolkit.ParseIndex("b_"));
+            Assert.AreEqual(2, Toolkit.ParseIndex("c_2"));
+            Assert.AreEqual(3, Toolkit.ParseIndex("d_3_0"));
+            Assert.AreEqual(-1, Toolkit.ParseIndex("_e_3_1"));
+            Assert.AreEqual(4, Toolkit.ParseIndex("_4_2"));
+        }
     }
 }

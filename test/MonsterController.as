@@ -1,4 +1,4 @@
-package 
+package monster
 {
     import com.finegamedesign.utils.DataUtil;
     /**
@@ -36,7 +36,7 @@ package
             View.initAnimation(view.background);
         }
 
-        public function select(event:*):void
+        public function select(mouseEvent:*):void
         {
             if (model.result == -1)
             {
@@ -45,7 +45,7 @@ package
                 model.restart();
                 return;
             }
-            var target:* = View.currentTarget(event);
+            var target:* = View.currentTarget(mouseEvent);
             var isExplosion:Boolean = model.select(View.getName(target));
             if (isExplosion)
             {

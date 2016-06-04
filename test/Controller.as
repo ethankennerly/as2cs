@@ -1,9 +1,11 @@
-package 
+package monster
 {
     import com.finegamedesign.utils.DataUtil;
 
     public class Controller
     {
+        public var /*<delegate>*/ ChildKeyChangeDelegate:*, _key:String, _change:String;
+
         public static function listenToChildren(view:*, childNames:Array, methodName:String, owner:*):void
         {
             for (var c:int = 0; c < DataUtil.Length(childNames); c++) 
@@ -22,7 +24,7 @@ package
         /**
          * @param   changes     What is different as nested hashes.
          */
-        public static function visit(parent:*, changes:Object, boundFunction:Function):void
+        public static function visit(parent:*, changes:Object, boundFunction:/*<ChildKeyChangeDelegate>*/Function):void
         {
             for (var key:String in changes)
             {

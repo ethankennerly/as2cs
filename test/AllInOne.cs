@@ -8,7 +8,7 @@ using com.finegamedesign.anagram/*<View>*/;
 namespace com.finegamedesign.anagram
 {
     // This class has all supported features.
-    public sealed class AllInOne : EmptyClass, IModel, IController
+    public sealed class AllInOne : EmptyClass // implements IModel, IController
     {
         private static string _cache = "";
         

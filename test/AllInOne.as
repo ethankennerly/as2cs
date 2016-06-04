@@ -9,7 +9,7 @@ package com.finegamedesign.anagram
     import com.finegamedesign.anagram.View;
 
     // This class has all supported features.
-    public final class AllInOne extends EmptyClass implements IModel, IController
+    public final class AllInOne extends EmptyClass // implements IModel, IController
     {
         private static var _cache:String = "";
 

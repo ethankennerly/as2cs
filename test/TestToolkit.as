@@ -1,4 +1,4 @@
-package{
+package testSyntax{
     /**
      * This script must be in an Editor folder.
      * Test case:  2014-01 JimboFBX expects "using NUnit.Framework;"

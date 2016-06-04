@@ -45,6 +45,9 @@ For another example, wrap cloning an ActionScript Array:
 
 See DataUtil.as and DataUtil.cs for the supported wrappers.
 
+* C# does not support reserved keyword 'event'.  Replace those.
+
+
 Documentation
 =============
 
@@ -312,6 +315,10 @@ Not supported
                 ]
                 ;
 
+* Overriding virtual functions in C#.
+  http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
+* Interface definition.
+* Delegate with variable number of arguments.
 * Match whitespace in roundtrip conversion.  Instead there might be extra new lines.
 * Call as2cs.py from a different directory than as2cs.py directory.
 * Convert nested strictly equals.  Example:
@@ -402,9 +409,6 @@ Not supported
 * ActionScript typed Vector literal to C# typed list literal.
 * ActionScript delete a to C# .Remove(a).
 * ActionScript clear(d) to C# d.Clear().
-* Overriding virtual functions in C#.
-  http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
-* Interface definition.
 * ActionScript single-quoted strings to C# double-quoted strings, with escaping subquotes.  C# reserves single-quoted strings for single-characters.  Instead, you can replace in ActionScript the single-quotes with double-quotes.  Example ActionScript:
 
             trial({'help': 'Hello world'});

@@ -1,31 +1,34 @@
 using System.Collections;
-
-/**
- * Portable.  Independent of Flash.
- */
-public class Model
+using System.Collections.Generic;
+namespace monster
 {
     /**
-     * @param   represents  Nested hash of descendents.
-     * @param   prefix      Filtered to this prefix.
-     * @return  Array of child names that start with prefix, and have suffix "_0", where 0 may be any digits.
-     *          Sorted from back to front.
+     * Portable.  Independent of platform.
      */
-    public static ArrayList keys(Dictionary<string, dynamic> represents, string prefix="")
+    public class Model
     {
-        ArrayList childNames = new ArrayList(){
-        }
-        ;
-        if (represents)
+        /**
+         * @param   represents  Nested hash of descendents.
+         * @param   prefix      Filtered to this prefix.
+         * @return  Array of child names that start with prefix, and have suffix "_0", where 0 may be any digits.
+         *          Sorted from back to front.
+         */
+        public static ArrayList keys(Dictionary<string, dynamic> represents, string prefix="")
         {
-            foreach(KeyValuePair<string, dynamic> _entry in represents){
-                string name = _entry.Key;
-                if (object.ReferenceEquals(0, name.IndexOf(prefix)))
-                {
-                    childNames.Add(name);
+            ArrayList childNames = new ArrayList(){
+            }
+            ;
+            if (represents)
+            {
+                foreach(KeyValuePair<string, dynamic> _entry in represents){
+                    string name = _entry.Key;
+                    if (object.ReferenceEquals(0, name.IndexOf(prefix)))
+                    {
+                        childNames.Add(name);
+                    }
                 }
             }
+            return childNames;
         }
-        return childNames;
     }
 }

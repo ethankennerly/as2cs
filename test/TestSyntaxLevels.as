@@ -1,4 +1,4 @@
-package com.finegamedesign.anagram
+package com.finegamedesign.anagram.testSynax
 {
     import com.finegamedesign.utils.DataUtil;
 

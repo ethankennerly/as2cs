@@ -1,4 +1,4 @@
-package 
+package monster
 {
     import com.finegamedesign.utils.DataUtil;
     /**
@@ -291,7 +291,7 @@ package
         // 60.0;
         // 40.0;
         // 20.0;
-        private var periodBase:int = 120.0;
+        private var periodBase:Number = 120.0;
 
         private function updatePeriod(population:int, vacancy:int):Number
         {

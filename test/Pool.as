@@ -1,4 +1,4 @@
-package 
+package monster
 {
     import com.finegamedesign.utils.DataUtil;
 

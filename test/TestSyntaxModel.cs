@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 using com.finegamedesign.utils/*<Model>*/;
-namespace com.finegamedesign.anagram
+namespace com.finegamedesign.anagram.testSyntax
 {
     public class TestSyntaxModel
     {

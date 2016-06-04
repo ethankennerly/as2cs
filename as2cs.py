@@ -562,10 +562,13 @@ def may_import(taglist, text, definition, to):
         import_statements = [
             ('using System.Collections.Generic;\n', [
                 'generic_collection', 
-                'string_hash_literal',
+                'STRING_HASH_TABLE',
+                'NEW_HASH_TABLE',
             ]), 
             ('using System.Collections;\n', [
                 'collection', 
+                'NEW_ARRAY_LIST', 
+                'ARRAY_LIST', 
             ]),
             ('using UnityEngine;\n', [
                 'unity_address',

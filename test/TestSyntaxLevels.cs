@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using com.finegamedesign.utils/*<DataUtil>*/;
-namespace com.finegamedesign.anagram
+namespace com.finegamedesign.anagram.testSynax
 {
     public class Levels
     {

@@ -1,4 +1,4 @@
-package com.finegamedesign.anagram
+package com.finegamedesign.anagram.testSyntax
 {
     import com.finegamedesign.utils.Model;
 
