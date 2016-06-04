@@ -1,10 +1,12 @@
 using System.Collections;
 
+using com.finegamedesign.utils/*<DataUtil>*/;
+
 public class Controller
 {
     public static void listenToChildren(dynamic view, ArrayList childNames, string methodName, dynamic owner)
     {
-        for (int c = 0; c < childNames.Count; c++)
+        for (int c = 0; c < DataUtil.Length(childNames); c++)
         {
             string name = childNames[c];
             dynamic child = view[name];

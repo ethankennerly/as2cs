@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+using com.finegamedesign.utils/*<DataUtil>*/;
 /**
  * Portable.  Independent of platform.
  */
@@ -19,16 +20,16 @@ public class MonsterController
         model.represent(View.represent(view));
         classNameCounts = new Dictionary<string, dynamic>(){
             {
-                "Explosion", model.Count}
+                "Explosion", DataUtil.Length(model)}
         }
         ;
-        for (int g = 1; g < model.gridClassNames.Count; g++)
+        for (int g = 1; g < model.DataUtil.Length(gridClassNames); g++)
         {
             string className = model.gridClassNames[g];
-            classNameCounts[className] = model.Count;
+            classNameCounts[className] = DataUtil.Length(model);
         }
         pools = Pool.construct(View.construct, classNameCounts);
-        for (int c = 0; c < model.cityNames.Count; c++)
+        for (int c = 0; c < model.DataUtil.Length(cityNames); c++)
         {
             string name = model.cityNames[c];
             View.removeChild(view.spawnArea[name]);
@@ -115,7 +116,7 @@ public class MonsterController
         {
             if (Controller.isObject(change) && !isNaN(change.x))
             {
-                for (int g = 1; g < model.gridClassNames.Count; g++)
+                for (int g = 1; g < DataUtil.Length(model.gridClassNames); g++)
                 {
                     string className = model.gridClassNames[g];
                     if (object.ReferenceEquals(key.IndexOf(className), 0))

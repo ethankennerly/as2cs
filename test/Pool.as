@@ -1,12 +1,15 @@
 package 
 {
+    import com.finegamedesign.utils.DataUtil;
+
     public class Pool
     {
         public var index:int;
         private var pool:Array = [];
         private var max:int;
+        public var /*<delegate>*/ FactoryDelegate1:*, factoryArgument:*;
 
-        public static function construct(factory:Function, classNameCounts:Object):Object
+        public static function construct(factory:/*<FactoryDelegate1>*/Function, classNameCounts:Object):Object
         {
             var pools:Object = {};
             for (var className:String in classNameCounts)
@@ -18,7 +21,7 @@ package
             return pools;
         }
 
-        public function Pool(count:int, factory:Function, factoryArgument:*=null)
+        public function Pool(count:int, factory:/*<FactoryDelegate1>*/Function, factoryArgument:*=null)
         {
             max = count;
             for (var i:int = 0; i < max; i++)
@@ -41,7 +44,7 @@ package
         {
             var item:* = pool[index];
             index++;
-            if (pool.length <= index)
+            if (DataUtil.Length(pool) <= index)
             {
                 index = 0;
             }

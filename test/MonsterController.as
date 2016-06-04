@@ -1,5 +1,6 @@
 package 
 {
+    import com.finegamedesign.utils.DataUtil;
     /**
      * Portable.  Independent of platform.
      */
@@ -17,15 +18,15 @@ package
             model = new MonsterModel();
             model.represent(View.represent(view));
             classNameCounts = {
-                "Explosion": model.length
+                "Explosion": DataUtil.Length(model)
             };
-            for (var g:int = 1; g < model.gridClassNames.length; g++)
+            for (var g:int = 1; g < model.DataUtil.Length(gridClassNames); g++)
             {
                 var className:String = model.gridClassNames[g];
-                classNameCounts[className] = model.length;
+                classNameCounts[className] = DataUtil.Length(model);
             }
             pools = Pool.construct(View.construct, classNameCounts);
-            for (var c:int = 0; c < model.cityNames.length; c++)
+            for (var c:int = 0; c < model.DataUtil.Length(cityNames); c++)
             {
                 var name:String = model.cityNames[c];
                 View.removeChild(view.spawnArea[name]);
@@ -112,7 +113,7 @@ package
             {
                 if (Controller.isObject(change) && !isNaN(change.x))
                 {
-                    for (var g:int = 1; g < model.gridClassNames.length; g++)
+                    for (var g:int = 1; g < DataUtil.Length(model.gridClassNames); g++)
                     {
                         var className:String = model.gridClassNames[g];
                         if (key.indexOf(className) === 0)

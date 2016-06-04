@@ -28,6 +28,23 @@ Overwrites file with corresponding extension.
 
 Since C# is strict about explicitly typing, you probably want to explicitly type ActionScript Arrays into Vectors.  This script converts Object hashes into `Dictionary<string, dynamic>`.
 
+Wrap DataUtil
+
+as2cs.py converts syntax.  Sometimes syntax is not enough information to infer a difference in idioms and functions between the languages.  For example, property 'length' of an ActionScript Array is converted to 'Count', presuming it is a generic collection.  A Vector is converted to a List.  Another way to port is to replace 'a.length' with DataUtil.Length(a).
+
+        import com.finegamedesign.utils.DataUtil;
+
+This vim sed command replaces the ActionScript:
+
+        %s/\([A-Za-z0-9\.]\+\)\.length\>/DataUtil.Length(\1)/gIce
+
+For another example, wrap cloning an ActionScript Array:
+
+        args test/*.as
+        argdo %s/\([A-Za-z\.0-9]\+\)\.concat()/DataUtil.CloneList(\1)/gIce | update
+
+See DataUtil.as and DataUtil.cs for the supported wrappers.
+
 Documentation
 =============
 
@@ -297,13 +314,21 @@ Not supported
 
 * Match whitespace in roundtrip conversion.  Instead there might be extra new lines.
 * Call as2cs.py from a different directory than as2cs.py directory.
+* Convert nested strictly equals.  Example:
+
+        var isChanged:Boolean = g === grid[index] || g === gridPreviously[index]
+
+  Instead you could replace with equals:
+
+        var isChanged:Boolean = g == grid[index] || g == gridPreviously[index]
+
 * Do not reformat braces and lines in comments.
+  Recognize data type is a collection.  Only convert length to Count if so.
 * ActionScript string.length to C# String.Length.  Instead DataUtil.Length is available.  Replace:
   Vim sed:
 
-        %s/\([A-Za-z]\+\)\.length\>/DataUtil.Length(\1)/gIce
+        %s/\([A-Za-z0-9\.]\+\)\.length\>/DataUtil.Length(\1)/gIce
 
-  Recognize data type is a collection.  Only convert length to Count if so.
 * Split string into an array of strings without a delimiter.  
   ActionScript:
 

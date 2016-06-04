@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using com.finegamedesign.utils/*<DataUtil>*/;
+
 public class Pool
 {
     public int index;
@@ -8,8 +10,9 @@ public class Pool
     }
     ;
     private int max;
+    public delegate dynamic FactoryDelegate1(dynamic factoryArgument);
     
-    public static Dictionary<string, dynamic> construct(Function factory, Dictionary<string, dynamic> classNameCounts)
+    public static Dictionary<string, dynamic> construct(/*<Function>*/FactoryDelegate1 factory, Dictionary<string, dynamic> classNameCounts)
     {
         Dictionary<string, dynamic> pools = new Dictionary<string, dynamic>(){
         }
@@ -22,7 +25,7 @@ public class Pool
         return pools;
     }
     
-    public Pool(int count, Function factory, dynamic factoryArgument=null)
+    public Pool(int count, /*<Function>*/FactoryDelegate1 factory, dynamic factoryArgument=null)
     {
         max = count;
         for (int i = 0; i < max; i++)
@@ -45,7 +48,7 @@ public class Pool
     {
         dynamic item = pool[index];
         index++;
-        if (pool.Count <= index)
+        if (DataUtil.Length(pool) <= index)
         {
             index = 0;
         }

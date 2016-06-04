@@ -1,10 +1,12 @@
 package 
 {
+    import com.finegamedesign.utils.DataUtil;
+
     public class Controller
     {
         public static function listenToChildren(view:*, childNames:Array, methodName:String, owner:*):void
         {
-            for (var c:int = 0; c < childNames.length; c++) 
+            for (var c:int = 0; c < DataUtil.Length(childNames); c++) 
             {
                 var name:String = childNames[c];
                 var child:* = view[name];

@@ -1,7 +1,8 @@
-﻿package 
+package 
 {
+    import com.finegamedesign.utils.DataUtil;
     /**
-     * Portable.  Independent of Flash.
+     * Portable.  Independent of platform.
      */
     public class MonsterModel
     {
@@ -58,25 +59,25 @@
             widthInCells = Math.floor(width / cellWidth);
             heightInCells = Math.floor(height / cellHeight);
             clearGrid(0);
-            gridPreviously = grid.concat();
+            gridPreviously = DataUtil.CloneList(grid);
         }
 
         private function toGrid(represents:Object, cityNames:Array):Array
         {
             width = Math.ceil(represents.spawnArea.width);
             height = Math.ceil(represents.spawnArea.height);
-            for (var c:int = 0; c < cityNames.length; c++)
+            for (var c:int = 0; c < DataUtil.Length(cityNames); c++)
             {
                 var name:String = cityNames[c];
                 var child:* = represents.spawnArea[name];
-                if (0 == grid.length) {
+                if (0 == DataUtil.Length(grid)) {
                     initGrid(grid, child.width, child.height);
                 }
                 var column:int = Math.floor(child.x / cellWidth);
                 var row:int = Math.floor(child.y / cellHeight);
                 grid[row * widthInCells + column] = 1;
             }
-            length = grid.length;
+            length = DataUtil.Length(grid);
             // trace(grid);
             return grid;
         }
@@ -167,7 +168,7 @@
         private function grow(grid:Array):Array
         {
             // trace("grow:   " + grid);
-            var gridNext:Array = grid.concat();
+            var gridNext:Array = DataUtil.CloneList(grid);
             for (var row:int = 0; row < heightInCells; row++)
             {
                 for (var column:int = 0; column < widthInCells; column++)
@@ -192,20 +193,20 @@
                 for (var column:int = 0; column < widthInCells; column++)
                 {
                     var index:int = row * widthInCells + column;
-                    if (grid[index] !== gridPreviously[index]) {
+                    if (grid[index] != gridPreviously[index]) {
                         if (null == changes.spawnArea)
                         {
                             changes.spawnArea = {};
                         }
-                        for (var g:int = 1; g < gridClassNames.length; g++)
+                        for (var g:int = 1; g < DataUtil.Length(gridClassNames); g++)
                         {
                             var className:String = gridClassNames[g];
-                            var isChanged:Boolean = g === grid[index] || g === gridPreviously[index];
+                            var isChanged:Boolean = g == grid[index] || g == gridPreviously[index];
                             if (isChanged)
                             {
                                 var name:String = className + "_" + row + "_" + column;
                                 count++;
-                                if (g === grid[index]) 
+                                if (g == grid[index]) 
                                 {
                                     changes.spawnArea[name] = {
                                         x: cellWidth * column + cellWidth * 0.5 + offsetWidth(row),
@@ -229,7 +230,7 @@
             accumulated += deltaSeconds;
             population = count(grid, 1);
             health = count(grid, 2);
-            vacancy = grid.length - population;
+            vacancy = DataUtil.Length(grid) - population;
             win();
             if (period <= accumulated) 
             {
@@ -250,17 +251,17 @@
             }
             changes = change(gridPreviously, grid);
             cityNames = Model.keys(changes.spawnArea, "city");
-            gridPreviously = grid.concat();
+            gridPreviously = DataUtil.CloneList(grid);
         }
 
         private function count(counts:Array, value:int):int
         {
             var sum:int = 0;
-            for (var c:int = 0; c < counts.length; c++)
+            for (var c:int = 0; c < DataUtil.Length(counts); c++)
             {
                 if (value === counts[c])
                 {
-                    sum += 1
+                    sum += 1;
                 }
             }
             return sum;
@@ -277,7 +278,7 @@
             var attemptMax:int = 128;
             for (var attempt:int = 0; count(grid, 1) < startingPlaces && attempt < attemptMax; attempt++)
             {
-                var index:int = Math.floor(Math.random() * (grid.length - 4)) + 2;
+                var index:int = Math.floor(Math.random() * (DataUtil.Length(grid) - 4)) + 2;
                 grid[index] = 1;
             }
             // startingPlaces += 0.125;
@@ -304,7 +305,7 @@
             }
             else if (1 <= vacancy)
             {
-                var ratio:Number = Math.pow(population, 0.325) / grid.length;
+                var ratio:Number = Math.pow(population, 0.325) / DataUtil.Length(grid);
                 var exponent:Number = 1.0;
                 // 0.75;
                 // 0.25;
@@ -318,7 +319,7 @@
 
         private function win():int
         {
-            resultNow = result === 0 ? 0 : result;
+            resultNow = result == 0 ? 0 : result;
             if (vacancy <= 0 || health <= 0)
             {
                 result = -1;
@@ -331,13 +332,13 @@
             {
                 result = 0;
             }
-            resultNow = resultNow === 0 ? result : 0;
+            resultNow = resultNow == 0 ? result : 0;
             return resultNow;
         }
 
         internal function select(name:String):Boolean
         {
-            var parts:Array = name.split("_");
+            var parts:Array = DataUtil.Split(name, "_");
             var row:int = parseInt(parts[1]);
             var column:int = parseInt(parts[2]);
             var result:int = selectCell(row, column);
@@ -345,7 +346,7 @@
             var isExplosion:Boolean = 1 === result;
             if (isExplosion && 0 <= population)
             {
-                vacancy = grid.length - population;
+                vacancy = DataUtil.Length(grid) - population;
                 period = updatePeriod(population, vacancy);
             }
             return isExplosion;
@@ -369,7 +370,7 @@
 
         internal function clearGrid(value:int):void
         {
-            grid.length = 0;
+            DataUtil.Clear(grid);
             for (var row:int = 0; row < heightInCells; row++)
             {
                 for (var column:int = 0; column < widthInCells; column++)

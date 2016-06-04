@@ -519,10 +519,17 @@ definitions = [
          'using NUnit.Framework;'],
      ]),
 
-     ('compilation_unit', [
-        ['package{class C{\nvar repeat:Object = {};\n}}', 
-         'using System.Collections.Generic;\n' + \
-         'class C{\nDictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};\n}'],
+     # Edge cases
+
+     ('variable_declaration', [
+        ['var columnOffset:int = offset == 0 ? -1 : 1',
+         'int columnOffset = offset == 0 ? -1 : 1'],
+        ['var isChanged:Boolean = g == grid[index] || g == gridPreviously[index]',
+         'bool isChanged = g == grid[index] || g == gridPreviously[index]'],
+     ]),
+     ('class_definition', [
+        ['class C{\n    var a:int;\n    var repeat:Object = {};\n    var b:int;\n}', 
+         'class C{\n    int a;\n    Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};\n    int b;\n}'],
      ]),
 ]
 
