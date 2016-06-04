@@ -65,9 +65,17 @@ REMOVE_RANGE := "RemoveRange"
 TO_LOWER_CASE := "ToLower"
 
 collection_clone := ts?, NEW, ts, collection_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
-reordered_call := ts?, NEW, ts, declared_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
+clone_call := ts?, NEW, ts, declared_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
+
 declared_type := "ArrayList"
 NEW_ARRAYLIST := "new ArrayList"
+
+assert_equals_with_message_call := ASSERT_EQUALS, ts?, LPAREN, 
+    ts?, expected_expression, 
+    ts?, COMMA, whitespace, ts?, got_expression, 
+    ts?, COMMA, whitespace, ts?, message_expression, 
+    ts?, RPAREN
+ASSERT_EQUALS := "Assert.AreEqual"
 
 PARSE_INT := "int.Parse"
 PARSE_FLOAT := "float.Parse"

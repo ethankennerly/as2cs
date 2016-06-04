@@ -53,16 +53,16 @@ package com.finegamedesign.anagram
             wordPosition = 0.0;
             help = "";
             wordWidthPerSecond = -0.01;
-            if (null != parameters["text"]) {
+            if ("text" in parameters) {
                 text = String(parameters["text"]);
             }
-            if (null != parameters["help"]) {
+            if ("help" in parameters) {
                 help = String(parameters["help"]);
             }
-            if (null != parameters["wordWidthPerSecond"]) {
+            if ("wordWidthPerSecond" in parameters) {
                 wordWidthPerSecond = Number(parameters["wordWidthPerSecond"]);
             }
-            if (null != parameters["wordPosition"]) {
+            if ("wordPosition" in parameters) {
                 wordPosition = Number(parameters["wordPosition"]);
             }
             available = DataUtil.Split(text, "");

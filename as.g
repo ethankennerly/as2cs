@@ -63,7 +63,14 @@ REMOVE_RANGE := "splice"
 TO_LOWER_CASE := "toLowerCase"
 
 collection_clone := ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
-reordered_call := ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
+clone_call := ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
+
+assert_equals_with_message_call := ASSERT_EQUALS, ts?, LPAREN, 
+    ts?, message_expression, 
+    ts?, COMMA, whitespace, ts?, expected_expression, 
+    ts?, COMMA, whitespace, ts?, got_expression, 
+    ts?, RPAREN
+ASSERT_EQUALS := "assertEquals"
 
 PARSE_INT := "parseInt"
 PARSE_FLOAT := "parseFloat"

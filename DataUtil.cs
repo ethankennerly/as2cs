@@ -48,10 +48,30 @@ namespace com.finegamedesign.utils
          */
         public static List<string> Split(string text, string delimiter)
         {
-            string[] delimiters = new string[] {delimiter};
-            string[] parts = text.Split(delimiters, StringSplitOptions.None);
-            List<string> list = new List<string>(parts);
-            return list;
+            if ("" == delimiter) {
+                return SplitString(text);
+            }
+            else {
+                string[] delimiters = new string[] {delimiter};
+                string[] parts = text.Split(delimiters, StringSplitOptions.None);
+                List<string> list = new List<string>(parts);
+                return list;
+            }
+        }
+
+        /**
+         * This was the most concise way I found to split a string without depending on a library.
+         * In ActionScript splitting a string is concise:  s.split("");
+	 * C# has characters, which would be more efficient, though less portable.
+         */
+        public static List<string> SplitString(string text)
+        {
+            List<string> letters = new List<string>();
+            char[] characters = text.ToCharArray();
+            for (int i = 0; i < characters.Length; i++) {
+                letters.Add(characters[i].ToString());
+            }
+            return letters;
         }
 
         public static string Join(List<string> texts, string delimiter)
@@ -60,6 +80,7 @@ namespace com.finegamedesign.utils
             string joined = string.Join(delimiter, parts);
             return joined;
         }
+
 
         public static T Pop<T>(List<T> items)
         {

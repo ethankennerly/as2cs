@@ -613,6 +613,7 @@ def format_taglist(input, definition):
 
 
 def convert_file(source_path, to_path):
+    configure_language(source_path)
     text = codecs.open(source_path, 'r', 'utf-8').read()
     str = convert(text)
     f = codecs.open(to_path, 'w', 'utf-8')
@@ -620,31 +621,47 @@ def convert_file(source_path, to_path):
     f.close()
 
 
+def configure_language(source_path):
+    root, ext = path.splitext(source_path)
+    if '.cs' == ext:
+        cfg['source'] = 'cs'
+        cfg['to'] = 'as'
+    else:
+        cfg['source'] = 'as'
+        cfg['to'] = 'cs'
+
+
 def analogous_paths(source_paths):
     path_pairs = []
     for source_path in source_paths:
         root, ext = path.splitext(source_path)
+        configure_language(source_path)
         to_path = '%s.%s' % (root, cfg['to'])
         path_pairs.append([source_path, to_path])
     return path_pairs
 
 
 def convert_files(source_paths):
-    try:
-        for source_path, to_path in analogous_paths(source_paths):
+    original_source = cfg['source']
+    original_to = cfg['to']
+    for source_path, to_path in analogous_paths(source_paths):
+        try:
+            print 'Converting %s to %s' % (source_path, to_path)
             convert_file(source_path, to_path)
-    except ParserSyntaxError as err:
-        message = 'Path %s:\nproduction %s\nexpected %s\nposition %s' % (
-            source_path, err.production, err.expected, err.position)
-        if err.buffer:
-            radius = 80
-            context = err.buffer[max(0, err.position - radius):err.position]
-            context += ' >>!<< '
-            context += err.buffer[err.position:err.position + radius]
-            message += ' of %s. context:\n%s' % (len(err.buffer), context)
-        print message
-        import pdb
-        pdb.set_trace()
+        except ParserSyntaxError as err:
+            message = 'Path %s:\nproduction %s\nexpected %s\nposition %s' % (
+                source_path, err.production, err.expected, err.position)
+            if err.buffer:
+                radius = 80
+                context = err.buffer[max(0, err.position - radius):err.position]
+                context += ' >>!<< '
+                context += err.buffer[err.position:err.position + radius]
+                message += ' of %s. context:\n%s' % (len(err.buffer), context)
+            print message
+            ## import pdb
+            ## pdb.set_trace()
+    cfg['source'] = original_source
+    cfg['to'] = original_to
 
 
 def compare_file(source_path, to_path):

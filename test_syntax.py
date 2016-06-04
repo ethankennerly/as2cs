@@ -487,6 +487,12 @@ definitions = [
         ['{var word:Vector.<String>;    available = word.concat();}',
          '{List<string> word;    available = new List<string>(word);}'],
      ]),
+     ('call_expression', [
+        ['assertEquals(expected, got)',
+         'Assert.AreEqual(expected, got)'],
+        ['assertEquals(message, expected, got)',
+         'Assert.AreEqual(expected, got, message)'],
+     ]),
 ]
 
 one_ways = {
