@@ -32,7 +32,7 @@ ebnf_parser = Parser(declaration, 'declarationset')
 source_keys = [key for source in SOURCES 
     for key in source.keys()]
 source_keys.sort()
-## print pformat(source_keys)
+## print(pformat(source_keys))
 
 
 def merge_declarations(declarations):
@@ -84,10 +84,10 @@ def set_tags(tags, grammar_text, value):
     >>> grammar_text = "a := b\nb := '.'"
     >>> tags = {}
     >>> set_tags(tags, grammar_text, True)
-    >>> print pformat(tags)
+    >>> print(pformat(tags))
     {'a': True, 'b': True}
     >>> set_tags(tags, 'spacechar := " "', False)
-    >>> print pformat(tags)
+    >>> print(pformat(tags))
     {'a': True, 'b': True, 'spacechar': False}
     """
     taglist = ebnf_parser.parse(grammar_text)
@@ -432,7 +432,7 @@ def argument_declared_data_type(data_types, text, taglist):
     ...     ('data_type', 2, 17, None), 
     ... ])]
     >>> argument_declared_data_type(data_types, 'v:Vector.<String>', taglist)
-    >>> print pformat(data_types)
+    >>> print(pformat(data_types))
     {'a': 'int', 'v': 'List<string>'}
     """
     data_type = None
@@ -587,7 +587,7 @@ def convert(input, definition = 'compilation_unit'):
     """
     Example of converting syntax from ActionScript to C#.
 
-    >>> print convert('import com.finegamedesign.anagram.Model;', 'import_definition')
+    >>> print(convert('import com.finegamedesign.anagram.Model;', 'import_definition'))
     using com.finegamedesign.anagram/*<Model>*/;
 
     Related to grammar unit testing specification (gUnit)
@@ -646,7 +646,7 @@ def convert_files(source_paths):
     original_to = cfg['to']
     for source_path, to_path in analogous_paths(source_paths):
         try:
-            print 'Converting %s to %s' % (source_path, to_path)
+            print('Converting %s to %s' % (source_path, to_path))
             convert_file(source_path, to_path)
         except ParserSyntaxError as err:
             message = 'Path %s:\nproduction %s\nexpected %s\nposition %s' % (
@@ -657,7 +657,7 @@ def convert_files(source_paths):
                 context += ' >>!<< '
                 context += err.buffer[err.position:err.position + radius]
                 message += ' of %s. context:\n%s' % (len(err.buffer), context)
-            print message
+            print(message)
             ## import pdb
             ## pdb.set_trace()
     cfg['source'] = original_source
@@ -674,7 +674,11 @@ def compare_file(source_path, to_path):
 def compare_files(source_paths):
     expected_gots = []
     for source_path, to_path in analogous_paths(source_paths):
-        expected_gots.append(compare_file(source_path, to_path))
+        try:
+            expected_gots.append(compare_file(source_path, to_path))
+        except:
+            print('compare_files failed:', source_path, to_path)
+            convert_file(source_path, to_path)
     return expected_gots
 
 
@@ -716,7 +720,7 @@ data_types = {}
 if '__main__' == __name__:
     import sys
     if len(sys.argv) <= 1:
-        print __doc__
+        print(__doc__)
     if 2 <= len(sys.argv) and '--test' != sys.argv[1]:
         convert_files(sys.argv[1:])
     import doctest

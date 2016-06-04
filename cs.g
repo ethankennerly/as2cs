@@ -45,7 +45,7 @@ property := LBRACE, ts?, key, ts?, COMMA, ts, expression, ts?, RBRACE
 quoted_identifier := QUOTE, identifier, QUOTE
 
 
-for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, STRING_HASH_ENTRY, ts, IN_ITERATOR, ts, expression, ts?, RPAREN, ts?, LBRACE, iterator, ASSIGN_KEY, ts, statement+, RBRACE
+for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, STRING_HASH_ENTRY, ts, IN_ITERATOR, !, ts, expression, ts?, RPAREN, ts?, LBRACE, iterator, ASSIGN_KEY, ts, statement_place, ts?, RBRACE
 variable_declared := ts?, argument_declared
 STRING_HASH_ENTRY := "KeyValuePair<string, dynamic> _entry"
 ASSIGN_KEY := " = _entry.Key;"

@@ -47,7 +47,7 @@ delegate_declaration := delegate_argument_declaration / delegate_no_argument_dec
 CONSTANT := "const"
 namespace_modifiers_place := (namespace_modifier, (ts, namespace_modifier)*, whitespace)?
 namespace_modifier := scope / STATIC / FINAL / OVERRIDE
-function_body := ts?, LBRACE, !, statement*, ts?, RBRACE
+function_body := ts?, LBRACE, !, statement_place, ts?, RBRACE
 function_declaration := test_function / function_modified / constructor / function_default
 constructor := ts?, namespace_modifiers_place, function_signature
 function_definition := function_declaration, function_body
@@ -132,8 +132,9 @@ statement := ts?,
     )
     / (ts?, SEMICOLON)
 
-block := LBRACE, !, statement*, ts?, RBRACE
-return_expression := ts?, RETURN, ts, expression
+block := LBRACE, !, statement_place, ts?, RBRACE
+return_expression := ts?, RETURN, (ts, 
+    conditional_expression / expression)?
 RETURN := "return"
 primary_expression := expression
 expression := 
@@ -245,6 +246,7 @@ AND := "&&"
 
 BIT_NOT := "~"
 
+statement_place := statement*
 iteration_statement := for_in_statement / for_statement / do_statement / while_statement
 for_statement := ts?, FOR, ts?, LPAREN, !, statement, statement, expression_list?, RPAREN, statement
 FOR := "for"

@@ -440,8 +440,8 @@ definitions = [
          'while( true ){i++;  j--;}'],
         ['do {i++; j--;}while(false)',
          'do {i++; j--;}while(false)'],
-        ['for(var key:String in items){text += key;}',
-         'foreach(KeyValuePair<string, dynamic> _entry in items){string key = _entry.Key; text += key;}'],
+        ['for(var key:String in items){text += key; a = key;}',
+         'foreach(KeyValuePair<string, dynamic> _entry in items){string key = _entry.Key; text += key; a = key;}'],
         ['for(key in items){text += key;}',
          'foreach(KeyValuePair<string, dynamic> _entry in items){key = _entry.Key; text += key;}'],
         ['for (var i:int = cards.length - 1; 1 <= i; i--){}',
@@ -489,6 +489,14 @@ definitions = [
         ['package{public class C{\n}}',
          'public class C{\n    }'],
      ]),
+     ('statement', [
+        ['return;',
+         'return;'],
+        ['return a ? b : c;',
+         'return a ? b : c;'],
+        ['return "object" === typeof(value);',
+         'return object.ReferenceEquals("object", typeof(value));'],
+     ]),
 
      # ASUnit to NUnit:
 
@@ -512,9 +520,9 @@ definitions = [
      ]),
 
      ('compilation_unit', [
-        ['package{class C{var repeat:Object = {};}}', 
+        ['package{class C{\nvar repeat:Object = {};\n}}', 
          'using System.Collections.Generic;\n' + \
-         'class C{Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};}'],
+         'class C{\nDictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};\n}'],
      ]),
 ]
 
@@ -565,15 +573,17 @@ def print_expected(expected, got, input, definition, index, err):
     difference = format_difference(expected, got)
     if got is None:
         got = err.message
-    print
-    print 'Converting from %s to %s' % (cfg['source'], cfg['to'])
-    print definition, index
-    print 'Input (first 200 characters):'
-    print input[:200]
-    print 'Difference (expected to got, first 500 characters):'
-    print difference[:500]
-    print 'Tag parts (first 500 characters):'
-    print format_taglist(input, definition)[:500]
+    message = (''
+        + '\nConverting from %s to %s' % (cfg['source'], cfg['to'])
+        + '\n' + definition + ' ' + str(index)
+        + '\n' + 'Input (first 200 characters):'
+        + '\n' + input[:200]
+        + '\n' + 'Difference (expected to got, first 500 characters):'
+        + '\n' + difference[:500]
+        + '\n' + 'Tag parts (first 500 characters):'
+        + '\n' + format_taglist(input, definition)[:500])
+    message = message.encode('ascii', 'replace')
+    print(message)
 
 
 class TestDefinitions(TestCase):

@@ -415,6 +415,7 @@ Not supported
 * Strict condition without whitespace around operator:
         a===b
         object.ReferenceEquals(a,b)
+* Tolerate Unicode byte-order-marker at start of the file.
 * Distinguish order of operators that will be translated verbatim.
 * Logging.  Instead, wrap ActionScript trace and Unity C# Debug.Log in Toolkit.log.
 * Anonymous function.
