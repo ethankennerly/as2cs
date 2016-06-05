@@ -81,10 +81,16 @@ namespace com.finegamedesign.utils
             return joined;
         }
 
-
         public static T Pop<T>(List<T> items)
         {
             T item = (T)items[items.Count - 1];
+            items.RemoveAt(items.Count - 1);
+            return item;
+        }
+
+        public static dynamic Pop(ArrayList items)
+        {
+            dynamic item = items[items.Count - 1];
             items.RemoveAt(items.Count - 1);
             return item;
         }

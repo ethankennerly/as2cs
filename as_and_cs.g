@@ -114,10 +114,12 @@ return_type := data_type / VOID
 as_type := data_type
 cs_type := data_type
 collection_type := collection / STRING_HASH_TABLE / generic_collection 
-generic_collection := collection_prefix, ts?, LT, ts?, data_type, ts?, GT
+generic_collection := collection_prefix, template_type
+template_type := ts?, LT, ts?, data_type, ts?, GT
 collection := ARRAY_LIST / HASH_TABLE
 array_literal := array_literal_prefix, ts?, expression_list?, ts?, array_literal_suffix
 string_hash_literal := hash_literal_prefix, ts?, property_list?, ts?, hash_literal_suffix
+list_literal := list_literal_prefix, ts?, expression_list?, ts?, list_literal_suffix
 property_list := property, (ts?, COMMA, ts?, property)*
 key := quoted_identifier / literal
 
@@ -141,7 +143,8 @@ return_expression := ts?, RETURN, (ts,
 RETURN := "return"
 primary_expression := expression
 expression := 
-    array_literal
+    list_literal
+    / array_literal
     / string_hash_literal
     / variable_assignment
     / relational_expression

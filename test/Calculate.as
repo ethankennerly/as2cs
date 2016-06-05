@@ -10,7 +10,7 @@ package com.finegamedesign.powerplant
          * Multiply cards in stack.  Add stack products.
          * Example @see TestCalculate.as
          */
-        public static function power(stacks:Array):int
+        public static function power(stacks:Vector.<Vector.<int>>):int
         {
             var power:int = 0;
             for (var s:int=0; s < DataUtil.Length(stacks); s++) {
@@ -32,16 +32,16 @@ package com.finegamedesign.powerplant
          * Multiply cards in stack.  Add stack products.
          * Example @see TestCalculate.as
          */
-        public static function describe(stacks:Array):String
+        public static function describe(stacks:Vector.<Vector.<int>>):String
         {
             var description:String = "";
-            var termCount:int = 0;
-            var products:Array = [];
-            var trimmed:Array = clone(stacks);
+            var term_count:int = 0;
+            var products:Vector.<int> = new Vector.<int>();
+            var trimmed:Vector.<Vector.<int>> = clone(stacks);
             removeEmpty(trimmed);
             for (var s:int=0; s < DataUtil.Length(trimmed); s++) {
                 var product:String = "";
-                termCount += DataUtil.Length(trimmed[s]);
+                term_count += DataUtil.Length(trimmed[s]);
                 if (2 <= DataUtil.Length(trimmed) && 2 <= DataUtil.Length(trimmed[s])) {
                     product += "(";
                 }
@@ -51,14 +51,14 @@ package com.finegamedesign.powerplant
                 }
                 products.push(product);
             }
-            if (2 <= termCount) {
+            if (2 <= term_count) {
                 description += products.join(" + ")
                     + " = " + power(trimmed).toString();
             }
             return description;
         }
 
-        private static function removeEmpty(stacks:Array):void
+        private static function removeEmpty(stacks:Vector.<Vector.<int>>):void
         {
             for (var s:int = DataUtil.Length(stacks) - 1; 0 <= s; s--) {
                 if (DataUtil.Length(stacks[s]) <= 0) {
@@ -72,21 +72,21 @@ package com.finegamedesign.powerplant
          * or most nearly approaches contract without going over.
          * Example @see TestCalculate.as
          */
-        public static function stacksUnderContract(value:int, stacks:Array, contract:int):Array
+        public static function stacksUnderContract(value:int, stacks:Vector.<Vector.<int>>, contract:int):Vector.<Boolean>
         {
-            var stacksValid:Array = [];
-            var hypothetical_stacks:Array = clone(stacks);
+            var stacks_valid:Vector.<Boolean> = new Vector.<Boolean>();
+            var hypothetical_stacks:Vector.<Vector.<int>> = clone(stacks);
             if (DataUtil.Length(hypothetical_stacks) <= 0 || 1 <= DataUtil.Length(
                     hypothetical_stacks[DataUtil.Length(hypothetical_stacks) - 1])) {
-                hypothetical_stacks.push([]);
+                hypothetical_stacks.push(new Vector.<int>());
             }
             for (var s:int=0; s < DataUtil.Length(hypothetical_stacks); s++) {
                 hypothetical_stacks[s].push(value);
                 var hypothetical_power:int = power(hypothetical_stacks);
-                stacksValid.push(hypothetical_power <= contract);
+                stacks_valid.push(hypothetical_power <= contract);
                 DataUtil.Pop(hypothetical_stacks[s]);
             }
-            return stacksValid;
+            return stacks_valid;
         }
 
         /**
@@ -94,12 +94,12 @@ package com.finegamedesign.powerplant
          * or most nearly approaches contract without going over.
          * Example @see TestCalculate.as
          */
-        public static function select_value_and_stack(hand:Array, stacks:Array, contract:int):Array
+        public static function select_value_and_stack(hand:Vector.<int>, stacks:Vector.<Vector.<int>>, contract:int):Vector.<int>
         {
-            var value_and_stack:Array = [];
+            var value_and_stack:Vector.<int> = new Vector.<int>();
             var max:int = 0;
-            var hypothetical_stacks:Array = clone(stacks);
-            hypothetical_stacks.push([]);
+            var hypothetical_stacks:Vector.<Vector.<int>> = clone(stacks);
+            hypothetical_stacks.push(new Vector.<int>());
             for (var h:int=0; h < DataUtil.Length(hand); h++) {
                 for (var s:int=0; s < DataUtil.Length(hypothetical_stacks); s++) {
                     hypothetical_stacks[s].push(hand[h]);
@@ -114,19 +114,16 @@ package com.finegamedesign.powerplant
             return value_and_stack;
         }
  
-        public static function clone(stacks:Array):*
+        public static function clone(stacks:Vector.<Vector.<int>>):*
         {
-            var copy:Array = [];
+            var copy:Vector.<Vector.<int>> = new Vector.<Vector.<int>>();
             for (var s:int = 0; s < DataUtil.Length(stacks); s++) {
-                var element:*;
-                var stack:* = stacks[s];
-                if (stack is Array) {
-                    element = clone(stack);    
+                var stack:Vector.<int> = stacks[s];
+                var copyStack:Vector.<int> = new Vector.<int>();
+                for (var i:int = 0; i < DataUtil.Length(stack); i++) {
+                    copyStack.push(stack[i]);
                 }
-                else {
-                    element = stack;
-                }
-                copy.push(element);
+                copy.push(copyStack);
             }
             return copy;
         }

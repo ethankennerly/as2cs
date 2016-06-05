@@ -26,7 +26,20 @@ C# to ActionScript:
 
 Overwrites file with corresponding extension.
 
-Since C# is strict about explicitly typing, you probably want to explicitly type ActionScript Arrays into Vectors.  This script converts Object hashes into `Dictionary<string, dynamic>`.
+Specify collection data type
+============================
+
+Although the syntax converts, since C# is strict about explicitly typing, you probably want to explicitly type ActionScript Arrays into Vectors.  This script converts Object hashes into `Dictionary<string, dynamic>`.  Examples of vim sed for List of integers:
+
+        %s/Array/Vector.<int>/gIce
+
+Literal list:
+
+        %s/\[/new <int>[/gIce
+
+List of list of integers:
+
+        %s/Array/Vector.<Vector.<int>>/gIce
 
 Wrap DataUtil
 =============
@@ -65,7 +78,68 @@ Features
 
 * Convert model from game jam.  <https://github.com/ethankennerly/unconventional-weapon>
 * Example conversion of game jam model and controller.  <https://github.com/ethankennerly/monster>
-* Example doctest of import.
+* Example conversion of rules from PowerPlant.  <https://github.com/ethankennerly/powerplant>
+
+Convert Unit Test Features
+==========================
+
+* DataUtil.as and DataUtil.cs wrapper for consistent API.
+* Pass Unity 5.2 compiler check of TestSyntaxModel.cs when copied to Assets folder.
+
+        bash test_copy_to_unity.sh
+
+* ASUnit-to-NUnit test assert equals.  
+  ActionScript:
+
+        assertEquals(expected, got)
+
+  C#:
+
+        Assert.AreEqual(expected, got)
+
+* ASUnit-to-NUnit test assert equals with message.
+  ActionScript:
+
+        assertEquals(message, expected, got)
+
+  C#:
+
+        Assert.AreEqual(expected, got, message)
+
+* ASUnit-to-NUnit test function.  Expects namespace is public.
+  ActionScript:
+
+        public function testThis():void
+
+  C#:
+
+        [Test] public void testThis()
+
+* ASUnit-to-NUnit test class.  Any namespace.
+  ActionScript:
+
+        internal class TestThis extends TestCase{}
+
+  C#:
+
+        [TestFixture] internal class TestThis{}
+
+* ASUnit-to-NUnit import.  Any namespace.
+  ActionScript:
+
+        import asunit.framework.TestCase;
+
+  C#:
+
+        using NUnit.Framework;
+
+* Other asserts not supported.  You could rewrite other asserts in assert equals format.  Example of single-dimension array equality using vim sed:
+
+        %s/assertEqualsArrays(\(.*]\)\(, Calculate.*\)\())\)/assertEquals(\1.toString()\2.toString()\3/
+
+More features
+=============
+
 * Run discovered doctests and unit tests:
 
         python test.py
@@ -244,58 +318,6 @@ Features
 * ActionScript Dictionary to C# Hashtable data type.
 * ActionScript string.toLowerCase to C# String.ToLower
 * ActionScript lastIndexOf to C# LastIndexOf
-* DataUtil.as and DataUtil.cs wrapper for consistent API.
-* Pass Unity 5.2 compiler check of TestSyntaxModel.cs when copied to Assets folder.
-
-        bash test_copy_to_unity.sh
-
-* Pass Unity 5.2 compiler check with Anagram Attack:  Levels.cs.
-
-* ASUnit-to-NUnit test assert equals.
-  ActionScript:
-
-        assertEquals(expected, got)
-
-  C#:
-
-        Assert.AreEqual(expected, got)
-
-* ASUnit-to-NUnit test assert equals with message.
-  ActionScript:
-
-        assertEquals(message, expected, got)
-
-  C#:
-
-        Assert.AreEqual(expected, got, message)
-
-* ASUnit-to-NUnit test function.  Expects namespace is public.
-  ActionScript:
-
-        public function testThis():void
-
-  C#:
-
-        [Test] public void testThis()
-
-* ASUnit-to-NUnit test class.  Any namespace.
-  ActionScript:
-
-        internal class TestThis extends TestCase{}
-
-  C#:
-
-        [TestFixture] internal class TestThis{}
-
-* ASUnit-to-NUnit import.  Any namespace.
-  ActionScript:
-
-        import asunit.framework.TestCase;
-
-  C#:
-
-        using NUnit.Framework;
-
 * Basic chained call.
 * To-string camelCase to CapitalCase.
 
@@ -466,6 +488,7 @@ Not supported
 * Tolerate Unicode byte-order-marker at start of the file.
 * Distinguish order of operators that will be translated verbatim.
 * Logging.  Instead, wrap ActionScript trace and Unity C# Debug.Log in Toolkit.log.
+* Nested list literals.
 * Anonymous function.
   https://msdn.microsoft.com/en-us/library/0yw3tz5k.aspx
 * Combine literal from multiple literals: 

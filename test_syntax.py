@@ -197,10 +197,10 @@ definitions = [
          'int index'],
         ['var a:C = new C()',
          'C a = new C()'],
-        ['var v:Vector.<Vector.<Boolean>> = new Vector.<Vector.<Boolean>>(2)',
-         'List<List<bool>> v = new List<List<bool>>(2)'],
-        ['var v:Vector.<Vector.<CustomType>> = new Vector.<Vector.<CustomType>>(2)',
-         'List<List<CustomType>> v = new List<List<CustomType>>(2)'],
+        ['var v:Vector.<Vector.<Boolean>> = new Vector.<Vector.<Boolean>>()',
+         'List<List<bool>> v = new List<List<bool>>()'],
+        ['var v:Vector.<Vector.<CustomType>> = new Vector.<Vector.<CustomType>>()',
+         'List<List<CustomType>> v = new List<List<CustomType>>()'],
         ['var a:*',
          'dynamic a'],
      ]),
@@ -520,15 +520,19 @@ definitions = [
      ]),
 
      # Edge cases
-     ('expression', [
-        ['power(trimmed).toString()',
-         'power(trimmed).ToString()'],
-     ]),
      ('variable_declaration', [
         ['var columnOffset:int = offset == 0 ? -1 : 1',
          'int columnOffset = offset == 0 ? -1 : 1'],
         ['var isChanged:Boolean = g == grid[index] || g == gridPreviously[index]',
          'bool isChanged = g == grid[index] || g == gridPreviously[index]'],
+     ]),
+     ('expression', [
+        ['power(trimmed).toString()',
+         'power(trimmed).ToString()'],
+        ['new <int>[1, 0]',
+         'new List<int>(){1, 0}'],
+        ['new <int>[]',
+         'new List<int>(){}'],
      ]),
      ('class_definition', [
         ['class C{\n    var a:int;\n    var b:int;\n}', 

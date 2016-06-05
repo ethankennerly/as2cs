@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 
 using com.finegamedesign.utils/*<DataUtil>*/;
 namespace com.finegamedesign.powerplant
@@ -12,7 +12,7 @@ namespace com.finegamedesign.powerplant
          * Multiply cards in stack.  Add stack products.
          * Example @see TestCalculate.as
          */
-        public static int power(ArrayList stacks)
+        public static int power(List<List<int>> stacks)
         {
             int power = 0;
             for (int s=0; s < DataUtil.Length(stacks); s++) {
@@ -34,18 +34,16 @@ namespace com.finegamedesign.powerplant
          * Multiply cards in stack.  Add stack products.
          * Example @see TestCalculate.as
          */
-        public static string describe(ArrayList stacks)
+        public static string describe(List<List<int>> stacks)
         {
             string description = "";
-            int termCount = 0;
-            ArrayList products = new ArrayList(){
-            }
-            ;
-            ArrayList trimmed = clone(stacks);
+            int term_count = 0;
+            List<int> products = new List<int>();
+            List<List<int>> trimmed = clone(stacks);
             removeEmpty(trimmed);
             for (int s=0; s < DataUtil.Length(trimmed); s++) {
                 string product = "";
-                termCount += DataUtil.Length(trimmed[s]);
+                term_count += DataUtil.Length(trimmed[s]);
                 if (2 <= DataUtil.Length(trimmed) && 2 <= DataUtil.Length(trimmed[s])) {
                     product += "(";
                 }
@@ -55,14 +53,14 @@ namespace com.finegamedesign.powerplant
                 }
                 products.Add(product);
             }
-            if (2 <= termCount) {
+            if (2 <= term_count) {
                 description += products.join(" + ")
                 + " = " + power(trimmed).ToString();
             }
             return description;
         }
         
-        private static void removeEmpty(ArrayList stacks)
+        private static void removeEmpty(List<List<int>> stacks)
         {
             for (int s = DataUtil.Length(stacks) - 1; 0 <= s; s--) {
                 if (DataUtil.Length(stacks[s]) <= 0) {
@@ -76,25 +74,21 @@ namespace com.finegamedesign.powerplant
          * or most nearly approaches contract without going over.
          * Example @see TestCalculate.as
          */
-        public static ArrayList stacksUnderContract(int value, ArrayList stacks, int contract)
+        public static List<bool> stacksUnderContract(int value, List<List<int>> stacks, int contract)
         {
-            ArrayList stacksValid = new ArrayList(){
-            }
-            ;
-            ArrayList hypothetical_stacks = clone(stacks);
+            List<bool> stacks_valid = new List<bool>();
+            List<List<int>> hypothetical_stacks = clone(stacks);
             if (DataUtil.Length(hypothetical_stacks) <= 0 || 1 <= DataUtil.Length(
             hypothetical_stacks[DataUtil.Length(hypothetical_stacks) - 1])) {
-                hypothetical_stacks.Add(new ArrayList(){
-                }
-                );
+                hypothetical_stacks.Add(new List<int>());
             }
             for (int s=0; s < DataUtil.Length(hypothetical_stacks); s++) {
                 hypothetical_stacks[s].Add(value);
                 int hypothetical_power = power(hypothetical_stacks);
-                stacksValid.Add(hypothetical_power <= contract);
+                stacks_valid.Add(hypothetical_power <= contract);
                 DataUtil.Pop(hypothetical_stacks[s]);
             }
-            return stacksValid;
+            return stacks_valid;
         }
         
         /**
@@ -102,16 +96,12 @@ namespace com.finegamedesign.powerplant
          * or most nearly approaches contract without going over.
          * Example @see TestCalculate.as
          */
-        public static ArrayList select_value_and_stack(ArrayList hand, ArrayList stacks, int contract)
+        public static List<int> select_value_and_stack(List<int> hand, List<List<int>> stacks, int contract)
         {
-            ArrayList value_and_stack = new ArrayList(){
-            }
-            ;
+            List<int> value_and_stack = new List<int>();
             int max = 0;
-            ArrayList hypothetical_stacks = clone(stacks);
-            hypothetical_stacks.Add(new ArrayList(){
-            }
-            );
+            List<List<int>> hypothetical_stacks = clone(stacks);
+            hypothetical_stacks.Add(new List<int>());
             for (int h=0; h < DataUtil.Length(hand); h++) {
                 for (int s=0; s < DataUtil.Length(hypothetical_stacks); s++) {
                     hypothetical_stacks[s].Add(hand[h]);
@@ -128,21 +118,16 @@ namespace com.finegamedesign.powerplant
             return value_and_stack;
         }
         
-        public static dynamic clone(ArrayList stacks)
+        public static dynamic clone(List<List<int>> stacks)
         {
-            ArrayList copy = new ArrayList(){
-            }
-            ;
+            List<List<int>> copy = new List<List<int>>();
             for (int s = 0; s < DataUtil.Length(stacks); s++) {
-                dynamic element;
-                dynamic stack = stacks[s];
-                if (stack is ArrayList) {
-                    element = clone(stack);
+                List<int> stack = stacks[s];
+                List<int> copyStack = new List<int>();
+                for (int i = 0; i < DataUtil.Length(stack); i++) {
+                    copyStack.Add(stack[i]);
                 }
-                else {
-                    element = stack;
-                }
-                copy.Add(element);
+                copy.Add(copyStack);
             }
             return copy;
         }
