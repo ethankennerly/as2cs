@@ -29,6 +29,7 @@ Overwrites file with corresponding extension.
 Since C# is strict about explicitly typing, you probably want to explicitly type ActionScript Arrays into Vectors.  This script converts Object hashes into `Dictionary<string, dynamic>`.
 
 Wrap DataUtil
+=============
 
 as2cs.py converts syntax.  Sometimes syntax is not enough information to infer a difference in idioms and functions between the languages.  For example, property 'length' of an ActionScript Array is converted to 'Count', presuming it is a generic collection.  A Vector is converted to a List.  Another way to port is to replace 'a.length' with DataUtil.Length(a).
 
@@ -36,12 +37,12 @@ as2cs.py converts syntax.  Sometimes syntax is not enough information to infer a
 
 This vim sed command replaces the ActionScript:
 
-        %s/\([A-Za-z0-9\.]\+\)\.length\>/DataUtil.Length(\1)/gIce
+        %s/\([_A-Za-z0-9\.\[\]]\+\)\.length\>/DataUtil.Length(\1)/gIce
 
 For another example, wrap cloning an ActionScript Array:
 
         args test/*.as
-        argdo %s/\([A-Za-z\.0-9]\+\)\.concat()/DataUtil.CloneList(\1)/gIce | update
+        argdo %s/\([A-Za-z0-9\.\[\]]\+\)\.concat()/DataUtil.CloneList(\1)/gIce | update
 
 See DataUtil.as and DataUtil.cs for the supported wrappers.
 
@@ -295,6 +296,8 @@ Features
 
         using NUnit.Framework;
 
+* Basic chained call.
+* To-string camelCase to CapitalCase.
 
 
 Not supported

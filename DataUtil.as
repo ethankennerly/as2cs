@@ -17,6 +17,11 @@ package com.finegamedesign.utils
              data.length = 0;
          }
 
+         public static function Pop(arrayOrVector:*):void
+         {
+             arrayOrVector.pop();
+         }
+
          public static function Split(text:String, delimiter:String):Vector.<String>
          {
              var parts:Array = text.split(delimiter);

@@ -520,7 +520,10 @@ definitions = [
      ]),
 
      # Edge cases
-
+     ('expression', [
+        ['power(trimmed).toString()',
+         'power(trimmed).ToString()'],
+     ]),
      ('variable_declaration', [
         ['var columnOffset:int = offset == 0 ? -1 : 1',
          'int columnOffset = offset == 0 ? -1 : 1'],
@@ -528,6 +531,8 @@ definitions = [
          'bool isChanged = g == grid[index] || g == gridPreviously[index]'],
      ]),
      ('class_definition', [
+        ['class C{\n    var a:int;\n    var b:int;\n}', 
+         'class C{\n    int a;\n    int b;\n}'],
         ['class C{\n    var a:int;\n    var repeat:Object = {};\n    var b:int;\n}', 
          'class C{\n    int a;\n    Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};\n    int b;\n}'],
      ]),

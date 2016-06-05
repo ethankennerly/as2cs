@@ -74,8 +74,11 @@ address_tail := ts?,
     / (LBRACK, ts?, expression, ts?, RBRACK)
 LBRACK := "["
 RBRACK := "]"
-call_expression := reordered_call / (address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN)
-reordered_call := clone_call / assert_equals_with_message_call / assert_equals_call
+call_expression := reordered_call / call_address, (ts?, DOT, ts?, 
+                   reordered_call / call_address)*
+call_address := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
+reordered_call := clone_call / assert_equals_with_message_call / assert_equals_call / to_string_call
+to_string_call := ts?, TO_STRING, ts?, LPAREN, ts?, RPAREN
 
 assert_equals_call := ASSERT_EQUALS, ts?, LPAREN, 
     ts?, expected_expression, ts?, COMMA, whitespace, 

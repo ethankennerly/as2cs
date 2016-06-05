@@ -67,6 +67,7 @@ STRICT_NOT_EQUAL := "!=="
 
 COLLECTION_LENGTH := "length"
 CLONE_CALL := "concat()"
+TO_STRING := "toString"
 INDEX_OF := "indexOf"
 LAST_INDEX_OF := "lastIndexOf"
 PUSH := "push"
