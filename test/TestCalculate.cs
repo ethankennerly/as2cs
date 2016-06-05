@@ -9,7 +9,7 @@ namespace com.finegamedesign.powerplant
          * No stack.  Empty stack.
          * Stack of 2.  2 stacks.
          */
-        public void testPower()
+        [Test] public void Power()
         {
             List<List<int>> stacks = new List<List<int>>();
             List<int> stack = new List<int>();
@@ -22,7 +22,7 @@ namespace com.finegamedesign.powerplant
          * No stack.  Empty stack.
          * Stack of 2.  2 stacks.
          */
-        public void testDescribe()
+        [Test] public void Describe()
         {
             List<List<int>> stacks = new List<List<int>>();
             List<int> stack = new List<int>();

@@ -509,6 +509,8 @@ definitions = [
      ('function_declaration', [
         ['  public function testThis():void',
          '  [Test] public void This()'],
+        ['  /*comment*/public function testThis():void',
+         '  /*comment*/[Test] public void This()'],
      ]),
      ('class_definition', [
         ['internal class TestThis extends TestCase{}',

@@ -81,7 +81,7 @@ TO_STRING := "ToString"
 declared_type := "ArrayList"
 NEW_ARRAYLIST := "new ArrayList"
 
-test_function := whitespace, TEST_TAG, whitespace, PUBLIC, whitespace, VOID, whitespace, test_function_identifier, ts?, LPAREN, ts?, RPAREN
+test_function := ts, TEST_TAG, ts, PUBLIC, ts, VOID, ts, test_function_identifier, ts?, LPAREN, ts?, RPAREN
 test_function_identifier := identifier
 TEST_TAG := "[Test]"
 

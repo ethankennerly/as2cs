@@ -20,7 +20,7 @@ function_modified := ts, namespace_modifiers_place, function_signature, ts?, COL
 function_default := ts, function_signature, ts?, COLON, ts?, return_type
 function_signature := FUNCTION, ts, identifier, function_parameters
 
-test_function := whitespace, PUBLIC, whitespace, FUNCTION, whitespace, test_function_identifier, ts?, LPAREN, ts?, RPAREN, ts?, COLON, ts?, VOID
+test_function := ts, PUBLIC, ts, FUNCTION, ts, test_function_identifier, ts?, LPAREN, ts?, RPAREN, ts?, COLON, ts?, VOID
 test_function_identifier := TEST_PREFIX, identifier
 TEST_PREFIX := "test"
 
