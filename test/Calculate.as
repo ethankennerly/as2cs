@@ -36,7 +36,7 @@ package com.finegamedesign.powerplant
         {
             var description:String = "";
             var term_count:int = 0;
-            var products:Vector.<int> = new Vector.<int>();
+            var products:Vector.<String> = new Vector.<String>();
             var trimmed:Vector.<Vector.<int>> = clone(stacks);
             removeEmpty(trimmed);
             for (var s:int=0; s < DataUtil.Length(trimmed); s++) {
@@ -45,14 +45,14 @@ package com.finegamedesign.powerplant
                 if (2 <= DataUtil.Length(trimmed) && 2 <= DataUtil.Length(trimmed[s])) {
                     product += "(";
                 }
-                product += trimmed[s].join(" x ");
+                product += DataUtil.Join(trimmed[s], " x ");
                 if (2 <= DataUtil.Length(trimmed) && 2 <= DataUtil.Length(trimmed[s])) {
                     product += ")";
                 }
                 products.push(product);
             }
             if (2 <= term_count) {
-                description += products.join(" + ")
+                description += DataUtil.Join(products, " + ")
                     + " = " + power(trimmed).toString();
             }
             return description;
@@ -106,7 +106,9 @@ package com.finegamedesign.powerplant
                     var candidate:int = power(hypothetical_stacks);
                     if (max < candidate && candidate <= contract) {
                         max = candidate;
-                        value_and_stack = [hand[h], s];
+                        value_and_stack = new Vector.<int>();
+                        value_and_stack.push(hand[h]);
+                        value_and_stack.push(s);
                     }
                     DataUtil.Pop(hypothetical_stacks[s]);
                 }

@@ -62,7 +62,7 @@ namespace com.finegamedesign.utils
         /**
          * This was the most concise way I found to split a string without depending on a library.
          * In ActionScript splitting a string is concise:  s.split("");
-	 * C# has characters, which would be more efficient, though less portable.
+     * C# has characters, which would be more efficient, though less portable.
          */
         public static List<string> SplitString(string text)
         {
@@ -77,6 +77,16 @@ namespace com.finegamedesign.utils
         public static string Join(List<string> texts, string delimiter)
         {
             string[] parts = (string[]) texts.ToArray();
+            string joined = string.Join(delimiter, parts);
+            return joined;
+        }
+
+        public static string Join<T>(List<T> items, string delimiter)
+        {
+            string[] parts = new string[items.Count];
+            for (int i = 0; i < items.Count; i++) {
+                parts[i] = items[i].ToString();
+            }
             string joined = string.Join(delimiter, parts);
             return joined;
         }

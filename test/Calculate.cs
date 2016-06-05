@@ -38,7 +38,7 @@ namespace com.finegamedesign.powerplant
         {
             string description = "";
             int term_count = 0;
-            List<int> products = new List<int>();
+            List<string> products = new List<string>();
             List<List<int>> trimmed = clone(stacks);
             removeEmpty(trimmed);
             for (int s=0; s < DataUtil.Length(trimmed); s++) {
@@ -47,14 +47,14 @@ namespace com.finegamedesign.powerplant
                 if (2 <= DataUtil.Length(trimmed) && 2 <= DataUtil.Length(trimmed[s])) {
                     product += "(";
                 }
-                product += trimmed[s].join(" x ");
+                product += DataUtil.Join(trimmed[s], " x ");
                 if (2 <= DataUtil.Length(trimmed) && 2 <= DataUtil.Length(trimmed[s])) {
                     product += ")";
                 }
                 products.Add(product);
             }
             if (2 <= term_count) {
-                description += products.join(" + ")
+                description += DataUtil.Join(products, " + ")
                 + " = " + power(trimmed).ToString();
             }
             return description;
@@ -108,9 +108,9 @@ namespace com.finegamedesign.powerplant
                     int candidate = power(hypothetical_stacks);
                     if (max < candidate && candidate <= contract) {
                         max = candidate;
-                        value_and_stack = new ArrayList(){
-                            hand[h], s}
-                        ;
+                        value_and_stack = new List<int>();
+                        value_and_stack.Add(hand[h]);
+                        value_and_stack.Add(s);
                     }
                     DataUtil.Pop(hypothetical_stacks[s]);
                 }

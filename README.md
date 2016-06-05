@@ -26,6 +26,13 @@ C# to ActionScript:
 
 Overwrites file with corresponding extension.
 
+Examples
+========
+
+* Convert model from game jam.  <https://github.com/ethankennerly/unconventional-weapon>
+* Example conversion of game jam model and controller.  <https://github.com/ethankennerly/monster>
+* Example conversion of rules from PowerPlant.  <https://github.com/ethankennerly/powerplant>
+
 Specify collection data type
 ============================
 
@@ -57,13 +64,17 @@ For another example, wrap cloning an ActionScript Array:
         args test/*.as
         argdo %s/\([A-Za-z0-9\.\[\]]\+\)\.concat()/DataUtil.CloneList(\1)/gIce | update
 
+Joining strings:
+
+        %s/\([A-Za-z0-9\.\[\]]\+\)\.join(\([^)]\+\))/DataUtil.Join(\1, \2)/gIce
+
 See DataUtil.as and DataUtil.cs for the supported wrappers.
 
 * C# does not support reserved keyword 'event'.  Replace those.
 
 
-Documentation
-=============
+Grammar Documentation
+=====================
 
 SimpleParse:
 http://www.ibm.com/developerworks/linux/library/l-simple/index.html
@@ -72,13 +83,6 @@ http://www.vrplumber.com/programming/simpleparse/simpleparse.html
 
 EBNF:
 http://simpleparse.sourceforge.net/simpleparse\_grammars.html
-
-Features
-========
-
-* Convert model from game jam.  <https://github.com/ethankennerly/unconventional-weapon>
-* Example conversion of game jam model and controller.  <https://github.com/ethankennerly/monster>
-* Example conversion of rules from PowerPlant.  <https://github.com/ethankennerly/powerplant>
 
 Convert Unit Test Features
 ==========================
@@ -137,8 +141,8 @@ Convert Unit Test Features
 
         %s/assertEqualsArrays(\(.*]\)\(, Calculate.*\)\())\)/assertEquals(\1.toString()\2.toString()\3/
 
-More features
-=============
+Features
+========
 
 * Run discovered doctests and unit tests:
 
