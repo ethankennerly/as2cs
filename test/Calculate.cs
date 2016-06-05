@@ -118,7 +118,7 @@ namespace com.finegamedesign.powerplant
             return value_and_stack;
         }
         
-        public static dynamic clone(List<List<int>> stacks)
+        public static List<List<int>> clone(List<List<int>> stacks)
         {
             List<List<int>> copy = new List<List<int>>();
             for (int s = 0; s < DataUtil.Length(stacks); s++) {

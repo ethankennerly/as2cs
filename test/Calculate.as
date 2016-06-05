@@ -116,7 +116,7 @@ package com.finegamedesign.powerplant
             return value_and_stack;
         }
  
-        public static function clone(stacks:Vector.<Vector.<int>>):*
+        public static function clone(stacks:Vector.<Vector.<int>>):Vector.<Vector.<int>>
         {
             var copy:Vector.<Vector.<int>> = new Vector.<Vector.<int>>();
             for (var s:int = 0; s < DataUtil.Length(stacks); s++) {
