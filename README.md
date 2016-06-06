@@ -329,12 +329,20 @@ Features
 * Basic chained call.
 * To-string camelCase to CapitalCase.
 
+* Unary subtraction.
+* Ternary inside of parameter list.
+* Delete expression with only an identifier.  Does not support "a.b.c[d]"
+
 
 Not supported
 =============
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+* Expression of call with array access suffix.
+* Throw expression.  Error :: System.InvalidOperationException
+* Regular expression.
+* Parenthetical expression with function call suffix.
 * Match whitespace when empty array literal, hash literal and following newline.
  In C# there are curly braces.  When the curly braces are empty or a single line, put on a single line.  
 

@@ -95,6 +95,12 @@ definitions = [
          'my.Math.random()'],
         ['Math', 
          'Math'],
+        ['-a', 
+         '-a'],
+        [' ++i', 
+         ' ++i'],
+        ['-- j', 
+         '-- j'],
      ]),
      ('data_declaration', [
         ['const path:String',
@@ -496,6 +502,15 @@ definitions = [
          'return a ? b : c;'],
         ['return "object" === typeof(value);',
          'return object.ReferenceEquals("object", typeof(value));'],
+        ['f(a ? b : c);',
+         'f(a ? b : c);'],
+        ['delete container[key];',
+         'container.Remove(key);'],
+		# TODO:
+        # ['return f()[i];',
+        #  'return f()[i];'],
+        # ['throw new Error("message");',
+        #  'throw new System.InvalidOperationException("message");'],
      ]),
 
      # ASUnit to NUnit:
@@ -594,6 +609,11 @@ def print_expected(expected, got, input, definition, index, err):
     difference = format_difference(expected, got)
     if got is None:
         got = err.message
+    tag_text = ''
+    try:
+        tag_text = format_taglist(input, definition)[:500]
+    except:
+        tag_text = 'Failed formatting.'
     message = (''
         + '\nConverting from %s to %s' % (cfg['source'], cfg['to'])
         + '\n' + definition + ' ' + str(index)
@@ -602,7 +622,7 @@ def print_expected(expected, got, input, definition, index, err):
         + '\n' + 'Difference (expected to got, first 500 characters):'
         + '\n' + difference[:500]
         + '\n' + 'Tag parts (first 500 characters):'
-        + '\n' + format_taglist(input, definition)[:500])
+        + '\n' + tag_text)
     message = message.encode('ascii', 'replace')
     print(message)
 

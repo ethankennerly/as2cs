@@ -128,12 +128,7 @@ statement := ts?,
     / if_statement
     / iteration_statement
     / (
-        (
-            return_expression
-            / data_declaration
-            / primary_expression
-        ), 
-        ts?, !, SEMICOLON
+		primary_expression, ts?, !, SEMICOLON
     )
     / (ts?, SEMICOLON)
 
@@ -141,7 +136,7 @@ block := LBRACE, !, statement_place, ts?, RBRACE
 return_expression := ts?, RETURN, (ts, 
     conditional_expression / expression)?
 RETURN := "return"
-primary_expression := expression
+primary_expression := return_expression / delete_expression / data_declaration / expression
 expression := 
     list_literal
     / array_literal
@@ -152,7 +147,7 @@ expression :=
 
 new_expression := NEW, ts?, data_type, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 NEW := "new"
-expression_list := expression, (ts?, COMMA, ts?, expression)*
+expression_list := conditional_expression / expression, (ts?, COMMA, ts?, conditional_expression / expression)*
 
 left_hand_side_expression := 
     literal
@@ -199,16 +194,19 @@ unary_expression :=
     / cast_expression
     / nullable_cast_expression
     / postfix_expression
-    / (PLUS2, ts?, unary_expression)
-    / (MINUS2, ts?, unary_expression)
-    / (LNOT, ts?, unary_expression)
+    / prefix_expression
+	/ left_hand_side_expression
 LNOT := "!"
 nullable_cast_expression := ts?, left_hand_side_expression, ts, AS, ts, data_type
 AS := "as"
 is_expression := ts?, left_hand_side_expression, ts, IS, ts, data_type
 IS := "is"
 
-postfix_expression := left_hand_side_expression, (PLUS2 / MINUS2)?
+prefix_expression := (PLUS2 / MINUS2 / PLUS / MINUS / LNOT), ts?, left_hand_side_expression
+PLUS2 := "++"
+MINUS2 := "--"
+
+postfix_expression := left_hand_side_expression, ts?, (PLUS2 / MINUS2)
 PLUS2 := "++"
 MINUS2 := "--"
 

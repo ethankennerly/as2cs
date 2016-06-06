@@ -77,6 +77,8 @@ TO_LOWER_CASE := "ToLower"
 collection_clone := ts?, NEW, ts, collection_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
 clone_call := ts?, NEW, ts, declared_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
 TO_STRING := "ToString"
+delete_expression := ts?, identifier, ts?, DOT, ts?, REMOVE, ts?, LPAREN, ts?, address, ts?, RPAREN
+REMOVE := "Remove"
 
 declared_type := "ArrayList"
 NEW_ARRAYLIST := "new ArrayList"
