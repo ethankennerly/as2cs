@@ -128,7 +128,7 @@ statement := ts?,
     / if_statement
     / iteration_statement
     / (
-		primary_expression, ts?, !, SEMICOLON
+        primary_expression, ts?, !, SEMICOLON
     )
     / (ts?, SEMICOLON)
 
@@ -136,11 +136,13 @@ block := LBRACE, !, statement_place, ts?, RBRACE
 return_expression := ts?, RETURN, (ts, 
     conditional_expression / expression)?
 RETURN := "return"
-primary_expression := return_expression / delete_expression / data_declaration / expression
+primary_expression := return_expression / delete_expression / throw_expression / data_declaration / expression
+throw_expression := ts?, THROW, ts, NEW, ts?, ERROR, ts?, LPAREN, ts?, expression, ts?, RPAREN
+THROW := "throw"
 expression := 
-    list_literal
-    / array_literal
+    array_literal
     / string_hash_literal
+    / list_literal
     / variable_assignment
     / relational_expression
     / left_hand_side_expression
@@ -152,6 +154,7 @@ expression_list := conditional_expression / expression, (ts?, COMMA, ts?, condit
 left_hand_side_expression := 
     literal
     / call_expression
+    / new_expression
     / address
     / (LPAREN, ts?, conditional_expression, ts?, RPAREN)
 
@@ -195,7 +198,7 @@ unary_expression :=
     / nullable_cast_expression
     / postfix_expression
     / prefix_expression
-	/ left_hand_side_expression
+    / left_hand_side_expression
 LNOT := "!"
 nullable_cast_expression := ts?, left_hand_side_expression, ts, AS, ts, data_type
 AS := "as"

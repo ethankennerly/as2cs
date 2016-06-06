@@ -332,6 +332,7 @@ Features
 * Unary subtraction.
 * Ternary inside of parameter list.
 * Delete expression with only an identifier.  Does not support "a.b.c[d]"
+* Throw one kind of expression.  Error :: System.InvalidOperationException
 
 
 Not supported
@@ -339,8 +340,8 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+* Roundtrip nested literal array of hash literals.
 * Expression of call with array access suffix.
-* Throw expression.  Error :: System.InvalidOperationException
 * Regular expression.
 * Parenthetical expression with function call suffix.
 * Match whitespace when empty array literal, hash literal and following newline.

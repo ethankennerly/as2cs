@@ -81,6 +81,7 @@ collection_clone := ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
 clone_call := ts?, clone_address, ts?, DOT, ts?, CLONE_CALL
 delete_expression := ts?, DELETE, ts, identifier, ts?, LBRACK, ts?, address, ts?, RBRACK
 DELETE := "delete"
+ERROR := "Error"
 
 
 assert_equals_with_message_call := ASSERT_EQUALS, ts?, LPAREN, 

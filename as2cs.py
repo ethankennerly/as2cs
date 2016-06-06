@@ -549,6 +549,9 @@ def may_import(taglist, text, definition, to):
     >>> taglist = ((('generic_collection', None), ('collection', None)))
     >>> may_import(taglist, 't', 'compilation_unit', 'cs')
     'using System.Collections;\nusing System.Collections.Generic;\nt'
+    >>> taglist = ((('ERROR', None), ), )
+    >>> may_import(taglist, 't', 'compilation_unit', 'cs')
+    'using System;\nt'
 
     During preprocessing, remove from C# being converted to ActionScript.
     >>> from_cs = 'before\nusing System.Collections.Generic;\nafter'
@@ -569,6 +572,9 @@ def may_import(taglist, text, definition, to):
                 'collection', 
                 'NEW_ARRAY_LIST', 
                 'ARRAY_LIST', 
+            ]),
+            ('using System;\n', [
+                'ERROR', 
             ]),
             ('using UnityEngine;\n', [
                 'unity_address',

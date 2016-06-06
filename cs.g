@@ -79,6 +79,7 @@ clone_call := ts?, NEW, ts, declared_type, ts?, LPAREN, ts?, clone_address, ts?,
 TO_STRING := "ToString"
 delete_expression := ts?, identifier, ts?, DOT, ts?, REMOVE, ts?, LPAREN, ts?, address, ts?, RPAREN
 REMOVE := "Remove"
+ERROR := "System.InvalidOperationException"
 
 declared_type := "ArrayList"
 NEW_ARRAYLIST := "new ArrayList"

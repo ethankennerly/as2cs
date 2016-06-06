@@ -106,15 +106,6 @@ definitions = [
         ['const path:String',
          'const string path'],
      ]),
-     ('expression', [
-        ['[]', 'new ArrayList(){}'],
-        ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
-        ['{}', 'new Dictionary<string, dynamic>(){}'],
-        ['{a: b, "1.0": 2.0}', 'new Dictionary<string, dynamic>(){{"a", b}, {"1.0", 2.0f}}'],
-        ['{a: {b: "1.0"}}', 'new Dictionary<string, dynamic>(){{"a", new Dictionary<string, dynamic>(){{"b", "1.0"}}}}'],
-        ['[{a: b}]', 'new ArrayList(){new Dictionary<string, dynamic>(){{"a", b}}}'],
-        ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],
-     ]),
      ('data_type', [
         ['int', 'int'],
         ['String', 'string'],
@@ -506,11 +497,11 @@ definitions = [
          'f(a ? b : c);'],
         ['delete container[key];',
          'container.Remove(key);'],
-		# TODO:
+        ['throw new Error("message");',
+         'throw new System.InvalidOperationException("message");'],
+        # Not supported:
         # ['return f()[i];',
         #  'return f()[i];'],
-        # ['throw new Error("message");',
-        #  'throw new System.InvalidOperationException("message");'],
      ]),
 
      # ASUnit to NUnit:
@@ -553,6 +544,15 @@ definitions = [
          'new List<int>(){}'],
         ['int(Math.random() * (i + 1))',
          '(int)((Random.value % 1.0f) * (i + 1))']
+     ]),
+     ('expression', [
+        ['[]', 'new ArrayList(){}'],
+        ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
+        ['{}', 'new Dictionary<string, dynamic>(){}'],
+        ['{a: b, "1.0": 2.0}', 'new Dictionary<string, dynamic>(){{"a", b}, {"1.0", 2.0f}}'],
+        ['{a: {b: "1.0"}}', 'new Dictionary<string, dynamic>(){{"a", new Dictionary<string, dynamic>(){{"b", "1.0"}}}}'],
+        ['[{a: b}]', 'new ArrayList(){new Dictionary<string, dynamic>(){{"a", b}}}'],
+        ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],
      ]),
      ('class_definition', [
         ['class C{\n    var a:int;\n    var b:int;\n}', 
