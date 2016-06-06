@@ -56,9 +56,9 @@ definitions = [
         ['path as String',
          'path as string'],
         ['int(path)',
-         '(int)path'],
+         '(int)(path)'],
         ['Number(path)',
-         '(float)path'],
+         '(float)(path)'],
         ['paths.length',
          'paths.Count'],
         ['paths.push(p)',
@@ -521,7 +521,8 @@ definitions = [
          'using NUnit.Framework;'],
      ]),
 
-     # Edge cases
+     # Complex cases:
+
      ('variable_declaration', [
         ['var columnOffset:int = offset == 0 ? -1 : 1',
          'int columnOffset = offset == 0 ? -1 : 1'],
@@ -535,6 +536,8 @@ definitions = [
          'new List<int>(){1, 0}'],
         ['new <int>[]',
          'new List<int>(){}'],
+        ['int(Math.random() * (i + 1))',
+         '(int)((Random.value % 1.0f) * (i + 1))']
      ]),
      ('class_definition', [
         ['class C{\n    var a:int;\n    var b:int;\n}', 

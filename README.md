@@ -64,6 +64,10 @@ For another example, wrap cloning an ActionScript Array:
         args test/*.as
         argdo %s/\([A-Za-z0-9\.\[\]]\+\)\.concat()/DataUtil.CloneList(\1)/gIce | update
 
+Shifting element from head of a list:
+
+        %s/\([A-Za-z0-9\.\[\]]\+\)\.shift()/DataUtil.Shift(\1)/gIce | update
+
 Joining strings:
 
         %s/\([A-Za-z0-9\.\[\]]\+\)\.join(\([^)]\+\))/DataUtil.Join(\1, \2)/gIce
@@ -348,6 +352,7 @@ Not supported
   http://stackoverflow.com/questions/1327544/what-is-the-equivalent-of-javas-final-in-c
 * Interface definition.
 * Delegate with variable number of arguments.
+* Arbitrary number of parameters:  ActionScript "... rest" to C# "T[] params".
 * Match whitespace in roundtrip conversion.  Instead there might be extra new lines.
 * Call as2cs.py from a different directory than as2cs.py directory.
 * Convert nested strictly equals.  Example:

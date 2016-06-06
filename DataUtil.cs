@@ -104,5 +104,28 @@ namespace com.finegamedesign.utils
             items.RemoveAt(items.Count - 1);
             return item;
         }
+
+        public static T Shift<T>(List<T> items)
+        {
+            T item = (T)items[0];
+            items.RemoveAt(0);
+            return item;
+        }
+
+        public static dynamic Shift(ArrayList items)
+        {
+            dynamic item = items[0];
+            items.RemoveAt(0);
+            return item;
+        }
+
+		public static List<T> ToList<T>(params T[] rest)
+		{
+			List<T> aList = new List<T>();
+			for (int i = 0; i < rest.Length; i++) {
+				aList.Add(rest[i]);
+			}
+			return aList;
+		}
     }
 }
