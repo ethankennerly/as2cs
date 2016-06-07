@@ -144,6 +144,7 @@ expression :=
     / string_hash_literal
     / list_literal
     / variable_assignment
+    / logical_expression
     / relational_expression
     / left_hand_side_expression
 
@@ -175,12 +176,12 @@ ELSE := "else"
 
 conditional_expression :=
     conditional_function 
-    / is_expression
     / ternary_expression
+    / logical_expression
     / relational_expression
     / address
 
-ternary_expression := relational_expression, ts?, QUESTION, ts?, assignment_value, ts?, COLON, ts?, assignment_value
+ternary_expression := logical_expression, ts?, QUESTION, ts?, assignment_value, ts?, COLON, ts?, assignment_value
 QUESTION := "?"
 
 conditional_function := 
@@ -188,6 +189,8 @@ conditional_function :=
     / strict_not_equal_expression / strict_equal_expression 
 contained_expression := expression
 
+logical_expression := (ts?, relational_expression, logical_expression_tail*)
+logical_expression_tail := ts?, logical_operator, ts?, logical_expression
 relational_expression := (ts?, unary_expression, relational_expression_tail*)
 relational_expression_tail := ts?, computational_operator, ts?, relational_expression
 
@@ -195,6 +198,7 @@ unary_expression :=
     reordered_call
     / collection_clone
     / cast_expression
+    / is_expression
     / nullable_cast_expression
     / postfix_expression
     / prefix_expression
@@ -215,7 +219,6 @@ MINUS2 := "--"
 
 computational_operator :=
     comparison_operator
-    / logical_operator
     / assignable_operator
     / BIT_NOT
 

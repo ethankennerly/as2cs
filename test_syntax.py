@@ -371,7 +371,7 @@ definitions = [
         ['!(apple in basket)',
          '!basket.ContainsKey(apple)'],
      ]),
-     ('relational_expression', [
+     ('logical_expression', [
         ['a.b.c >= x.y',
          'a.b.c >= x.y'],
         ['a.b + 1.0 >= x.y',
@@ -502,6 +502,10 @@ definitions = [
         # Not supported:
         # ['return f()[i];',
         #  'return f()[i];'],
+        ['break;',
+         'break;'],
+        ['continue;',
+         'continue;'],
      ]),
 
      # ASUnit to NUnit:
@@ -543,7 +547,11 @@ definitions = [
         ['new <int>[]',
          'new List<int>(){}'],
         ['int(Math.random() * (i + 1))',
-         '(int)((Random.value % 1.0f) * (i + 1))']
+         '(int)((Random.value % 1.0f) * (i + 1))'],
+	    ['null == a && a is Array',
+	     'null == a && a is ArrayList'],
+	    ['null == a || a is Array',
+	     'null == a || a is ArrayList'],
      ]),
      ('expression', [
         ['[]', 'new ArrayList(){}'],
@@ -551,8 +559,8 @@ definitions = [
         ['{}', 'new Dictionary<string, dynamic>(){}'],
         ['{a: b, "1.0": 2.0}', 'new Dictionary<string, dynamic>(){{"a", b}, {"1.0", 2.0f}}'],
         ['{a: {b: "1.0"}}', 'new Dictionary<string, dynamic>(){{"a", new Dictionary<string, dynamic>(){{"b", "1.0"}}}}'],
-        ['[{a: b}]', 'new ArrayList(){new Dictionary<string, dynamic>(){{"a", b}}}'],
         ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],
+        ['[{a: b}]', 'new ArrayList(){new Dictionary<string, dynamic>(){{"a", b}}}'],
      ]),
      ('class_definition', [
         ['class C{\n    var a:int;\n    var b:int;\n}', 
