@@ -3,6 +3,8 @@ package com.finegamedesign.utils
     import flash.utils.getDefinitionByName;
     import flash.utils.getQualifiedClassName;
 
+    import com.lumoslabs.utils.Count;
+
     public final class DataUtil
     {
          public static function CloneList(original:*):*
@@ -12,7 +14,12 @@ package com.finegamedesign.utils
 
          public static function Length(data:*):int
          {
-             return data.length;
+             if (data.hasOwnProperty("length")) {
+                 return data.length;
+             }
+             else {
+                 return Count.length(data);
+             }
          }
 
          public static function Clear(data:*):void
@@ -66,6 +73,15 @@ package com.finegamedesign.utils
          public static function IsNumber(text:String):Boolean
          {
              return !isNaN(parseFloat(text));
+         }
+
+         /**
+          * Is data type flat or a class or collection?
+          */
+         public static function IsFlat(value:*):Boolean
+         {
+             return Boolean((value is String) || (value is Number) 
+                || (value is int) || (null == value));
          }
 
          /**

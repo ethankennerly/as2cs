@@ -48,6 +48,10 @@ List of list of integers:
 
         %s/Array/Vector.<Vector.<int>>/gIce
 
+Access object without dot notation:
+
+        %s/\(container\)\.\([A-Za-z0-9_]\+\)/\1["\2"]
+
 Wrap DataUtil
 =============
 
@@ -238,7 +242,7 @@ Features
 
   Alternatively, Flash 19 supports removeAt and insertAt.
 * No return type in constructor.
-* Dynamic data type.
+* Dynamic data type using local 'var' keyword, since Unity 5.3.4 compiler still does not support dynamic data type as a function parameter.  So will not support dynamic return types.
 * Keyword 'is'.
   https://msdn.microsoft.com/en-us/library/dd264741.aspx
 * Limited use of 'typeof' function for JavaScript basic types only.  Caveat:  In JavaScript, this returns a string.  In C# this returns a type.  So this would be portable code:
@@ -341,6 +345,12 @@ Not supported
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
 * isNaN :: IsNaN
+* Conditional expressions mixing reordered calls without parentheses.  ActionScript, C#:
+        null == hash || key in hash
+        null == hash || hash.ContainsKey(key)
+  Instead wrap parentheses:
+        (null == hash) || (key in hash)
+        (null == hash) || (hash.ContainsKey(key))
 * Roundtrip nested literal array of hash literals.
 * Expression of call with array access suffix.
 * Regular expression.

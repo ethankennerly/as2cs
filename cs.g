@@ -132,6 +132,6 @@ BOOLEAN := "bool"
 FLOAT := "float"
 float_suffix := "f" / "F"
 OBJECT := "object"
-DYNAMIC_TYPE := "dynamic"
+DYNAMIC_TYPE := "var"
 UNDEFINED := NULL
 

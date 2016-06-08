@@ -114,7 +114,7 @@ definitions = [
         ['Custom', 'Custom'],
         ['Array', 'ArrayList'],
         ['Object', 'Dictionary<string, dynamic>'],
-        ['*', 'dynamic'],
+        ['*', 'var'],
         ['A.B.C', 'A.B.C'],
         ['Vector.<String>', 'List<string>'],
      ]),
@@ -178,8 +178,9 @@ definitions = [
          ' protected float getF(){}'],
         ['    function F(){i = index;}', 
          '    F(){i = index;}'],
-        ['    function f():*{}', 
-         '    dynamic f(){}'],
+		# Not supported:
+        # ['    function f():*{}', 
+        #  '    var f(){}'],
      ]),
      ('argument_declaration', [
         ['path:String',
@@ -199,7 +200,7 @@ definitions = [
         ['var v:Vector.<Vector.<CustomType>> = new Vector.<Vector.<CustomType>>()',
          'List<List<CustomType>> v = new List<List<CustomType>>()'],
         ['var a:*',
-         'dynamic a'],
+         'var a'],
      ]),
      ('argument_list', [
         ['path:String',
@@ -257,7 +258,7 @@ definitions = [
         ['var index:int = 16',
          'int index = 16'],
         ['var swap:* = cards[r]',
-         'dynamic swap = cards[r]'],
+         'var swap = cards[r]'],
         ['var r:int = Math.random() * (i + 1)',
          'int r = (Random.value % 1.0f) * (i + 1)'],
      ]),
@@ -466,7 +467,7 @@ definitions = [
      ]),
      ('member_expression', [
         ['  internal var /*<delegate>*/ ActionDelegate:/*<void>*/*;',
-         '  internal delegate /*<dynamic>*/void ActionDelegate();'],
+         '  internal delegate /*<var>*/void ActionDelegate();'],
         ['  internal var onComplete:/*<ActionDelegate>*/Function;',
          '  internal /*<Function>*/ActionDelegate onComplete;'],
         ['  public var /*<delegate>*/ IsJustPressed:Boolean, letter:String;',
@@ -556,8 +557,14 @@ definitions = [
          'null == a && a is ArrayList'],
         ['null == a || a is Array',
          'null == a || a is ArrayList'],
-     ]),
-     ('expression', [
+		['(null == hash) || (key in hash)',
+		 '(null == hash) || (hash.ContainsKey(key))'],
+		# Not supported:
+		# ['null == hash || key in hash',
+		#  'null == hash || hash.ContainsKey(key)'],
+
+		# Collection literals:
+
         ['[]', 'new ArrayList(){}'],
         ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
         ['{}', 'new Dictionary<string, dynamic>(){}'],

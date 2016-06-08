@@ -27,6 +27,11 @@ namespace com.finegamedesign.utils
 			return data.Count;
 		}
 
+		public static int Length<T, U>(Dictionary<T, U> items)
+		{
+			return items.Count;
+		}
+
 		public static int Length(ArrayList elements)
 		{
 			return elements.Count;
@@ -47,8 +52,18 @@ namespace com.finegamedesign.utils
 		  */
 		public static bool IsNumber(string text)
 		{
+			float n;
 			return float.TryParse(text, out n);
 		}
+
+		 /**
+		  * Is data type flat or a class or collection?
+		  */
+		 public static bool IsFlat(object value)
+		 {
+			 return (bool)((value is string) || (value is float) 
+				|| (value is int) || (null == value));
+		 }
 
 		public static ArrayList SplitToArrayList(string text, string delimiter)
 		{
