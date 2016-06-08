@@ -42,6 +42,19 @@ namespace com.finegamedesign.utils
 			items.Clear();
 		}
 
+		 /**
+		  * Is integer or single floating point.
+		  */
+		public static bool IsNumber(string text)
+		{
+			return float.TryParse(text, out n);
+		}
+
+		public static ArrayList SplitToArrayList(string text, string delimiter)
+		{
+			return new ArrayList(Split(text, delimiter));
+		}
+
 		/**
 		 * I wish C# API were as simple as JavaScript and Python:
 		 * http://stackoverflow.com/questions/1126915/how-do-i-split-a-string-by-a-multi-character-delimiter-in-c
@@ -74,11 +87,28 @@ namespace com.finegamedesign.utils
 			return letters;
 		}
 
+		public static string Join(ArrayList texts, string delimiter)
+		{
+			string[] parts = (string[]) texts.ToArray();
+			string joined = string.Join(delimiter, parts);
+			return joined;
+		}
+
 		public static string Join(List<string> texts, string delimiter)
 		{
 			string[] parts = (string[]) texts.ToArray();
 			string joined = string.Join(delimiter, parts);
 			return joined;
+		}
+
+		public static string Trim(string text)
+		{
+			return text.Trim();
+		}
+
+		public static string Replace(string text, string from, string to)
+		{
+			return Join(Split(text, from), to);
 		}
 
 		public static string Join<T>(List<T> items, string delimiter)

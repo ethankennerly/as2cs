@@ -98,7 +98,7 @@ replaced_property :=
     EOF / ?-(alphanumunder / DOT)
 string_property := TO_LOWER_CASE
 collection_property := COLLECTION_LENGTH / CLONE_CALL / PUSH 
-    / INDEX_OF / LAST_INDEX_OF / REMOVE_RANGE
+    / INDEX_OF / LAST_INDEX_OF / REMOVE_RANGE / SORT
 
 math_address := MATH, ts?, DOT, ts?, math_property
 math_property := ABS / ACOS / ASIN / ATAN / ATAN2

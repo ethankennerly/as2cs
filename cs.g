@@ -69,6 +69,7 @@ container_identifier := ?-CONTAINS, alphaunder, alphanumunder*
 COLLECTION_LENGTH := "Count"
 CLONE_CALL := "Clone()"
 INDEX_OF := "IndexOf"
+SORT := "Sort"
 LAST_INDEX_OF := "LastIndexOf"
 PUSH := "Add"
 REMOVE_RANGE := "RemoveRange"

@@ -340,6 +340,7 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+* isNaN :: IsNaN
 * Roundtrip nested literal array of hash literals.
 * Expression of call with array access suffix.
 * Regular expression.

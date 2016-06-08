@@ -30,6 +30,11 @@ package com.finegamedesign.utils
              arrayOrVector.shift();
          }
 
+         public static function SplitToArrayList(text:String, delimiter:String):Array
+         {
+             return text.split(delimiter);
+         }
+
          public static function Split(text:String, delimiter:String):Vector.<String>
          {
              var parts:Array = text.split(delimiter);
@@ -43,6 +48,24 @@ package com.finegamedesign.utils
          public static function Join(texts:*, delimiter:String):String
          {
              return texts.join(delimiter);
+         }
+
+         public static function Replace(text:String, from:String, to:String):String
+         {
+             return Join(Split(text, from), to);
+         }
+
+         public static function Trim(text:String):String
+         {
+            return text.replace(/^\s+|\s+$/g, "");
+         }
+
+         /**
+          * Is integer or single floating point.
+          */
+         public static function IsNumber(text:String):Boolean
+         {
+             return !isNaN(parseFloat(text));
          }
 
          /**
