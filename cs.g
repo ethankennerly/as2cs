@@ -82,8 +82,7 @@ delete_expression := ts?, identifier, ts?, DOT, ts?, REMOVE, ts?, LPAREN, ts?, a
 REMOVE := "Remove"
 ERROR := "System.InvalidOperationException"
 
-declared_type := "ArrayList"
-NEW_ARRAYLIST := "new ArrayList"
+declared_type := ARRAY_LIST
 
 test_function := ts, TEST_TAG, ts, PUBLIC, ts, VOID, ts, test_function_identifier, ts?, LPAREN, ts?, RPAREN
 test_function_identifier := identifier
