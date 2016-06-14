@@ -122,6 +122,9 @@ cast_expression := ts?, reserved_data_type, ts?, LPAREN, ts?, expression, ts?, R
 float_format := float
 
 UNDEFINED := "undefined"
+VECTOR2 := "Point"
+COLLIDER2D := "DisplayObject"
+SCENE_NODE := "DisplayObjectContainer"
 INTEGER := "int"
 STRING := "String"
 BOOLEAN := "Boolean"

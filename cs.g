@@ -125,6 +125,9 @@ cast_expression := ts?, LPAREN, ts?, reserved_data_type, ts?, RPAREN, ts?, LPARE
 float_format := float, float_suffix
 
 literal_keyword := NULL
+VECTOR2 := "Vector2"
+COLLIDER2D := "Collider2D"
+SCENE_NODE := "GameObject"
 INTEGER := "int"
 STRING := "string"
 BOOLEAN := "bool"

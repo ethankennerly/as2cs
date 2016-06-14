@@ -108,7 +108,8 @@ math_property := ABS / ACOS / ASIN / ATAN / ATAN2
 identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
-reserved_data_type := INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT
+reserved_data_type := SCENE_NODE / VECTOR2 / COLLIDER2D 
+	/ INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT
 data_type := swap_type / reserved_data_type / address
 return_type := data_type / VOID
 as_type := data_type

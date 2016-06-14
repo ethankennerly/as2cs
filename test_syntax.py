@@ -117,6 +117,9 @@ definitions = [
         ['*', 'var'],
         ['A.B.C', 'A.B.C'],
         ['Vector.<String>', 'List<string>'],
+        ['Vector.<Point>', 'List<Vector2>'],
+        ['Vector.<DisplayObject>', 'List<Collider2D>'],
+        ['Vector.<DisplayObjectContainer>', 'List<GameObject>'],
      ]),
      ('identifier', [
         ['_a', '_a'],
@@ -575,14 +578,10 @@ definitions = [
         ['{}', 'new Dictionary<string, dynamic>(){}'],
         ['{a: b, "1.0": 2.0}', 'new Dictionary<string, dynamic>(){{"a", b}, {"1.0", 2.0f}}'],
         ['{a: {b: "1.0"}}', 'new Dictionary<string, dynamic>(){{"a", new Dictionary<string, dynamic>(){{"b", "1.0"}}}}'],
-        ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],
-        ['[{a: b}]', 'new ArrayList(){new Dictionary<string, dynamic>(){{"a", b}}}'],
      ]),
      ('class_definition', [
         ['class C{\n    var a:int;\n    var b:int;\n}', 
          'class C{\n    int a;\n    int b;\n}'],
-        ['class C{\n    var a:int;\n    var repeat:Object = {};\n    var b:int;\n}', 
-         'class C{\n    int a;\n    Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};\n    int b;\n}'],
      ]),
 ]
 
@@ -597,6 +596,14 @@ one_ways = {
             ['Dictionary',
              'Hashtable'],
          ]),
+        ('expression', [
+            ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],
+            ['[{a: b}]', 'new ArrayList(){new Dictionary<string, dynamic>(){{"a", b}}}'],
+        ]),
+        ('class_definition', [
+            ['class C{\n    var a:int;\n    var repeat:Object = {};\n    var b:int;\n}', 
+             'class C{\n    int a;\n    Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};\n    int b;\n}'],
+        ]),
      ]},
     'cs': {'as': [
         ('number_format', [

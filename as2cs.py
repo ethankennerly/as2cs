@@ -578,6 +578,9 @@ def may_import(taglist, text, definition, to):
             ]),
             ('using UnityEngine;\n', [
                 'unity_address',
+                'VECTOR2',
+                'COLLIDER2D',
+                'SCENE_NODE',
             ]),
         ]
         for import_statement, tags in import_statements:
