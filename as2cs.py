@@ -456,23 +456,23 @@ def declared_type(literals, data_types, declared_tag, input, taglist):
     >>> data_types = {}
     >>> input = 'a'
     >>> taglist = [('ignored', 0, 0, None), ('clone_address', 0, 1, None)]
-    >>> declared_type(literals, data_types, 'declared_type', input, taglist)
+    >>> declared_type(literals, data_types, 'DECLARED_TYPE', input, taglist)
     >>> literals
     {}
     >>> data_types['a'] = 'List<string>'
-    >>> declared_type(literals, data_types, 'declared_type', input, taglist)
+    >>> declared_type(literals, data_types, 'DECLARED_TYPE', input, taglist)
     >>> literals
-    {'declared_type': 'List<string>'}
+    {'DECLARED_TYPE': 'List<string>'}
     """
     data_type = None
-    if 'declared_type' == declared_tag:
+    if 'DECLARED_TYPE' == declared_tag:
         for tag, begin, end, parts in taglist:
             if 'clone_address' == tag:
                 identifier = input[begin:end]
                 if identifier in data_types:
                     data_type = data_types[identifier]
     if data_type:
-        literals['declared_type'] = data_type
+        literals['DECLARED_TYPE'] = data_type
 
 
 def _recurse_tags(taglist, input, source, to):

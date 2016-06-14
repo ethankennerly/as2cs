@@ -76,13 +76,13 @@ REMOVE_RANGE := "RemoveRange"
 TO_LOWER_CASE := "ToLower"
 
 collection_clone := ts?, NEW, ts, collection_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
-clone_call := ts?, NEW, ts, declared_type, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
+clone_call := ts?, NEW, ts, DECLARED_TYPE, ts?, LPAREN, ts?, clone_address, ts?, RPAREN
+# Text replaced by declared_type function
+DECLARED_TYPE := "ArrayList"
 TO_STRING := "ToString"
 delete_expression := ts?, identifier, ts?, DOT, ts?, REMOVE, ts?, LPAREN, ts?, address, ts?, RPAREN
 REMOVE := "Remove"
 ERROR := "System.InvalidOperationException"
-
-declared_type := ARRAY_LIST
 
 test_function := ts, TEST_TAG, ts, PUBLIC, ts, VOID, ts, test_function_identifier, ts?, LPAREN, ts?, RPAREN
 test_function_identifier := identifier

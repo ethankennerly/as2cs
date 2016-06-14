@@ -150,14 +150,14 @@ expression :=
 
 new_expression := NEW, ts?, data_type, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 NEW := "new"
-expression_list := conditional_expression / expression, (ts?, COMMA, ts?, conditional_expression / expression)*
+expression_list := ts?, conditional_expression / expression, (ts?, COMMA, ts?, conditional_expression / expression)*
 
 left_hand_side_expression := 
     literal
     / call_expression
     / new_expression
     / address
-    / (LPAREN, ts?, conditional_expression, ts?, RPAREN)
+    / conditional_clause
 
 literal :=
     number_format
@@ -177,9 +177,10 @@ ELSE := "else"
 conditional_expression :=
     conditional_function 
     / ternary_expression
+    / variable_assignment
     / logical_expression
     / relational_expression
-    / address
+    / expression
 
 ternary_expression := logical_expression, ts?, QUESTION, ts?, assignment_value, ts?, COLON, ts?, assignment_value
 QUESTION := "?"

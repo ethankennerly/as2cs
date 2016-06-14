@@ -178,7 +178,7 @@ definitions = [
          ' protected float getF(){}'],
         ['    function F(){i = index;}', 
          '    F(){i = index;}'],
-		# Not supported:
+        # Not supported:
         # ['    function f():*{}', 
         #  '    var f(){}'],
      ]),
@@ -419,6 +419,9 @@ definitions = [
         ['  function f():void{if (a){}}', 
          '  void f(){if (a){}}'],
      ]),
+     ('expression_list', [
+         ['i-=s', 'i-=s']
+     ]),
      ('iteration_statement', [
         ['for (i=0; i<L;i++){}',
          'for (i=0; i<L;i++){}'],
@@ -444,6 +447,8 @@ definitions = [
          'foreach(KeyValuePair<string, dynamic> _entry in items){key = _entry.Key; text += key;}'],
         ['for (var i:int = cards.length - 1; 1 <= i; i--){}',
          'for (int i = cards.Count - 1; 1 <= i; i--){}'],
+        ['for (var i:int=0; i <= L; i -= s){}',
+         'for (int i=0; i <= L; i -= s){}'],
      ]),
      ('compilation_unit', [
         ['package P{\n    import A.B;\n\npublic class C{\n}}',
@@ -557,13 +562,13 @@ definitions = [
          'null == a && a is ArrayList'],
         ['null == a || a is Array',
          'null == a || a is ArrayList'],
-		['(null == hash) || (key in hash)',
-		 '(null == hash) || (hash.ContainsKey(key))'],
-		# Not supported:
-		# ['null == hash || key in hash',
-		#  'null == hash || hash.ContainsKey(key)'],
+        ['(null == hash) || (key in hash)',
+         '(null == hash) || (hash.ContainsKey(key))'],
+        # Not supported:
+        # ['null == hash || key in hash',
+        #  'null == hash || hash.ContainsKey(key)'],
 
-		# Collection literals:
+        # Collection literals:
 
         ['[]', 'new ArrayList(){}'],
         ['[a, 1.0, ""]', 'new ArrayList(){a, 1.0f, ""}'],
