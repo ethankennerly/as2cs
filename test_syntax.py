@@ -595,6 +595,10 @@ one_ways = {
         ('data_type', [
             ['Dictionary',
              'Hashtable'],
+            ['Sprite',
+             'GameObject'],
+            ['MovieClip',
+             'GameObject'],
          ]),
         ('expression', [
             ['[[a, b]]', 'new ArrayList(){new ArrayList(){a, b}}'],

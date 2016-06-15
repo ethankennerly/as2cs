@@ -1,9 +1,7 @@
 package com.finegamedesign.utils
 {
-    import flash.utils.getDefinitionByName;
-    import flash.utils.getQualifiedClassName;
-
-    import com.lumoslabs.utils.Count;
+    import flash.display.Sprite;
+    import flash.geom.Point;
 
     public final class DataUtil
     {
@@ -18,7 +16,11 @@ package com.finegamedesign.utils
                  return data.length;
              }
              else {
-                 return Count.length(data);
+                 var count:int = 0;
+                 for (var key:String in data) {
+                    count++;
+                 }
+                 return count;
              }
          }
 
@@ -89,39 +91,64 @@ package com.finegamedesign.utils
           */
          public static function ToList(... rest):*
          {
-             var Type:Class = Class(getDefinitionByName(getQualifiedClassName(rest[0])));
-             var aList:*;
-             if (rest[0] is int) {
+             return ToListItems(rest);
+         }
+
+         public static function ToListItems(elements:*):*
+         {
+            var aList:*;
+             if (elements[0] is int) {
                  aList = new Vector.<int>();
              }
-             else if (rest[0] is Number) {
+             else if (elements[0] is Number) {
                  aList = new Vector.<Number>();
              }
-             else if (rest[0] is String) {
+             else if (elements[0] is String) {
                  aList = new Vector.<String>();
              }
-             else if (rest[0] is Boolean) {
+             else if (elements[0] is Boolean) {
                  aList = new Vector.<Boolean>();
              }
-             else if (rest[0] is Vector.<int>) {
+             else if (elements[0] is Point) {
+                 aList = new Vector.<Point>();
+             }
+             else if (elements[0] is Sprite) {
+                 aList = new Vector.<Sprite>();
+             }
+             else if (elements[0] is Vector.<int>) {
                  aList = new Vector.<Vector.<int>>();
              }
-             else if (rest[0] is Vector.<Number>) {
+             else if (elements[0] is Vector.<Number>) {
                  aList = new Vector.<Vector.<Number>>();
              }
-             else if (rest[0] is Vector.<String>) {
+             else if (elements[0] is Vector.<String>) {
                  aList = new Vector.<Vector.<String>>();
              }
-             else if (rest[0] is Vector.<Boolean>) {
+             else if (elements[0] is Vector.<Boolean>) {
                  aList = new Vector.<Vector.<Boolean>>();
+             }
+             else if (elements[0] is Vector.<Point>) {
+                 aList = new Vector.<Vector.<Point>>();
+             }
+             else if (elements[0] is Vector.<Sprite>) {
+                 aList = new Vector.<Vector.<Sprite>>();
              }
              else {
                  aList = new Array();
              }
-             for (var i:int = 0; i < rest.length; i++) {
-                 aList.push(rest[i]);
+             for (var i:int = 0; i < elements.length; i++) {
+                 aList.push(elements[i]);
              }
              return aList;
+         }
+
+         public static function ToArrayList(iterable:*):Array
+         {
+             var items:Array = [];
+             for (var i:int = 0; i < iterable.length; i++) {
+                 items.push(iterable[i]);
+             }
+             return items;
          }
     }
 }

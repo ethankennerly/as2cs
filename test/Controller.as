@@ -6,7 +6,7 @@ package monster
     {
         public var /*<delegate>*/ ChildKeyChangeDelegate:*, _key:String, _change:String;
 
-        public static function listenToChildren(view:*, childNames:Array, methodName:String, owner:*):void
+        public static function listenToChildren(view/*<object>*/:*, childNames:Array, methodName:String, owner/*<object>*/:*):void
         {
             for (var c:int = 0; c < DataUtil.Length(childNames); c++) 
             {
@@ -16,15 +16,15 @@ package monster
             }
         }
 
-        public static function isObject(value:*):Boolean
+        public static function isObject(value/*<object>*/:*):Boolean
         {
-            return "object" === typeof(value);
+            return !(value is int || value is String || value is Number || value is Boolean);
         }
 
         /**
          * @param   changes     What is different as nested hashes.
          */
-        public static function visit(parent:*, changes:Object, boundFunction:/*<ChildKeyChangeDelegate>*/Function):void
+        public static function visit(parent:/*<object>*/*, changes:Object, boundFunction:/*<ChildKeyChangeDelegate>*/Function):void
         {
             for (var key:String in changes)
             {
