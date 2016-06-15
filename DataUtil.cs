@@ -176,8 +176,8 @@ namespace com.finegamedesign.utils
 		public static List<T> ToListItems<T>(ArrayList elements)
 		{
 			List<T> aList = new List<T>();
-			for (int i = 0; i < elements.Length; i++) {
-				aList.Add((T)rest[i]);
+			for (int i = 0; i < elements.Count; i++) {
+				aList.Add((T)elements[i]);
 			}
 			return aList;
 		}

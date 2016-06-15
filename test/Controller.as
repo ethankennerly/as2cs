@@ -6,7 +6,7 @@ package monster
     {
         public var /*<delegate>*/ ChildKeyChangeDelegate:*, _key:String, _change:String;
 
-        public static function listenToChildren(view/*<object>*/:*, childNames:Array, methodName:String, owner/*<object>*/:*):void
+        public static function listenToChildren(view:/*<object>*/*, childNames:Array, methodName:String, owner:/*<object>*/*):void
         {
             for (var c:int = 0; c < DataUtil.Length(childNames); c++) 
             {
@@ -16,7 +16,7 @@ package monster
             }
         }
 
-        public static function isObject(value/*<object>*/:*):Boolean
+        public static function isObject(value:/*<object>*/*):Boolean
         {
             return !(value is int || value is String || value is Number || value is Boolean);
         }
