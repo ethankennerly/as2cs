@@ -220,7 +220,6 @@ Features
   http://stackoverflow.com/questions/1723112/initializing-arraylist-with-constant-literal
 * For loop iteration.  Grammar is more permissive than a compiled for loop.
 * While loop iteration; break and continue keywords.
-* Constant declaration.
 * Cast some reserved data types.  ActionScript type-casting to C# type-casting by type function only for some reserved data types.  With custom data types, it is ambiguous of a type is cast or if an arbitrary function is called.  Instead the ActionScript "as" keyword is clear.  However, C# does not permit "as" used with non-nullable types, such as int or float.
 * Cast type by "as" keyword.  Won't work for int or float.  Use explicit type instead.  Example:
 
@@ -344,6 +343,7 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+* Constants:  These are static in C# but not necessarily static in ActionScript.  You can use variable instead.
 * isNaN :: IsNaN
 * Conditional expressions mixing reordered calls without parentheses.  ActionScript, C#:
         null == hash || key in hash

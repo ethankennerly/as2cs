@@ -3,7 +3,9 @@ namespace_default := NAMESPACE, ts?, LBRACE, import_definition_place, class_defi
 NAMESPACE := "package"
 IMPORT := "import"
 import_class_clause := DOT, namespace_identifier, SEMICOLON
+
 UNIT_TEST_ADDRESS := "asunit.framework.TestCase"
+import_flash := ts?, IMPORT, whitespace, FLASH, DOT, address, SEMICOLON, EOL
 
 test_class := ts?, scope, 
     whitespace, CLASS, whitespace, identifier, 

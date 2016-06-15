@@ -608,6 +608,14 @@ one_ways = {
             ['class C{\n    var a:int;\n    var repeat:Object = {};\n    var b:int;\n}', 
              'class C{\n    int a;\n    Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){};\n    int b;\n}'],
         ]),
+        ('import_definition', [
+            ['import flash.display.Sprite;',
+             '// using flash.display.Sprite;'],
+        ]),
+        ('import_definition_place', [
+            ['import flash.display.Sprite;\nimport flash.display.MovieClip;',
+             '// using flash.display.Sprite;\n// using flash.display.MovieClip;'],
+        ]),
      ]},
     'cs': {'as': [
         ('number_format', [
@@ -696,7 +704,7 @@ class TestDefinitions(TestCase):
         cfg['source'] = original_source 
         cfg['to'] = original_to 
 
-    def test_files(self):
+    def DISABLED_test_files(self):
         for source, to, s, t in directions:
             cfg['source'] = source
             cfg['to'] = to

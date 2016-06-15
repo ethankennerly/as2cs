@@ -10,12 +10,12 @@ namespace monster
     public class MonsterController
     {
         private MonsterModel model;
-        private dynamic view;
+        private var view;
         private Dictionary<string, dynamic> classNameCounts;
         private Dictionary<string, dynamic> pools;
         private int explosionSoundCount = 4;
         
-        public MonsterController(dynamic view)
+        public MonsterController(var view)
         {
             this.view = view;
             model = new MonsterModel();
@@ -41,7 +41,7 @@ namespace monster
             View.initAnimation(view.background);
         }
         
-        public void select(dynamic mouseEvent)
+        public void select(var mouseEvent)
         {
             if (model.result == -1)
             {
@@ -50,13 +50,13 @@ namespace monster
                 model.restart();
                 return;
             }
-            dynamic target = View.currentTarget(mouseEvent);
+            var target = View.currentTarget(mouseEvent);
             bool isExplosion = model.select(View.getName(target));
             if (isExplosion)
             {
                 int index = pools["Explosion"].index;
-                dynamic explosion = pools["Explosion"].next();
-                dynamic parent = View.getParent(target);
+                var explosion = pools["Explosion"].next();
+                var parent = View.getParent(target);
                 View.addChild(parent, explosion, "explosion_" + index);
                 View.setPosition(explosion, View.getPosition(target));
                 View.start(explosion);
@@ -109,7 +109,7 @@ namespace monster
         /**
          * Would be more flexible to add child to whichever parent.
          */
-        internal Dictionary<string, dynamic> create(dynamic child, string key, dynamic change)
+        internal Dictionary<string, dynamic> create(var child, string key, var change)
         {
             if (child)
             {

@@ -16,13 +16,14 @@ MARKUP_END := ">*/"
 
 namespace_declaration := ts?, NAMESPACE, ts, address, ts?
 import_definition_place := import_definition*
-import_definition := ts?, IMPORT, ts, import_address, EOL?
+import_definition := import_flash / (ts?, IMPORT, ts, import_address, EOL?)
 import_address := (import_address_replaced, SEMICOLON) /
     (identifier, (import_class_clause / import_subaddress)+)
 import_address_replaced := UNIT_TEST_ADDRESS
 import_subaddress := ts?, DOT, ts?, identifier
 namespace_identifier := GLOB_ALL / identifier
 GLOB_ALL := "*"
+FLASH := "flash"
 
 class_definition_place := class_definition?, ts?
 class_definition := test_class 

@@ -12,6 +12,7 @@ test_class := ts?, TEST_FIXTURE_TAG, whitespace, scope,
     class_block
 TEST_FIXTURE_TAG := "[TestFixture]"
 
+import_flash := ts?, COMMENT_LINE_START, whitespace, IMPORT, whitespace, FLASH, DOT, address, SEMICOLON, EOL
 class_base_clause := ts, COLON, class_base
 class_extends := ts, class_identifier
 interface_first := ts, interface_identifier

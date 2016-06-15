@@ -6,32 +6,32 @@ namespace monster
 {
     public class Controller
     {
-        public delegate dynamic ChildKeyChangeDelegate(string _key, string _change);
+        public delegate var ChildKeyChangeDelegate(string _key, string _change);
         
-        public static void listenToChildren(dynamic view, ArrayList childNames, string methodName, dynamic owner)
+        public static void listenToChildren(/*<var>*/object view, ArrayList childNames, string methodName, /*<var>*/object owner)
         {
             for (int c = 0; c < DataUtil.Length(childNames); c++)
             {
                 string name = childNames[c];
-                dynamic child = view[name];
+                var child = view[name];
                 View.listenToOverAndDown(child, methodName, owner);
             }
         }
         
-        public static bool isObject(dynamic value)
+        public static bool isObject(/*<var>*/object value)
         {
-            return object.ReferenceEquals("object", typeof(value));
+            return !(value is int || value is string || value is float || value is bool);
         }
         
         /**
          * @param   changes     What is different as nested hashes.
          */
-        public static void visit(dynamic parent, Dictionary<string, dynamic> changes, /*<Function>*/ChildKeyChangeDelegate boundFunction)
+        public static void visit(/*<var>*/object parent, Dictionary<string, dynamic> changes, /*<Function>*/ChildKeyChangeDelegate boundFunction)
         {
             foreach(KeyValuePair<string, dynamic> _entry in changes){
                 string key = _entry.Key;
-                dynamic change = changes[key];
-                dynamic child = parent[key];
+                var change = changes[key];
+                var child = parent[key];
                 child = boundFunction(child, key, change);
                 if (isObject(change))
                 {
