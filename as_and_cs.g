@@ -14,14 +14,24 @@ COMMENT_MARKUP_END := ">"
 MARKUP_START := "/*<"
 MARKUP_END := ">*/"
 
-namespace_declaration := ts?, NAMESPACE, ts, address, ts?
+namespace_sector := COM / ORG / NET
+COM := "com"
+ORG := "org"
+NET := "net"
+namespace_declaration := ts?, NAMESPACE, ts, 
+    namespace_sector_prefix?, 
+    namespace_address
+    , ts?
 import_definition_place := import_definition*
 import_definition := import_flash / (ts?, IMPORT, ts, import_address, EOL?)
 import_address := (import_address_replaced, SEMICOLON) /
-    (identifier, (import_class_clause / import_subaddress)+)
+    ( namespace_sector_prefix?, 
+    namespace_identifier, (import_class_clause / import_subaddress)+)
 import_address_replaced := UNIT_TEST_ADDRESS
-import_subaddress := ts?, DOT, ts?, identifier
-namespace_identifier := GLOB_ALL / identifier
+import_subaddress := ts?, DOT, ts?, namespace_identifier
+namespace_address := namespace_identifier, ts?, (DOT, ts?, namespace_identifier)*
+namespace_identifier := identifier
+namespace_suffix := GLOB_ALL / identifier
 GLOB_ALL := "*"
 FLASH := "flash"
 
@@ -51,6 +61,7 @@ namespace_modifier := scope / STATIC / FINAL / OVERRIDE
 function_body := ts?, LBRACE, !, statement_place, ts?, RBRACE
 function_declaration := test_function / function_modified / constructor / function_default
 constructor := ts?, namespace_modifiers_place, function_signature
+function_identifier := identifier
 function_definition := function_declaration, function_body
 function_parameters := ts?, LPAREN, whitespace?, argument_list?, ts?, RPAREN
 FUNCTION := "function"
@@ -70,14 +81,15 @@ argument_initializer := ts?, ASSIGN, ts?, !, assignment_value
 assignment_value := conditional_expression / expression
 variable_assignment := address, ts?, assignment_operator, ts?, assignment_value
 address := (new_expression / replaced_address / identifier), address_tail*
+function_address := (identifier / bracket_expression, DOT)*, replaced_property / function_identifier
 address_tail := ts?, 
-    (DOT, ts?, (replaced_property / identifier))
-    / (LBRACK, ts?, expression, ts?, RBRACK)
+    (DOT, ts?, (replaced_property / identifier)) / bracket_expression
+bracket_expression := LBRACK, ts?, expression, ts?, RBRACK
 LBRACK := "["
 RBRACK := "]"
 call_expression := reordered_call / call_address, (ts?, DOT, ts?, 
                    reordered_call / call_address)*
-call_address := address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
+call_address := replaced_address / function_address / address, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 reordered_call := clone_call / assert_equals_with_message_call / assert_equals_call / to_string_call
 to_string_call := ts?, TO_STRING, ts?, LPAREN, ts?, RPAREN
 
@@ -92,7 +104,8 @@ clone_address := (new_expression / replaced_address / identifier), clone_address
 clone_address_tail := ts?, 
     (DOT, ts?, not_clone_identifier)
 not_clone_identifier := ?-CLONE_CALL, alphaunder, alphanumunder*
-replaced_address := PARSE_INT / PARSE_FLOAT / unity_address
+replaced_address := PARSE_INT / PARSE_FLOAT / unity_address / TYPEOF
+TYPEOF := "typeof"
 unity_address := DEBUG_LOG / RANDOM / math_address
 replaced_property := 
     string_property / collection_property,

@@ -131,7 +131,8 @@ package com.finegamedesign.powerplant
             if (field.length <= stackIndex) {
                 field.push(new Vector.<int>());
             }
-            field[stackIndex].push(value);
+            var stack:Vector.<int> = field[stackIndex];
+            stack.push(value);
         }
 
         public function equalsContract(you:Boolean):Boolean

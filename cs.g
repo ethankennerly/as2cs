@@ -1,10 +1,11 @@
 namespace_declared := import_definition_place, namespace_declaration, 
     LBRACE, class_definition_place, RBRACE
 namespace_default := import_definition_place, class_definition_place
+namespace_sector_prefix := MARKUP_START, namespace_sector, MARKUP_END
 IMPORT := "using"
 NAMESPACE := "namespace"
 import_suffix := ""
-import_class_clause := MARKUP_START, namespace_identifier, MARKUP_END, SEMICOLON
+import_class_clause := MARKUP_START, namespace_suffix, MARKUP_END, SEMICOLON
 UNIT_TEST_ADDRESS := "NUnit.Framework"
 
 test_class := ts?, TEST_FIXTURE_TAG, whitespace, scope, 
@@ -21,7 +22,7 @@ FINAL := "sealed"
 
 function_modified := ts, namespace_modifiers_place, return_type, ts, function_signature
 function_default := ts, return_type, ts, function_signature
-function_signature := identifier, function_parameters
+function_signature := function_identifier, function_parameters
 
 delegate_argument_declaration := DELEGATE, whitespace, argument_declared, LPAREN, argument_list, RPAREN
 delegate_no_argument_declaration := DELEGATE, whitespace, argument_declared, LPAREN, RPAREN

@@ -7,26 +7,26 @@ package monster
     public class MonsterController
     {
         private var model:MonsterModel;
-        private var view:*;
+        private var view:/*<dynamic>*/*;
         private var classNameCounts:Object;
         private var pools:Object;
         private var explosionSoundCount:int = 4;
 
-        public function MonsterController(view:*)
+        public function MonsterController(view:/*<dynamic>*/*)
         {
             this.view = view;
             model = new MonsterModel();
-            model.represent(View.represent(view));
+            //+ model.represent(View.represent(view));
             classNameCounts = {
-                "Explosion": DataUtil.Length(model)
+                "Explosion": model.size
             };
-            for (var g:int = 1; g < model.DataUtil.Length(gridClassNames); g++)
+            for (var g:int = 1; g < DataUtil.Length(model.gridClassNames); g++)
             {
                 var className:String = model.gridClassNames[g];
-                classNameCounts[className] = DataUtil.Length(model);
+                classNameCounts[className] = model.size;
             }
             pools = Pool.construct(View.construct, classNameCounts);
-            for (var c:int = 0; c < model.DataUtil.Length(cityNames); c++)
+            for (var c:int = 0; c < DataUtil.Length(model.cityNames); c++)
             {
                 var name:String = model.cityNames[c];
                 View.removeChild(view.spawnArea[name]);
@@ -36,7 +36,7 @@ package monster
             View.initAnimation(view.background);
         }
 
-        public function select(mouseEvent:*):void
+        public function select(mouseEvent:/*<dynamic>*/*):void
         {
             if (model.result == -1)
             {
@@ -50,7 +50,8 @@ package monster
             if (isExplosion)
             {
                 var index:int = pools["Explosion"].index;
-                var explosion:* = pools["Explosion"].next();
+                var pool:* = pools["Explosion"];
+                var explosion:* = pool.next();
                 var parent:* = View.getParent(target);
                 View.addChild(parent, explosion, "explosion_" + index);
                 View.setPosition(explosion, View.getPosition(target));
@@ -104,7 +105,7 @@ package monster
         /**
          * Would be more flexible to add child to whichever parent.
          */
-        internal function create(child:*, key:String, change:*):Object
+        internal function create(child:/*<dynamic>*/*, key:String, change:/*<dynamic>*/*):Object
         {
             if (child)
             {
@@ -118,7 +119,8 @@ package monster
                         var className:String = model.gridClassNames[g];
                         if (key.indexOf(className) === 0)
                         {
-                            child = pools[className].next();
+                            var pool = pools[className];
+                            child = pool.next();
                             View.gotoFrame(child, randomRange(1, child.totalFrames));
                             var parent = view.spawnArea;
                             View.addChild(parent, child, key);

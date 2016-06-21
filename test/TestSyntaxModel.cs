@@ -1,16 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-using com.finegamedesign.utils/*<Model>*/;
-namespace com.finegamedesign.anagram.testSyntax
+using /*<com>*/Finegamedesign.Utils/*<Model>*/;
+namespace /*<com>*/Finegamedesign.Anagram.TestSyntax
 {
     public class TestSyntaxModel
     {
-        private static void shuffle(List<string> cards)
+        private static void Shuffle(List<string> cards)
         {
             for (int i = DataUtil.Length(cards) - 1; 1 <= i; i--)
             {
-                int r = (int)Mathf.Floor((Random.value % 1.0f) * (i + 1));
+                int r = (int)(Mathf.Floor((Random.value % 1.0f) * (i + 1)));
                 string swap = cards[r];
                 cards[r] = cards[i];
                 cards[i] = swap;
@@ -24,7 +24,7 @@ namespace com.finegamedesign.anagram.testSyntax
          * From letter graphic.
          */
         internal float letterWidth = 42.0f;
-        internal delegate /*<dynamic>*/void ActionDelegate();
+        internal delegate /*<var>*/void ActionDelegate();
         internal /*<Function>*/ActionDelegate onComplete;
         internal delegate bool IsJustPressed(string letter);
         internal string help;
@@ -37,7 +37,7 @@ namespace com.finegamedesign.anagram.testSyntax
         internal int points = 0;
         internal int score = 0;
         internal string state;
-        internal Levels levels = new Levels();
+        internal TestSyntaxLevels levels = new TestSyntaxLevels();
         private List<string> available;
         private Dictionary<string, dynamic> repeat = new Dictionary<string, dynamic>(){
         }
@@ -53,31 +53,31 @@ namespace com.finegamedesign.anagram.testSyntax
                     "aa", true}
             }
             ;
-            trial(levels.getParams());
+            Trial(levels.GetParams());
         }
         
-        internal void trial(Dictionary<string, dynamic> parameters)
+        internal void Trial(Dictionary<string, dynamic> parameters)
         {
             wordPosition = 0.0f;
             help = "";
             wordWidthPerSecond = -0.01f;
             if (parameters.ContainsKey("text")) {
-                text = (string)parameters["text"];
+                text = (string)(parameters["text"]);
             }
             if (parameters.ContainsKey("help")) {
-                help = (string)parameters["help"];
+                help = (string)(parameters["help"]);
             }
             if (parameters.ContainsKey("wordWidthPerSecond")) {
-                wordWidthPerSecond = (float)parameters["wordWidthPerSecond"];
+                wordWidthPerSecond = (float)(parameters["wordWidthPerSecond"]);
             }
             if (parameters.ContainsKey("wordPosition")) {
-                wordPosition = (float)parameters["wordPosition"];
+                wordPosition = (float)(parameters["wordPosition"]);
             }
             available = DataUtil.Split(text, "");
             word = DataUtil.CloneList(available);
             if ("" == help)
             {
-                shuffle(word);
+                Shuffle(word);
                 wordWidthPerSecond = // -0.05;
                 // -0.02;
                 // -0.01;
@@ -101,23 +101,23 @@ namespace com.finegamedesign.anagram.testSyntax
         private int previous = 0;
         private int now = 0;
         
-        internal void updateNow(int cumulativeMilliseconds)
+        internal void UpdateNow(int cumulativeMilliseconds)
         {
             float deltaSeconds = (now - previous) / 1000.0f;
-            update(deltaSeconds);
+            Update(deltaSeconds);
             previous = now;
         }
         
-        internal void update(float deltaSeconds)
+        internal void Update(float deltaSeconds)
         {
-            updatePosition(deltaSeconds);
+            UpdatePosition(deltaSeconds);
         }
         
         internal float width = 720;
         internal float scale = 1.0f;
         private float wordWidthPerSecond;
         
-        internal void scaleToScreen(float screenWidth)
+        internal void ScaleToScreen(float screenWidth)
         {
             scale = screenWidth / width;
         }
@@ -125,7 +125,7 @@ namespace com.finegamedesign.anagram.testSyntax
         /**
          * Test case:  2015-03 Use Mac. Rosa Zedek expects to read key to change level.
          */
-        private void clampWordPosition()
+        private void ClampWordPosition()
         {
             float wordWidth = 160;
             float min = wordWidth - width;
@@ -137,17 +137,17 @@ namespace com.finegamedesign.anagram.testSyntax
             wordPosition = Mathf.Max(min, Mathf.Min(0, wordPosition));
         }
         
-        private void updatePosition(float seconds)
+        private void UpdatePosition(float seconds)
         {
             wordPosition += (seconds * width * wordWidthPerSecond);
-            clampWordPosition();
+            ClampWordPosition();
             wordPositionScaled = wordPosition * scale;
             if (isVerbose) Debug.Log("Model.updatePosition: " + wordPosition);
         }
         
         private float outputKnockback = 0.0f;
         
-        internal bool mayKnockback()
+        internal bool MayKnockback()
         {
             return 0 < outputKnockback && 1 <= DataUtil.Length(outputs);
         }
@@ -155,7 +155,7 @@ namespace com.finegamedesign.anagram.testSyntax
         /**
          * Clamp word to appear on screen.  Test case:  2015-04-18 Complete word.  See next word slide in.
          */
-        private void prepareKnockback(int length, bool complete)
+        private void PrepareKnockback(int length, bool complete)
         {
             float perLength =
             0.03f;
@@ -165,16 +165,16 @@ namespace com.finegamedesign.anagram.testSyntax
             if (complete) {
                 outputKnockback *= 3;
             }
-            clampWordPosition();
+            ClampWordPosition();
         }
         
-        internal bool onOutputHitsWord()
+        internal bool OnOutputHitsWord()
         {
-            bool enabled = mayKnockback();
+            bool enabled = MayKnockback();
             if (enabled)
             {
                 wordPosition += outputKnockback;
-                shuffle(word);
+                Shuffle(word);
                 selects = DataUtil.CloneList(word);
                 for (int i = 0; i < DataUtil.Length(inputs); i++)
                 {
@@ -193,7 +193,7 @@ namespace com.finegamedesign.anagram.testSyntax
         /**
          * @param   justPressed     Filter signature justPressed(letter):Boolean.
          */
-        internal List<string> getPresses(/*<Function>*/IsJustPressed justPressed)
+        internal List<string> GetPresses(/*<Function>*/IsJustPressed justPressed)
         {
             List<string> presses = new List<string>();
             Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
@@ -222,7 +222,7 @@ namespace com.finegamedesign.anagram.testSyntax
          * If letter not available, disable typing it.
          * @return Vector of word indexes.
          */
-        internal List<int> press(List<string> presses)
+        internal List<int> Press(List<string> presses)
         {
             Dictionary<string, dynamic> letters = new Dictionary<string, dynamic>(){
             }
@@ -255,7 +255,7 @@ namespace com.finegamedesign.anagram.testSyntax
             return selectsNow;
         }
         
-        internal List<int> backspace()
+        internal List<int> Backspace()
         {
             List<int> selectsNow = new List<int>();
             if (1 <= DataUtil.Length(inputs))
@@ -278,7 +278,7 @@ namespace com.finegamedesign.anagram.testSyntax
          *      "submit":  Shuffle letters.  Test case:  2015-04-18 Jennifer wants to shuffle.  Irregular arrangement of letters.  Jennifer feels uncomfortable.
          * Test case:  2015-04-19 Backspace. Deselect. Submit. Type. Select.
          */
-        internal string submit()
+        internal string Submit()
         {
             string submission = DataUtil.Join(inputs, "");
             bool accepted = false;
@@ -305,17 +305,17 @@ namespace com.finegamedesign.anagram.testSyntax
                         }
                         repeat[submission] = true;
                         accepted = true;
-                        scoreUp(submission);
+                        ScoreUp(submission);
                         bool complete = DataUtil.Length(text) == DataUtil.Length(submission);
-                        prepareKnockback(DataUtil.Length(submission), complete);
+                        PrepareKnockback(DataUtil.Length(submission), complete);
                         if (complete)
                         {
                             completes = DataUtil.CloneList(word);
-                            trial(levels.up());
+                            Trial(levels.Up());
                             state = "complete";
                             if (null != onComplete)
                             {
-                                onComplete();
+                                OnComplete();
                             }
                         }
                         else
@@ -333,16 +333,16 @@ namespace com.finegamedesign.anagram.testSyntax
             return state;
         }
         
-        private void scoreUp(string submission)
+        private void ScoreUp(string submission)
         {
             points = DataUtil.Length(submission);
             score += points;
         }
         
-        internal void cheatLevelUp(int add)
+        internal void CheatLevelUp(int add)
         {
             score = 0;
-            trial(levels.up(add));
+            Trial(levels.Up(add));
             wordPosition = 0.0f;
         }
     }

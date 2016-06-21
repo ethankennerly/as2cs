@@ -1,12 +1,12 @@
-using com.finegamedesign.anagram/*<Model>*/;
-using com.finegamedesign.anagram/*<Controller>*/;
-using com.finegamedesign.anagram/*<View>*/;
+using /*<com>*/Finegamedesign.Anagram/*<Model>*/;
+using /*<com>*/Finegamedesign.Anagram/*<Controller>*/;
+using /*<com>*/Finegamedesign.Anagram/*<View>*/;
 /**
  * Example of comment.
  */
-namespace com.finegamedesign.anagram {
-    // This class is empty.
-    public class EmptyClass
-    {
-    }
+namespace /*<com>*/Finegamedesign.Anagram {
+// This class is empty.
+public class EmptyClass
+{
+}
 }

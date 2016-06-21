@@ -1,6 +1,7 @@
 package com.finegamedesign.powerplant
 {
     import com.finegamedesign.utils.DataUtil;
+
     /**
      * @author Ethan Kennerly
      */
@@ -81,7 +82,8 @@ package com.finegamedesign.powerplant
                 hypothetical_stacks.push(new Vector.<int>());
             }
             for (var s:int=0; s < DataUtil.Length(hypothetical_stacks); s++) {
-                hypothetical_stacks[s].push(value);
+                var stack:Vector.<int> = hypothetical_stacks[s];
+                stack.push(value);
                 var hypothetical_power:int = power(hypothetical_stacks);
                 stacks_valid.push(hypothetical_power <= contract);
                 DataUtil.Pop(hypothetical_stacks[s]);
@@ -102,7 +104,8 @@ package com.finegamedesign.powerplant
             hypothetical_stacks.push(new Vector.<int>());
             for (var h:int=0; h < DataUtil.Length(hand); h++) {
                 for (var s:int=0; s < DataUtil.Length(hypothetical_stacks); s++) {
-                    hypothetical_stacks[s].push(hand[h]);
+                    var stack:Vector.<int> = hypothetical_stacks[s];
+                    stack.push(hand[h]);
                     var candidate:int = power(hypothetical_stacks);
                     if (max < candidate && candidate <= contract) {
                         max = candidate;

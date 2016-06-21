@@ -35,7 +35,7 @@ package com.finegamedesign.anagram.testSyntax
         internal var points:int = 0;
         internal var score:int = 0;
         internal var state:String;
-        internal var levels:Levels = new Levels();
+        internal var levels:TestSyntaxLevels = new TestSyntaxLevels();
         private var available:Vector.<String>;
         private var repeat:Object = {};
         private var selects:Vector.<String>;

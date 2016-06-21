@@ -23,8 +23,21 @@ cfg = {
     'is_formats': [
         'compilation_unit'
     ],
+    'is_conform_case': True
 }
 
+# Examples:
+# https://github.com/blakeembrey/change-case
+first_letter_case_tags = {
+    'as': {
+        'function_identifier': 'lower',
+        'namespace_identifier': 'lower',
+    }, 
+    'cs': {
+        'function_identifier': 'upper',
+        'namespace_identifier': 'upper',
+    }
+}
 
 ebnf_parser = Parser(declaration, 'declarationset')
 
@@ -33,6 +46,50 @@ source_keys = [key for source in SOURCES
     for key in source.keys()]
 source_keys.sort()
 ## print(pformat(source_keys))
+
+
+def reset():
+    if 'DECLARED_TYPE' in literals and 'DECLARED_TYPE_ORIGINAL' in literals:
+        literals['DECLARED_TYPE'] = literals['DECLARED_TYPE_ORIGINAL']
+    for direction in ['as', 'cs']:
+        if 'DECLARED_TYPE' in literals[direction] \
+        and 'DECLARED_TYPE_ORIGINAL' in literals[direction]:
+            literals[direction]['DECLARED_TYPE'] = literals[direction]['DECLARED_TYPE_ORIGINAL']
+    data_types.clear()
+
+
+def change_first_letter_case(to, tag, text, data_types = {}):
+    """
+    >>> change_first_letter_case('as', 'function_identifier', 'doThis')
+    'doThis'
+    >>> change_first_letter_case('cs', 'function_identifier', 'doThis')
+    'DoThis'
+    >>> change_first_letter_case('as', 'function_identifier', 'DoThis')
+    'doThis'
+    >>> change_first_letter_case('cs', 'function_identifier', 'DoThis')
+    'DoThis'
+    >>> change_first_letter_case('as', 'other', 'doThis')
+    'doThis'
+    >>> change_first_letter_case('cs', 'other', 'doThis')
+    'doThis'
+    >>> change_first_letter_case('as', 'other', 'DoThis')
+    'DoThis'
+    >>> change_first_letter_case('cs', 'other', 'DoThis')
+    'DoThis'
+    >>> change_first_letter_case('cs', 'function_identifier', 'doThis', {'doThis': 'Delegate'})
+    'doThis'
+    """
+    if cfg['is_conform_case']:
+        if tag in first_letter_case_tags[to] and text not in data_types:
+            case = first_letter_case_tags[to][tag]
+            ## print tag, text, case, data_types
+            if 'lower' == case:
+                text = text[0].lower() + text[1:]
+            elif 'upper' == case:
+                text = text[0].upper() + text[1:]
+            else:
+                raise 'Unknown case %r' % case
+    return text
 
 
 def merge_declarations(declarations):
@@ -462,7 +519,7 @@ def declared_type(literals, data_types, declared_tag, input, taglist):
     >>> data_types['a'] = 'List<string>'
     >>> declared_type(literals, data_types, 'DECLARED_TYPE', input, taglist)
     >>> literals
-    {'DECLARED_TYPE': 'List<string>'}
+    {'DECLARED_TYPE': 'List<string>', 'DECLARED_TYPE_ORIGINAL': 'List<string>'}
     """
     data_type = None
     if 'DECLARED_TYPE' == declared_tag:
@@ -472,6 +529,8 @@ def declared_type(literals, data_types, declared_tag, input, taglist):
                 if identifier in data_types:
                     data_type = data_types[identifier]
     if data_type:
+        if 'DECLARED_TYPE' not in literals:
+            literals['DECLARED_TYPE_ORIGINAL'] = data_type
         literals['DECLARED_TYPE'] = data_type
 
 
@@ -495,6 +554,9 @@ def _recurse_tags(taglist, input, source, to):
         elif tag in source_keys:
             text += input[begin:end]
         elif parts:
+            piece = input[begin:end]
+            cased = change_first_letter_case(to, tag, piece, data_types)
+            input = input[:begin] + cased + input[end:]
             text += _recurse_tags(parts, input, source, to)
         else:
             text += input[begin:end]
@@ -600,7 +662,7 @@ def convert(input, definition = 'compilation_unit'):
     Example of converting syntax from ActionScript to C#.
 
     >>> print(convert('import com.finegamedesign.anagram.Model;', 'import_definition'))
-    using com.finegamedesign.anagram/*<Model>*/;
+    using /*<com>*/Finegamedesign.Anagram/*<Model>*/;
 
     Related to grammar unit testing specification (gUnit)
     https://theantlrguy.atlassian.net/wiki/display/ANTLR3/gUnit+-+Grammar+Unit+Testing
@@ -669,6 +731,7 @@ def analogous_paths(source_paths):
 
 
 def convert_files(source_paths):
+    reset()
     original_source = cfg['source']
     original_to = cfg['to']
     for source_path, to_path in analogous_paths(source_paths):

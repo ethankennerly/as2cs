@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-using com.finegamedesign.utils/*<DataUtil>*/;
-namespace monster
+using /*<com>*/Finegamedesign.Utils/*<DataUtil>*/;
+namespace Monster
 {
     /**
      * Portable.  Independent of platform.
@@ -46,7 +46,7 @@ namespace monster
         {
         }
         
-        internal void restart()
+        internal void Restart()
         {
             resultNow = 0;
             result = 0;
@@ -54,11 +54,11 @@ namespace monster
             period = 2.0f;
             level = 1;
             selectCount = 0;
-            clearGrid(2);
-            randomlyPlace(grid);
+            ClearGrid(2);
+            RandomlyPlace(grid);
         }
         
-        private void initGrid(ArrayList grid, int cellWidth, int cellHeight)
+        private void InitGrid(ArrayList grid, int cellWidth, int cellHeight)
         {
             this.cellWidth = Mathf.Ceil(cellWidth);
             float isometricHeightMultiplier = 0.5f;
@@ -68,20 +68,20 @@ namespace monster
             this.cellHeight = cellHeight;
             widthInCells = Mathf.Floor(width / cellWidth);
             heightInCells = Mathf.Floor(height / cellHeight);
-            clearGrid(0);
+            ClearGrid(0);
             gridPreviously = DataUtil.CloneList(grid);
         }
         
-        private ArrayList toGrid(Dictionary<string, dynamic> represents, ArrayList cityNames)
+        private ArrayList ToGrid(Dictionary<string, dynamic> represents, ArrayList cityNames)
         {
             width = Mathf.Ceil(represents.spawnArea.width);
             height = Mathf.Ceil(represents.spawnArea.height);
             for (int c = 0; c < DataUtil.Length(cityNames); c++)
             {
                 string name = cityNames[c];
-                dynamic child = represents.spawnArea[name];
+                var child = represents.spawnArea[name];
                 if (0 == DataUtil.Length(grid)) {
-                    initGrid(grid, child.width, child.height);
+                    InitGrid(grid, child.width, child.height);
                 }
                 int column = Mathf.Floor(child.x / cellWidth);
                 int row = Mathf.Floor(child.y / cellHeight);
@@ -92,15 +92,15 @@ namespace monster
             return grid;
         }
         
-        internal void represent(Dictionary<string, dynamic> represents)
+        internal void Represent(Dictionary<string, dynamic> represents)
         {
             this.represents = represents;
-            cityNames = Model.keys(represents.spawnArea, "city");
-            grid = toGrid(represents, cityNames);
-            restart();
-            if (count(grid, 1) <= 0)
+            cityNames = Model.Keys(represents.spawnArea, "city");
+            grid = ToGrid(represents, cityNames);
+            Restart();
+            if (Count(grid, 1) <= 0)
             {
-                randomlyPlace(grid);
+                RandomlyPlace(grid);
             }
         }
         
@@ -115,7 +115,7 @@ namespace monster
         2 0 2
         1 1 3
          */
-        private void expandIsometric(ArrayList grid, int row, int column, ArrayList gridNext)
+        private void ExpandIsometric(ArrayList grid, int row, int column, ArrayList gridNext)
         {
             int index = (row) * widthInCells + column;
             int cell = grid[index];
@@ -150,7 +150,7 @@ namespace monster
             }
         }
         
-        private void expandTopDown(ArrayList grid, int row, int column, ArrayList gridNext)
+        private void ExpandTopDown(ArrayList grid, int row, int column, ArrayList gridNext)
         {
             int index = (row) * widthInCells + column;
             int cell = grid[index];
@@ -175,7 +175,7 @@ namespace monster
             }
         }
         
-        private ArrayList grow(ArrayList grid)
+        private ArrayList Grow(ArrayList grid)
         {
             // trace("grow:   " + grid);
             ArrayList gridNext = DataUtil.CloneList(grid);
@@ -183,18 +183,18 @@ namespace monster
             {
                 for (int column = 0; column < widthInCells; column++)
                 {
-                    expandIsometric(grid, row, column, gridNext);
+                    ExpandIsometric(grid, row, column, gridNext);
                 }
             }
             return gridNext;
         }
         
-        private float offsetWidth(int row)
+        private float OffsetWidth(int row)
         {
             return (row % 2) * cellWidth * 0.5f;
         }
         
-        private Dictionary<string, dynamic> change(ArrayList gridPreviously, ArrayList grid)
+        private Dictionary<string, dynamic> Change(ArrayList gridPreviously, ArrayList grid)
         {
             Dictionary<string, dynamic> changes = new Dictionary<string, dynamic>(){
             }
@@ -224,7 +224,7 @@ namespace monster
                                 {
                                     changes.spawnArea[name] = new Dictionary<string, dynamic>(){
                                         {
-                                            "x", cellWidth * column + cellWidth * 0.5f + offsetWidth(row)}
+                                            "x", cellWidth * column + cellWidth * 0.5f + OffsetWidth(row)}
                                         ,
                                         {
                                             "y", cellHeight * row + cellHeight * 0.5f}
@@ -250,36 +250,36 @@ namespace monster
             return changes;
         }
         
-        internal void update(float deltaSeconds)
+        internal void Update(float deltaSeconds)
         {
             accumulated += deltaSeconds;
-            population = count(grid, 1);
-            health = count(grid, 2);
+            population = Count(grid, 1);
+            health = Count(grid, 2);
             vacancy = DataUtil.Length(grid) - population;
-            win();
+            Win();
             if (period <= accumulated)
             {
                 accumulated = 0;
                 if (1 <= selectCount)
                 {
-                    grid = grow(grid);
+                    grid = Grow(grid);
                     if (population <= 2)
                     {
                         if (population <= 0)
                         {
                             level++;
                         }
-                        randomlyPlace(grid);
+                        RandomlyPlace(grid);
                     }
                 }
-                period = updatePeriod(population, vacancy);
+                period = UpdatePeriod(population, vacancy);
             }
-            changes = change(gridPreviously, grid);
-            cityNames = Model.keys(changes.spawnArea, "city");
+            changes = Change(gridPreviously, grid);
+            cityNames = Model.Keys(changes.spawnArea, "city");
             gridPreviously = DataUtil.CloneList(grid);
         }
         
-        private int count(ArrayList counts, int value)
+        private int Count(ArrayList counts, int value)
         {
             int sum = 0;
             for (int c = 0; c < DataUtil.Length(counts); c++)
@@ -298,10 +298,10 @@ namespace monster
         /**
          * Slow to keep trying if there were lot of starting places, but there aren't.
          */
-        private void randomlyPlace(ArrayList grid)
+        private void RandomlyPlace(ArrayList grid)
         {
             int attemptMax = 128;
-            for (int attempt = 0; count(grid, 1) < startingPlaces && attempt < attemptMax; attempt++)
+            for (int attempt = 0; Count(grid, 1) < startingPlaces && attempt < attemptMax; attempt++)
             {
                 int index = Mathf.Floor((Random.value % 1.0f) * (DataUtil.Length(grid) - 4)) + 2;
                 grid[index] = 1;
@@ -316,9 +316,9 @@ namespace monster
         // 60.0;
         // 40.0;
         // 20.0;
-        private int periodBase = 120.0f;
+        private float periodBase = 120.0f;
         
-        private float updatePeriod(int population, int vacancy)
+        private float UpdatePeriod(int population, int vacancy)
         {
             float period = 999999.0f;
             if (population <= 0)
@@ -342,7 +342,7 @@ namespace monster
             return period;
         }
         
-        private int win()
+        private int Win()
         {
             resultNow = result == 0 ? 0 : result;
             if (vacancy <= 0 || health <= 0)
@@ -361,23 +361,23 @@ namespace monster
             return resultNow;
         }
         
-        internal bool select(string name)
+        internal bool Select(string name)
         {
             ArrayList parts = DataUtil.Split(name, "_");
             int row = int.Parse(parts[1]);
             int column = int.Parse(parts[2]);
-            int result = selectCell(row, column);
-            population = count(grid, 1);
+            int result = SelectCell(row, column);
+            population = Count(grid, 1);
             bool isExplosion = object.ReferenceEquals(1, result);
             if (isExplosion && 0 <= population)
             {
                 vacancy = DataUtil.Length(grid) - population;
-                period = updatePeriod(population, vacancy);
+                period = UpdatePeriod(population, vacancy);
             }
             return isExplosion;
         }
         
-        internal int selectCell(int row, int column)
+        internal int SelectCell(int row, int column)
         {
             int index = row * widthInCells + column;
             int was = grid[index];
@@ -393,7 +393,7 @@ namespace monster
             return was;
         }
         
-        internal void clearGrid(int value)
+        internal void ClearGrid(int value)
         {
             DataUtil.Clear(grid);
             for (int row = 0; row < heightInCells; row++)

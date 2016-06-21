@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-using com.finegamedesign.utils/*<DataUtil>*/;
-namespace monster
+using /*<com>*/Finegamedesign.Utils/*<DataUtil>*/;
+namespace Monster
 {
     /**
      * Portable.  Independent of platform.
@@ -10,65 +10,66 @@ namespace monster
     public class MonsterController
     {
         private MonsterModel model;
-        private var view;
+        private /*<var>*/dynamic view;
         private Dictionary<string, dynamic> classNameCounts;
         private Dictionary<string, dynamic> pools;
         private int explosionSoundCount = 4;
         
-        public MonsterController(var view)
+        public MonsterController(/*<var>*/dynamic view)
         {
             this.view = view;
             model = new MonsterModel();
-            model.represent(View.represent(view));
+            //+ model.represent(View.represent(view));
             classNameCounts = new Dictionary<string, dynamic>(){
                 {
-                    "Explosion", DataUtil.Length(model)}
+                    "Explosion", model.Count}
             }
             ;
-            for (int g = 1; g < model.DataUtil.Length(gridClassNames); g++)
+            for (int g = 1; g < DataUtil.Length(model.gridClassNames); g++)
             {
                 string className = model.gridClassNames[g];
-                classNameCounts[className] = DataUtil.Length(model);
+                classNameCounts[className] = model.Count;
             }
-            pools = Pool.construct(View.construct, classNameCounts);
-            for (int c = 0; c < model.DataUtil.Length(cityNames); c++)
+            pools = Pool.Construct(View.construct, classNameCounts);
+            for (int c = 0; c < DataUtil.Length(model.cityNames); c++)
             {
                 string name = model.cityNames[c];
-                View.removeChild(view.spawnArea[name]);
+                View.RemoveChild(view.spawnArea[name]);
             }
-            View.initAnimation(view.win);
-            View.initAnimation(view.lose);
-            View.initAnimation(view.background);
+            View.InitAnimation(view.win);
+            View.InitAnimation(view.lose);
+            View.InitAnimation(view.background);
         }
         
-        public void select(var mouseEvent)
+        public void Select(/*<var>*/dynamic mouseEvent)
         {
             if (model.result == -1)
             {
                 
-                View.gotoFrame(view.background,1);
-                model.restart();
+                View.GotoFrame(view.background,1);
+                model.Restart();
                 return;
             }
-            var target = View.currentTarget(mouseEvent);
-            bool isExplosion = model.select(View.getName(target));
+            var target = View.CurrentTarget(mouseEvent);
+            bool isExplosion = model.Select(View.GetName(target));
             if (isExplosion)
             {
                 int index = pools["Explosion"].index;
-                var explosion = pools["Explosion"].next();
-                var parent = View.getParent(target);
-                View.addChild(parent, explosion, "explosion_" + index);
-                View.setPosition(explosion, View.getPosition(target));
-                View.start(explosion);
+                var pool = pools["Explosion"];
+                var explosion = pool.Next();
+                var parent = View.GetParent(target);
+                View.AddChild(parent, explosion, "explosion_" + index);
+                View.SetPosition(explosion, View.GetPosition(target));
+                View.Start(explosion);
                 int countingNumber = Mathf.Floor((Random.value % 1.0f) * explosionSoundCount) + 1;
-                View.playSound("explosion_0" + countingNumber);
+                View.PlaySound("explosion_0" + countingNumber);
             }
         }
         
-        private void updateText(int result)
+        private void UpdateText(int result)
         {
-            View.setText(view.countText, model.selectCount.toString());
-            View.setText(view.levelText, model.level.toString());
+            View.SetText(view.countText, model.selectCount.ToString());
+            View.SetText(view.levelText, model.level.ToString());
             string text;
             if (result == 1)
             {
@@ -82,26 +83,26 @@ namespace monster
             {
                 text = "Mother Nature:\nDraw to destroy humans!\nDo not draw on forests.";
             }
-            View.setText(view.text, text);
+            View.SetText(view.text, text);
         }
         
-        internal void update(float deltaSeconds)
+        internal void Update(float deltaSeconds)
         {
-            model.update(deltaSeconds);
+            model.Update(deltaSeconds);
             if (object.ReferenceEquals(1, model.resultNow))
             {
-                View.start(view.win);
+                View.Start(view.win);
             }
             else if (object.ReferenceEquals(-1, model.resultNow))
             {
-                View.start(view.lose);
-                View.start(view.background);
+                View.Start(view.lose);
+                View.Start(view.background);
             }
-            Controller.visit(view, model.changes, create);
-            updateText(model.result);
+            Controller.Visit(view, model.changes, create);
+            UpdateText(model.result);
         }
         
-        float randomRange(float minNum, float maxNum)
+        float RandomRange(float minNum, float maxNum)
         {
             return (Mathf.Floor((Random.value % 1.0f) * (maxNum - minNum + 1)) + minNum);
         }
@@ -109,25 +110,26 @@ namespace monster
         /**
          * Would be more flexible to add child to whichever parent.
          */
-        internal Dictionary<string, dynamic> create(var child, string key, var change)
+        internal Dictionary<string, dynamic> Create(/*<var>*/dynamic child, string key, /*<var>*/dynamic change)
         {
             if (child)
             {
             }
             else
             {
-                if (Controller.isObject(change) && !isNaN(change.x))
+                if (Controller.IsObject(change) && !IsNaN(change.x))
                 {
                     for (int g = 1; g < DataUtil.Length(model.gridClassNames); g++)
                     {
                         string className = model.gridClassNames[g];
                         if (object.ReferenceEquals(key.IndexOf(className), 0))
                         {
-                            child = pools[className].next();
-                            View.gotoFrame(child, randomRange(1, child.totalFrames));
+                            pool = pools[className];
+                            child = pool.Next();
+                            View.GotoFrame(child, RandomRange(1, child.totalFrames));
                             parent = view.spawnArea;
-                            View.addChild(parent, child, key);
-                            View.listenToOverAndDown(child, "select", this);
+                            View.AddChild(parent, child, key);
+                            View.ListenToOverAndDown(child, "select", this);
                         }
                     }
                 }

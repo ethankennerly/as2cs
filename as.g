@@ -1,8 +1,11 @@
 namespace_declared := namespace_declaration, LBRACE, import_definition_place, class_definition_place, RBRACE
 namespace_default := NAMESPACE, ts?, LBRACE, import_definition_place, class_definition_place, RBRACE
+
+namespace_sector_prefix := namespace_sector, DOT
+
 NAMESPACE := "package"
 IMPORT := "import"
-import_class_clause := DOT, namespace_identifier, SEMICOLON
+import_class_clause := DOT, namespace_suffix, SEMICOLON
 
 UNIT_TEST_ADDRESS := "asunit.framework.TestCase"
 import_flash := ts?, IMPORT, whitespace, FLASH, DOT, address, SEMICOLON, EOL
@@ -20,7 +23,7 @@ IMPLEMENTS := "implements"
 
 function_modified := ts, namespace_modifiers_place, function_signature, ts?, COLON, ts?, return_type
 function_default := ts, function_signature, ts?, COLON, ts?, return_type
-function_signature := FUNCTION, ts, identifier, function_parameters
+function_signature := FUNCTION, ts, function_identifier, function_parameters
 
 test_function := ts, PUBLIC, ts, FUNCTION, ts, test_function_identifier, ts?, LPAREN, ts?, RPAREN, ts?, COLON, ts?, VOID
 test_function_identifier := TEST_PREFIX, identifier

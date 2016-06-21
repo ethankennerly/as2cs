@@ -337,11 +337,27 @@ Features
 * Delete expression with only an identifier.  Does not support "a.b.c[d]"
 * Throw one kind of expression.  Error :: System.InvalidOperationException
 
+* Optional cfg: 'is\_conform\_case' flag:  ActionScript first letter of function and namespace in camelCase to first letter C# CapitalCase.  Include all function or method calls.  Exclude casts.  Complexities would be to recognize delegates.
+  ActionScript:
+        function doThis():void{doThis(); b.do(); A.B.c.go(); int(a); e[i]();}
+  C#:
+        void DoThis(){DoThis(); b.Do(); A.B.c.Go(); (int)(a); e[i]();}
+
+* Remove preceding sector domain from namespace.
+  ActionScript:
+        import com.finegamedesign.utils;
+  C#:
+        using Finegamedesign.Utils;
+
+
 
 Not supported
 =============
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
+
+* Call after an array index:
+        pools["Explosion"].next()
 
 * Constants:  These are static in C# but not necessarily static in ActionScript.  You can use variable instead.
 * isNaN :: IsNaN

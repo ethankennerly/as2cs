@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using com.finegamedesign.utils/*<DataUtil>*/;
-namespace com.finegamedesign.anagram.testSynax
+using /*<com>*/Finegamedesign.Utils/*<DataUtil>*/;
+namespace /*<com>*/Finegamedesign.Anagram.TestSyntax
 {
-    public class Levels
+    public class TestSyntaxLevels
     {
         
         internal int index = 0;
@@ -543,27 +543,27 @@ namespace com.finegamedesign.anagram.testSynax
         }
         ;
         
-        internal Dictionary<string, dynamic> getParams()
+        internal Dictionary<string, dynamic> GetParams()
         {
-            return (Dictionary<string, dynamic>)parameters[index];
+            return (Dictionary<string, dynamic>)(parameters[index]);
         }
         
-        internal Dictionary<string, dynamic> up(int add = 1)
+        internal Dictionary<string, dynamic> Up(int add = 1)
         {
             index = (index + add) % DataUtil.Length(parameters);
             while (index < 0)
             {
                 index += DataUtil.Length(parameters);
             }
-            return getParams();
+            return GetParams();
         }
         
-        internal int current()
+        internal int Current()
         {
             return index + 1;
         }
         
-        internal int count()
+        internal int Count()
         {
             return DataUtil.Length(parameters);
         }

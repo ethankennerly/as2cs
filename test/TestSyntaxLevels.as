@@ -1,8 +1,8 @@
-package com.finegamedesign.anagram.testSynax
+package com.finegamedesign.anagram.testSyntax
 {
     import com.finegamedesign.utils.DataUtil;
 
-    public class Levels
+    public class TestSyntaxLevels
     {
 
         internal var index:int = 0;

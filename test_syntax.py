@@ -12,7 +12,7 @@ from glob import glob
 from unittest import main, TestCase
 
 from as2cs import cfg, convert, compare_files, \
-    format_taglist, literals, may_format, realpath
+    format_taglist, literals, may_format, realpath, reset
 from pretty_print_code.pretty_print_code import format_difference
 
 
@@ -21,13 +21,8 @@ directions = [
     ['cs', 'as', 1, 0],
 ]
 
+
 definitions = [
-     ('reordered_call', [
-        ['a.concat()',
-         'new ArrayList(a)'],
-        ['a.b.c.concat()',
-         'new ArrayList(a.b.c)'],
-     ]),
      ('expression', [
         ['"as.g"', 
          '"as.g"'],
@@ -67,8 +62,6 @@ definitions = [
          'paths.IndexOf(p)'],
         ['paths.splice(p, 1)',
          'paths.RemoveRange(p, 1)'],
-        ['paths.concat()',
-         'new ArrayList(paths)'],
         ['paths.lengths',
          'paths.lengths'],
         ['paths.length.i',
@@ -101,6 +94,17 @@ definitions = [
          ' ++i'],
         ['-- j', 
          '-- j'],
+        # ['thesePaths.concat()',
+        #  'new ArrayList(thesePaths)'],
+        # Not supported:
+        # ['pools["Explosion"].next()', 
+        #  'pools["Explosion"].next()'], 
+     ]),
+     ('reordered_call', [
+        ['abc.concat()',
+         'new ArrayList(abc)'],
+        ['a.b.c.concat()',
+         'new ArrayList(a.b.c)'],
      ]),
      ('data_declaration', [
         ['const path:String',
@@ -138,7 +142,7 @@ definitions = [
      ]),
      ('import_definition', [
         ['import com.finegamedesign.anagram.Model;',
-         'using com.finegamedesign.anagram/*<Model>*/;'],
+         'using /*<com>*/finegamedesign.anagram/*<Model>*/;'],
         ['import _._2;',
          'using _/*<_2>*/;'],
         ['import _.*;',
@@ -625,6 +629,247 @@ one_ways = {
     ]},
 }
 
+case_definitions = [
+     ('compilation_unit', [
+        ['package org.p{ import com.a.b; class C{}}',
+         'using /*<com>*/A/*<b>*/;namespace /*<org>*/P{ class C{}}'],
+     ]),
+     ('import_definition', [
+        ['import com.finegamedesign.anagram.Model;',
+         'using /*<com>*/Finegamedesign.Anagram/*<Model>*/;'],
+     ]),
+     ('function_definition', [
+        [' function doThis():void{ doThis();}',
+         ' void DoThis(){ DoThis();}'],
+        [' function doThis():void{ doThis(); b.do(); A.B.c.go();}',
+         ' void DoThis(){ DoThis(); b.Do(); A.B.c.Go();}'],
+        [' function doThis():void{ doThis(); b.do(); A.B.c.go(); f = int(a);}',
+         ' void DoThis(){ DoThis(); b.Do(); A.B.c.Go(); f = (int)(a);}'],
+     ]),
+     ('expression', [
+        ['"as.g"', 
+         '"as.g"'],
+        ['0.125', 
+         '0.125f'],
+        ['a % b', 
+         'a % b'],
+        ['((a + 2) % b)', 
+         '((a + 2) % b)'],
+        ['a ~ b', 
+         'a ~ b'],
+        ['a && b', 
+         'a && b'],
+        ['a || b', 
+         'a || b'],
+        ['new C(a, b)', 
+         'new C(a, b)'],
+        ['typeof(index)', 
+         'typeof(index)'],
+        ['parseInt(s)', 
+         'int.Parse(s)'],
+        ['parseFloat(s)', 
+         'float.Parse(s)'],
+        ['path as a.b.string',
+         'path as a.b.string'],
+        ['path as String',
+         'path as string'],
+        ['int(path)',
+         '(int)(path)'],
+        ['Number(path)',
+         '(float)(path)'],
+        ['paths.length',
+         'paths.Count'],
+        ['paths.push(p)',
+         'paths.Add(p)'],
+        ['paths.indexOf(p)',
+         'paths.IndexOf(p)'],
+        ['paths.splice(p, 1)',
+         'paths.RemoveRange(p, 1)'],
+        # ['paths.concat()',
+        #  'new ArrayList(paths)'],
+        ['paths.lengths',
+         'paths.lengths'],
+        ['paths.length.i',
+         'paths.length.i'],
+        ['paths.push.i',
+         'paths.push.i'],
+        ['name.toLowerCase',
+         'name.ToLower'],
+        ['name.lastIndexOf',
+         'name.LastIndexOf'],
+        ['trace(s)',
+         'Debug.Log(s)'],
+        ['a.trace(s)',
+         'a.Trace(s)'],
+        ['Math.floor(a)',
+         'Mathf.Floor(a)'],
+        ['a.Math.floor(index)', 
+         'a.Math.Floor(index)'],
+        ['Math.PI',
+         'Mathf.PI'],
+        ['Math.random()',
+         '(Random.value % 1.0f)'],
+        ['my.Math.random()', 
+         'my.Math.Random()'],
+        ['Math', 
+         'Math'],
+        ['-a', 
+         '-a'],
+        [' ++i', 
+         ' ++i'],
+        ['-- j', 
+         '-- j'],
+        # Not supported:
+        # ['pools["Explosion"].next()', 
+        #  'pools["Explosion"].Next()'], 
+     ]),
+     ('data_declaration', [
+        ['const path:String',
+         'const string path'],
+     ]),
+     ('data_type', [
+        ['int', 'int'],
+        ['String', 'string'],
+        ['Boolean', 'bool'],
+        ['Number', 'float'],
+        ['Custom', 'Custom'],
+        ['Array', 'ArrayList'],
+        ['Object', 'Dictionary<string, dynamic>'],
+        ['*', 'var'],
+        ['A.B.C', 'A.B.C'],
+        ['Vector.<String>', 'List<string>'],
+        ['Vector.<Point>', 'List<Vector2>'],
+        ['Vector.<DisplayObject>', 'List<Collider2D>'],
+        ['Vector.<DisplayObjectContainer>', 'List<GameObject>'],
+     ]),
+     ('identifier', [
+        ['_a', '_a'],
+        ['_2', '_2'],
+        ['I', 'I'],
+        ['b', 'b'],
+     ]),
+     ('address', [
+        ['_a', '_a'],
+        ['salad', 'salad'],
+        ['OIL', 'OIL'],
+        ['_0._1._2', '_0._1._2'],
+        ['a[i]', 'a[i]'],
+        ['_0._1[a.b]._2', '_0._1[a.b]._2'],
+        ['_0._1[a % b]._2', '_0._1[a % b]._2'],
+     ]),
+     ('import_definition', [
+        ['import _._2;',
+         'using _/*<_2>*/;'],
+        ['import _.*;',
+         'using _/*<*>*/;'],
+     ]),
+     ('class_definition', [
+        ['class C{}', 'class C{}'],
+        ['public class PC{}', 'public class PC{}'],
+        ['internal class IC{}', 'internal class IC{}'],
+     ]),
+     ('ts', [
+        ['/*c*/', '/*c*/'],
+        ['//c', '//c'],
+        ['// var i:int;', '// var i:int;'],
+     ]),
+     ('namespace_modifiers_place', [
+        ['public ', 
+         'public '],
+        ['private static ', 
+         'private static '],
+        ['static private ', 
+         'static private '],
+     ]),
+     ('function_declaration', [
+        ['  function f():void', 
+         '  void F()'],
+        ['    function g( ):void', 
+         '    void G( )'],
+     ]),
+     ('function_definition', [
+        ['  function f():void{}', 
+         '  void F(){}'],
+        [' function f():void{}', 
+         ' void F(){}'],
+        [' public function f():void{}', 
+         ' public void F(){}'],
+        [' internal function isF():Boolean{}', 
+         ' internal bool IsF(){}'],
+        [' protected function getF():Number{}', 
+         ' protected float GetF(){}'],
+        ['    function f(){i = index;}', 
+         '    F(){i = index;}'],
+        # Not supported:
+        # ['    function f():*{}', 
+        #  '    var f(){}'],
+     ]),
+     ('function_declaration', [
+        ['  function f(path:String, index:int):void',
+         '  void F(string path, int index)'],
+        ['  private function isF(index:int, isEnabled:Boolean, a:Number):Boolean',
+         '  private bool IsF(int index, bool isEnabled, float a)'],
+        ['\n\n  private static function shuffle(cards:Array):void',
+         '\n\n  private static void Shuffle(ArrayList cards)'],
+     ]),
+     ('function_declaration', [
+        [' function f(path:String, index:int = -1):void',
+         ' void F(string path, int index = -1)'],
+        [' private function isF(index:int, isEnabled:Boolean, a:Number=NaN):Boolean',
+         ' private bool IsF(int index, bool isEnabled, float a=NaN)'],
+     ]),
+     ('function_definition', [
+        ['  function f():void{var i:int = index;}', 
+         '  void F(){int i = index;}'],
+        ['  function f():void{i = index;}', 
+         '  void F(){i = index;}'],
+        ['  function f():void{var i:int = Math.floor(index);}', 
+         '  void F(){int i = Mathf.Floor(index);}'],
+     ]),
+     ('contains_expression', [
+        ['oil in italian.salad',
+         'italian.salad.ContainsKey(oil)'],
+        ['Content in Container.Container',
+         'Container.Container.ContainsKey(Content)'],
+     ]),
+     ('conditional_function', [
+        ['oil in salad',
+         'salad.ContainsKey(oil)'],
+        ['!(apple in basket)',
+         '!basket.ContainsKey(apple)'],
+     ]),
+
+     # ASUnit to NUnit:
+
+     ('call_expression', [
+        ['assertEquals(expected, got)',
+         'Assert.AreEqual(expected, got)'],
+        ['assertEquals(message, expected, got)',
+         'Assert.AreEqual(expected, got, message)'],
+     ]),
+     ('function_declaration', [
+        ['  public function testThis():void',
+         '  [Test] public void This()'],
+        ['  /*comment*/public function testThis():void',
+         '  /*comment*/[Test] public void This()'],
+     ]),
+     ('class_definition', [
+        ['internal class TestThis extends TestCase{}',
+         '[TestFixture] internal class TestThis{}'],
+     ]),
+     ('import_definition', [
+        ['import asunit.framework.TestCase;',
+         'using NUnit.Framework;'],
+     ]),
+
+     # Complex cases:
+
+     ('expression', [
+        ['power(trimmed).toString()',
+         'Power(trimmed).ToString()'],
+     ]),
+]
+
 is_debug_fail = True
 
 debug_definitions = [
@@ -684,6 +929,7 @@ class TestDefinitions(TestCase):
             got = convert(input, definition)
             self.assertEqual(expected, got)
         except Exception as err:
+            print 'is_conform_case: %r' % cfg['is_conform_case']
             print_expected(expected, got, input, definition, index, err)
             if is_debug_fail:
                 import pdb
@@ -693,15 +939,25 @@ class TestDefinitions(TestCase):
             raise err
 
     def test_definitions(self):
+        self.assert_definitions_case(False, definitions)
+        self.assert_definitions_case(True, case_definitions)
+
+    def assert_definitions_case(self, is_conform_case, definitions):
+        cfg['is_conform_case'] = is_conform_case
         for source, to, s, t in directions:
             cfg['source'] = source
             cfg['to'] = to
-            for definition, rows in definitions + one_ways[source][to]:
+            if is_conform_case:
+                these_definitions = definitions
+            else:
+                these_definitions = definitions + one_ways[source][to]
+            for definition, rows in these_definitions:
+                reset()
                 for r, row in enumerate(rows):
                     expected = row[t]
                     input = row[s]
                     self.assertExample(definition, expected, input, r)
-        cfg['source'] = original_source 
+        cfg['source'] = original_source
         cfg['to'] = original_to 
 
     def DISABLED_test_files(self):

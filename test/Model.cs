@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-namespace monster
+namespace Monster
 {
     /**
      * Portable.  Independent of platform.
@@ -13,12 +13,12 @@ namespace monster
          * @return  Array of child names that start with prefix, and have suffix "_0", where 0 may be any digits.
          *          Sorted from back to front.
          */
-        public static ArrayList keys(Dictionary<string, dynamic> represents, string prefix="")
+        public static ArrayList Keys(Dictionary<string, dynamic> represents, string prefix="")
         {
             ArrayList childNames = new ArrayList(){
             }
             ;
-            if (represents)
+            if (null != represents)
             {
                 foreach(KeyValuePair<string, dynamic> _entry in represents){
                     string name = _entry.Key;

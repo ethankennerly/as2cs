@@ -14,7 +14,7 @@ package monster
         public static function keys(represents:Object, prefix:String=""):Array
         {
             var childNames:Array = [];
-            if (represents)
+            if (null != represents)
             {
                 for (var name:String in represents)
                 {

@@ -8,7 +8,7 @@ package monster
     {
         internal var cityNames:Array;
         internal var level:int = 1;
-        internal var length:int;
+        internal var size:int;
         internal var changes:Object;
         internal var population:int;
         internal var health:int;
@@ -77,7 +77,7 @@ package monster
                 var row:int = Math.floor(child.y / cellHeight);
                 grid[row * widthInCells + column] = 1;
             }
-            length = DataUtil.Length(grid);
+            size = DataUtil.Length(grid);
             // trace(grid);
             return grid;
         }
@@ -128,7 +128,7 @@ package monster
                 if (row < heightInCells - 1)
                 {
                     var down:int = (row+1) * widthInCells + column;
-                    if (down < length)
+                    if (down < size)
                     {
                         gridNext[down] = 1;
                         if (column + columnOffset < widthInCells - 1)

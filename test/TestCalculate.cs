@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 using NUnit.Framework;
-namespace com.finegamedesign.powerplant
+namespace /*<com>*/Finegamedesign.Powerplant
 {
     [TestFixture] public class TestCalculate
     {
@@ -13,9 +13,9 @@ namespace com.finegamedesign.powerplant
         {
             List<List<int>> stacks = new List<List<int>>();
             List<int> stack = new List<int>();
-            Assert.AreEqual(0, Calculate.power(stacks));
+            Assert.AreEqual(0, Calculate.Power(stacks));
             stacks.Add(stack);
-            Assert.AreEqual(0, Calculate.power(stacks));
+            Assert.AreEqual(0, Calculate.Power(stacks));
         }
         
         /**
@@ -26,9 +26,9 @@ namespace com.finegamedesign.powerplant
         {
             List<List<int>> stacks = new List<List<int>>();
             List<int> stack = new List<int>();
-            Assert.AreEqual("", Calculate.describe(stacks));
+            Assert.AreEqual("", Calculate.Describe(stacks));
             stacks.Add(stack);
-            Assert.AreEqual("", Calculate.describe(stacks));
+            Assert.AreEqual("", Calculate.Describe(stacks));
         }
     }
 }

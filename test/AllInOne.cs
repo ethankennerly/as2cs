@@ -1,11 +1,11 @@
-using com.finegamedesign.anagram/*<Model>*/;
+using /*<com>*/Finegamedesign.Anagram/*<Model>*/;
 /*import com.finegamedesign.anagram.Controller;*/
-using com.finegamedesign.anagram/*<View>*/;
+using /*<com>*/Finegamedesign.Anagram/*<View>*/;
 /**
  * This file demos every feature supported by as2cs.
  * The C# version is auto-generated from the ActionScript.
  */
-namespace com.finegamedesign.anagram
+namespace /*<com>*/Finegamedesign.Anagram
 {
     // This class has all supported features.
     public sealed class AllInOne : EmptyClass // implements IModel, IController
@@ -15,7 +15,7 @@ namespace com.finegamedesign.anagram
         /**
          * Set cache.
          */
-        internal static void setTest()
+        internal static void SetTest()
         {
             // Comment is not converted.
             // trace("setTest: " + _cache);
@@ -33,7 +33,7 @@ namespace com.finegamedesign.anagram
             this.x = x;
             this.y = y;
             this.index = index;
-            setTest();
+            SetTest();
         }
     }
 }
