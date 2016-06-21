@@ -315,7 +315,7 @@ namespace /*<com>*/Finegamedesign.Anagram.TestSyntax
                             state = "complete";
                             if (null != onComplete)
                             {
-                                OnComplete();
+                                onComplete();
                             }
                         }
                         else

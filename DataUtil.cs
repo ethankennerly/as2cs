@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace com.finegamedesign.utils
+namespace /*<com>*/Finegamedesign.Utils
 {
 	/**
 	 * Another option is an extension method.
@@ -40,6 +40,11 @@ namespace com.finegamedesign.utils
 		public static int Length(string text)
 		{
 			return text.Length;
+		}
+
+		public static void Clear(ArrayList items)
+		{
+			items.Clear();
 		}
 
 		public static void Clear<T>(List<T> items)
@@ -102,9 +107,13 @@ namespace com.finegamedesign.utils
 			return letters;
 		}
 
-		public static string Join(ArrayList texts, string delimiter)
+		// Without depending on LINQ or that each item is already a string.
+		public static string Join(ArrayList items, string delimiter)
 		{
-			string[] parts = (string[]) texts.ToArray();
+			string[] parts = new string[items.Count];
+			for (int index = 0; index < items.Count; index++) {
+				parts[index] = items[index].ToString();
+			}
 			string joined = string.Join(delimiter, parts);
 			return joined;
 		}
@@ -150,6 +159,34 @@ namespace com.finegamedesign.utils
 			return item;
 		}
 
+		public static void RemoveAt<T>(List<T> items, int index)
+		{
+			items.RemoveAt(index);
+		}
+
+		public static void RemoveAt(ArrayList items, int index)
+		{
+			items.RemoveAt(index);
+		}
+
+		public static List<T> Slice<T>(List<T> items, int start, int end)
+		{
+			List<T> sliced = new List<T>();
+			for (int index = start; index < end; index++) {
+				sliced.Add(items[index]);
+			}
+			return sliced;
+		}
+
+		public static ArrayList Slice(ArrayList items, int start, int end)
+		{
+			ArrayList sliced = new ArrayList();
+			for (int index = start; index < end; index++) {
+				sliced.Add(items[index]);
+			}
+			return sliced;
+		}
+
 		public static T Shift<T>(List<T> items)
 		{
 			T item = (T)items[0];
@@ -162,6 +199,15 @@ namespace com.finegamedesign.utils
 			dynamic item = items[0];
 			items.RemoveAt(0);
 			return item;
+		}
+
+		public static List<T> ToListItems<T>(T[] rest)
+		{
+			List<T> aList = new List<T>();
+			for (int i = 0; i < rest.Length; i++) {
+				aList.Add(rest[i]);
+			}
+			return aList;
 		}
 
 		public static List<T> ToList<T>(params T[] rest)
