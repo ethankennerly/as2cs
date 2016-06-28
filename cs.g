@@ -42,17 +42,17 @@ list_literal_type := LIST, ts?, template_type
 list_literal_suffix := RBRACE
 LIST := "List"
 HASH_TABLE := "Hashtable"
-STRING_HASH_TABLE := "Dictionary<string, dynamic>"
+STRING_HASH_TABLE := "Dictionary<string, object>"
 hash_literal_prefix := NEW_HASH_TABLE, ts?, LBRACE
 hash_literal_suffix := RBRACE
-NEW_HASH_TABLE := "new Dictionary<string, dynamic>()"
+NEW_HASH_TABLE := "new Dictionary<string, object>()"
 property := LBRACE, ts?, key, ts?, COMMA, ts, expression, ts?, RBRACE
 quoted_identifier := QUOTE, identifier, QUOTE
 
 
 for_in_statement := ts?, FOR_IN, ts?, LPAREN, ts?, STRING_HASH_ENTRY, ts, IN_ITERATOR, !, ts, expression, ts?, RPAREN, ts?, LBRACE, iterator, ASSIGN_KEY, ts, statement_place, ts?, RBRACE
 variable_declared := ts?, argument_declared
-STRING_HASH_ENTRY := "KeyValuePair<string, dynamic> _entry"
+STRING_HASH_ENTRY := "KeyValuePair<string, object> _entry"
 ASSIGN_KEY := " = _entry.Key;"
 FOR_IN := "foreach"
 
@@ -132,6 +132,7 @@ COLLIDER2D := "Collider2D"
 SCENE_NODE := "GameObject"
 CONCRETE_SCENE_NODE := "GameObject"
 ANIMATED_SCENE_NODE := "GameObject"
+TEXT_NODE := "GameObject"
 INTEGER := "int"
 STRING := "string"
 BOOLEAN := "bool"

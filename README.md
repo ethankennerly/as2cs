@@ -36,7 +36,7 @@ Examples
 Specify collection data type
 ============================
 
-Although the syntax converts, since C# is strict about explicitly typing, you probably want to explicitly type ActionScript Arrays into Vectors.  This script converts Object hashes into `Dictionary<string, dynamic>`.  Examples of vim sed for List of integers:
+Although the syntax converts, since C# is strict about explicitly typing, you probably want to explicitly type ActionScript Arrays into Vectors.  This script converts Object hashes into `Dictionary<string, object>`.  Examples of vim sed for List of integers:
 
         %s/Array/Vector.<int>/gIce
 
@@ -306,10 +306,10 @@ Features
 * Insert "using UnityEngine" if converting to Mathf or Random.
 * Convert ActionScript hash to Dictionary with string-typed key.  Import generics.
 
-        Dictionary<string, dynamic>
+        Dictionary<string, object>
 
  Some people are saying Unity 5 still does not support C# 4 'dynamic' keyword.
- On my test of Unity 5.2, dynamic keyword compiled.
+ On my test of Unity 5.2, dynamic keyword compiled.  But MonoDevelop-Unity debugger does not recognize dynamic keyword.
  http://stackoverflow.com/questions/36079609/using-c-sharp-dynamic-typing-in-unity-5-3-1f
  http://answers.unity3d.com/questions/686244/using-c-dynamic-typing-with-unity-434f1.html
 * Dictionary iteration over keys:  for in with type.
@@ -321,7 +321,7 @@ Features
 
   C#:
 
-        foreach (KeyValuePair<string, dynamic> item in items) {
+        foreach (KeyValuePair<string, object> item in items) {
             string key = item.Key;
             text += key;
         }
