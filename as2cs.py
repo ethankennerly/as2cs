@@ -1,8 +1,9 @@
 """
-Converts a trivial example of an empty class.
+Converts some ActionScript syntax to C# syntax, and some C# to ActionScript.
 Usage: 
     cd as2cs
     python as2cs.py [file.as ...]
+    python as2cs.py [file.cs ...]
 """
 
 
@@ -689,9 +690,9 @@ def format_taglist(input, definition):
 def convert_file(source_path, to_path):
     configure_language(source_path)
     text = codecs.open(source_path, 'r', 'utf-8').read()
-    str = '__ERROR__'
+    converted = '__ERROR__'
     try:
-        str = convert(text)
+        converted = convert(text)
     except ParserSyntaxError as err:
         message = 'Path %s:\nproduction %s\nexpected %s\nposition %s' % (
             source_path, err.production, err.expected, err.position)
@@ -704,9 +705,9 @@ def convert_file(source_path, to_path):
         print(message)
         ## import pdb
         ## pdb.set_trace()
-    if str != '__ERROR__':
+    if converted != '__ERROR__':
         f = codecs.open(to_path, 'w', 'utf-8')
-        f.write(str)
+        f.write(converted)
         f.close()
 
 
