@@ -356,6 +356,14 @@ Not supported
 
 * If you'd like to request a pull or fork to add a feature, that'd be appreciated!
 
+* Extend unit tests to include JavaScript examples.
+* If JavaScript example exists, run it.  If length is short or item is None, skip.
+* Convert ActionScript to JavaScript.  
+ See:
+
+<http://github.com/ethankennerly/as2js>
+
+* Convert ActionScript ASUnit to JavaScript Mocha TDD.
 * Call after an array index:
         pools["Explosion"].next()
 

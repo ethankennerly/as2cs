@@ -15,12 +15,31 @@ from as2cs import cfg, convert, compare_files, \
     format_taglist, literals, may_format, realpath, reset
 from pretty_print_code.pretty_print_code import format_difference
 
+is_debug_fail = False
+
+debug_definitions = [
+    # 'data_type'
+    # 'compilation_unit'
+    # 'function_definition'
+    # 'import_definition'
+    # 'ts'
+    # 'variable_declaration'
+]
+
+debug_source = [
+    # 'cs'
+]
+
+debug_indexes = [
+    # 2
+]
 
 directions = [
+    # source, to, source_index, to_index
+    ['as', 'js', 0, 2],
     ['as', 'cs', 0, 1],
     ['cs', 'as', 1, 0],
 ]
-
 
 definitions = [
      ('expression', [
@@ -51,7 +70,8 @@ definitions = [
         ['path as String',
          'path as string'],
         ['int(path)',
-         '(int)(path)'],
+         '(int)(path)',
+         'Math.floor(path)'],
         ['Number(path)',
          '(float)(path)'],
         ['paths.length',
@@ -591,7 +611,9 @@ definitions = [
 
 
 one_ways = {
-    'as': {'cs': [
+    'as': {
+        'js':[],
+        'cs': [
         ('literal', [
             ['undefined',
              'null'],
@@ -629,6 +651,7 @@ one_ways = {
              '3.5F'],
         ]),
     ]},
+    'js': {'as':[]},
 }
 
 case_definitions = [
@@ -872,24 +895,6 @@ case_definitions = [
      ]),
 ]
 
-is_debug_fail = True
-
-debug_definitions = [
-    # 'data_type'
-    # 'compilation_unit'
-    # 'function_definition'
-    # 'import_definition'
-    # 'ts'
-    # 'variable_declaration'
-]
-
-debug_source = [
-    # 'cs'
-]
-
-debug_indexes = [
-    # 2
-]
 
 original_source = cfg['source']
 original_to = cfg['to']
@@ -925,7 +930,7 @@ class TestDefinitions(TestCase):
             expected = may_format(definition, expected)
             if definition in debug_definitions:
                 if not debug_indexes or index in debug_indexes:
-                    if not debug_source or cfg['source'] in debug_source:
+                    if cfg['source'] in debug_source:
                         import pdb
                         pdb.set_trace()
             got = convert(input, definition)
@@ -946,19 +951,20 @@ class TestDefinitions(TestCase):
 
     def assert_definitions_case(self, is_conform_case, definitions):
         cfg['is_conform_case'] = is_conform_case
-        for source, to, s, t in directions:
+        for source, to, source_index, to_index in directions:
             cfg['source'] = source
             cfg['to'] = to
             if is_conform_case:
                 these_definitions = definitions
             else:
                 these_definitions = definitions + one_ways[source][to]
-            for definition, rows in these_definitions:
+            for definition, examples in these_definitions:
                 reset()
-                for r, row in enumerate(rows):
-                    expected = row[t]
-                    input = row[s]
-                    self.assertExample(definition, expected, input, r)
+                for example_index, example in enumerate(examples):
+                    if to_index < len(example):
+                        expected = example[to_index]
+                        input = example[source_index]
+                        self.assertExample(definition, expected, input, example_index)
         cfg['source'] = original_source
         cfg['to'] = original_to 
 

@@ -1,16 +1,13 @@
 """
 Converts some ActionScript syntax to C# syntax, and some C# to ActionScript.
-Usage: 
     cd as2cs
-    python as2cs.py [file.as ...]
-    python as2cs.py [file.cs ...]
 """
 
 
 import codecs
 from collections import Iterable
 from os import path
-from pprint import pformat
+from pprint import pformat, pprint
 from pretty_print_code.pretty_print_code import format
 from simpleparse.error import ParserSyntaxError
 from simpleparse.parser import Parser
@@ -272,11 +269,11 @@ def find_literals(grammar_text):
 
 def replace_literals(a_grammar, b_grammar, literals = None):
     """
-    >>> replaces = replace_literals(as_grammar, cs_grammar, literals['cs'])
+    >>> replaces = replace_literals(grammars['as'], grammars['cs'], literals['cs'])
     >>> replaces.get('IMPORT')
     'using'
     >>> replaces.get('alphaunder')
-    >>> replaces = replace_literals(as_grammar, cs_grammar)
+    >>> replaces = replace_literals(grammars['as'], grammars['cs'])
     >>> replaces.get('IMPORT')
     'using'
     >>> replaces.get('alphaunder')
@@ -376,11 +373,6 @@ def tags_to_reorder(a_grammar, b_grammar):
 
 
 def unique_tag_orders(as_grammar, cs_grammar):
-    """
-    """
-    reorder_tags = {'as': {}, 'cs': {}}
-    reorder_tags['as']['cs'] = tags_to_reorder(as_grammar, cs_grammar)
-    reorder_tags['cs']['as'] = tags_to_reorder(cs_grammar, as_grammar)
     return reorder_tags
 
 
@@ -688,7 +680,7 @@ def format_taglist(input, definition):
 
 
 def convert_file(source_path, to_path):
-    configure_language(source_path)
+    configure_language(source_path, cfg)
     text = codecs.open(source_path, 'r', 'utf-8').read()
     converted = '__ERROR__'
     try:
@@ -711,7 +703,17 @@ def convert_file(source_path, to_path):
         f.close()
 
 
-def configure_language(source_path):
+def configure_language(source_path, cfg):
+    """
+    >>> configuration = {}
+    >>> configure_language('f.as', configuration)
+    >>> pprint(configuration)
+    {'source': 'as', 'to': 'cs'}
+    >>> configuration['to_override'] = 'js'
+    >>> configure_language('f.as', configuration)
+    >>> pprint(configuration)
+    {'source': 'as', 'to': 'js', 'to_override': 'js'}
+    """
     root, ext = path.splitext(source_path)
     if '.cs' == ext:
         cfg['source'] = 'cs'
@@ -719,13 +721,15 @@ def configure_language(source_path):
     else:
         cfg['source'] = 'as'
         cfg['to'] = 'cs'
+    if 'to_override' in cfg:
+        cfg['to'] = cfg['to_override']
 
 
 def analogous_paths(source_paths):
     path_pairs = []
     for source_path in source_paths:
         root, ext = path.splitext(source_path)
-        configure_language(source_path)
+        configure_language(source_path, cfg)
         to_path = '%s.%s' % (root, cfg['to'])
         path_pairs.append([source_path, to_path])
     return path_pairs
@@ -768,26 +772,35 @@ def realpath(a_path):
 
 
 # Cache global variables for speed
-as_grammar = merge_declaration_paths(['as_and_cs.g', 'as.g'])
-cs_grammar = merge_declaration_paths(['as_and_cs.g', 'cs.g'])
-grammars = {'as': as_grammar, 'cs': cs_grammar}
-literals = {'as': {}, 'cs': {}}
-literals['as'] = find_literals(as_grammar)
-literals['cs'] = find_literals(cs_grammar)
-replace_tags = {'as': {}, 'cs': {}}
-replace_tags['as']['cs'] = replace_literals(as_grammar, cs_grammar, literals['cs'])
-replace_tags['cs']['as'] = replace_literals(cs_grammar, as_grammar, literals['as'])
-
-reorder_defaults = {'as': {}, 'cs': {}}
-reorder_defaults['cs']['ts'] = literals['cs']['SPACE']
-reorder_defaults['as']['ts'] = literals['as']['SPACE']
-reorder_defaults['cs']['whitespace'] = literals['cs']['SPACE']
-reorder_defaults['as']['whitespace'] = literals['as']['SPACE']
-reorder_tags = unique_tag_orders(as_grammar, cs_grammar)
-
+# XXX Would be cleaner in functions.
 different_tags = {}
-set_tags(different_tags, open('as.g').read(), True)
-set_tags(different_tags, open('cs.g').read(), True)
+grammars = {}
+literals = {}
+replace_tags = {}
+reorder_defaults = {}
+reorder_tags = {}
+grammar_names = ['as', 'cs', 'js']
+for grammar_name in grammar_names:
+    grammar_file = grammar_name + '.g'
+    grammar = merge_declaration_paths(['as_and_cs.g', grammar_file])
+    grammars[grammar_name] = grammar
+    literals[grammar_name] = find_literals(grammar)
+    replace_tags[grammar_name] = {}
+    reorder_defaults[grammar_name] = {}
+    reorder_tags[grammar_name] = {}
+    reorder_defaults[grammar_name]['ts'] = literals[grammar_name]['SPACE']
+    reorder_defaults[grammar_name]['whitespace'] = literals[grammar_name]['SPACE']
+    set_tags(different_tags, open(grammar_file).read(), True)
+
+directions = [
+    ['as', 'cs'],
+    ['cs', 'as'],
+    ['as', 'js']
+]
+for source, to in directions:
+    reorder_tags[source][to] = tags_to_reorder(grammars[source], grammars[to])
+    replace_tags[source][to] = replace_literals(grammars[source], grammars[to], literals[to])
+
 for key in source_keys:
     different_tags[key] = False
 set_tags(different_tags, open('as_and_cs.g').read(), False)
@@ -796,10 +809,18 @@ data_types = {}
 
 
 if '__main__' == __name__:
-    import sys
-    if len(sys.argv) <= 1:
-        print(__doc__)
-    if 2 <= len(sys.argv) and '--test' != sys.argv[1]:
-        convert_files(sys.argv[1:])
-    import doctest
-    doctest.testmod()
+    from argparse import ArgumentParser
+    parser = ArgumentParser(description=__doc__)
+    parser.add_argument('file', nargs='*', help='Files to convert (with extension .as or .cs).')
+    parser.add_argument('--to', help='Syntax to convert to.  Default is inferred from extension.  Options are: as or cs')
+    parser.add_argument('--test', action='store_true', help='Run unit tests.')
+    args = parser.parse_args()
+    if args.to:
+        cfg['to_override'] = args.to
+    if not args.file and not args.test:
+        parser.print_help()
+    elif args.test:
+        from doctest import testmod
+        testmod()
+    else:
+        convert_files(args.file)

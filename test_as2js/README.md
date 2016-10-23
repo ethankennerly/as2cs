@@ -15,10 +15,3 @@ Mar 20 '12 Domenic
 <http://stackoverflow.com/questions/9795254/nodejs-mocha-suite-is-not-defined-error>
 <http://margotskapacs.com/2013/06/starting-with-mocha-for-testing-node-js-modules/>
 
-## Not supported
-
- * Convert ActionScript to JavaScript.  See:
-
-<http://github.com/ethankennerly/as2js>
-
- * Convert ActionScript ASUnit to JavaScript Mocha TDD.
