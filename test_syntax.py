@@ -37,6 +37,7 @@ debug_indexes = [
 directions = [
     # source, to, source_index, to_index
     ['as', 'js', 0, 2],
+    ['js', 'as', 2, 0],
     ['as', 'cs', 0, 1],
     ['cs', 'as', 1, 0],
 ]
@@ -70,8 +71,7 @@ definitions = [
         ['path as String',
          'path as string'],
         ['int(path)',
-         '(int)(path)',
-         'Math.floor(path)'],
+         '(int)(path)'],
         ['Number(path)',
          '(float)(path)'],
         ['paths.length',
@@ -610,9 +610,15 @@ definitions = [
 ]
 
 
+
 one_ways = {
     'as': {
-        'js':[],
+        'js': [
+        ('expression', [
+            ['int(path)',
+             'Math.floor(path)'],
+         ]),
+        ],
         'cs': [
         ('literal', [
             ['undefined',
@@ -651,8 +657,15 @@ one_ways = {
              '3.5F'],
         ]),
     ]},
-    'js': {'as':[]},
+    'js': {'as':[
+        ('expression', [
+            ['Math.floor(path)',
+             'Math.floor(path)'],
+         ]),
+    ]},
 }
+
+
 
 case_definitions = [
      ('compilation_unit', [
@@ -961,7 +974,7 @@ class TestDefinitions(TestCase):
             for definition, examples in these_definitions:
                 reset()
                 for example_index, example in enumerate(examples):
-                    if to_index < len(example):
+                    if to_index < len(example) and source_index < len(example):
                         expected = example[to_index]
                         input = example[source_index]
                         self.assertExample(definition, expected, input, example_index)

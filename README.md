@@ -349,7 +349,13 @@ Features
   C#:
         using Finegamedesign.Utils;
 
+ActionScript to JavaScript
+==========================
 
+* Integer type cast:
+
+    int(x)
+    Math.floor(x)
 
 Not supported
 =============

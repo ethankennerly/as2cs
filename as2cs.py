@@ -795,7 +795,8 @@ for grammar_name in grammar_names:
 directions = [
     ['as', 'cs'],
     ['cs', 'as'],
-    ['as', 'js']
+    ['as', 'js'],
+    ['js', 'as'],
 ]
 for source, to in directions:
     reorder_tags[source][to] = tags_to_reorder(grammars[source], grammars[to])
