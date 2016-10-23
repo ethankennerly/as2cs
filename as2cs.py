@@ -30,7 +30,7 @@ first_letter_case_tags = {
     'as': {
         'function_identifier': 'lower',
         'namespace_identifier': 'lower',
-    }, 
+    },
     'cs': {
         'function_identifier': 'upper',
         'namespace_identifier': 'upper',
@@ -40,7 +40,7 @@ first_letter_case_tags = {
 ebnf_parser = Parser(declaration, 'declarationset')
 
 
-source_keys = [key for source in SOURCES 
+source_keys = [key for source in SOURCES
     for key in source.keys()]
 source_keys.sort()
 ## print(pformat(source_keys))
@@ -323,7 +323,7 @@ def tag_order(grammar_text):
     taglist = ebnf_parser.parse(grammar_text)[1]
     optional_occurences = ['*', '?', '/']
     lookahead_or_negatives = ['-', '?', '/']
-    order = find_texts(grammar_text, 'name', taglist, optional_occurences, 
+    order = find_texts(grammar_text, 'name', taglist, optional_occurences,
         lookahead_or_negatives)[1:]
     return order
 
@@ -464,12 +464,12 @@ def argument_declared_data_type(data_types, text, taglist):
     >>> data_types
     {}
     >>> taglist = [('argument_declared', 0, 5, [
-    ...     ('data_type', 0, 3, 
-    ...         [('reserved_data_type', 0, 3, 
+    ...     ('data_type', 0, 3,
+    ...         [('reserved_data_type', 0, 3,
     ...            [('INTEGER', 0, 3, None)]
     ...         )]
-    ...     ), 
-    ...     ('identifier', 4, 5, None), 
+    ...     ),
+    ...     ('identifier', 4, 5, None),
     ... ])]
     >>> argument_declared_data_type(data_types, 'int a', taglist)
 
@@ -477,9 +477,9 @@ def argument_declared_data_type(data_types, text, taglist):
     >>> data_types
     {'a': 'int'}
     >>> taglist = [('argument_declared', 0, 17, [
-    ...     ('identifier', 0, 1, None), 
-    ...     ('COLON', 1, 2, None), 
-    ...     ('data_type', 2, 17, None), 
+    ...     ('identifier', 0, 1, None),
+    ...     ('COLON', 1, 2, None),
+    ...     ('data_type', 2, 17, None),
     ... ])]
     >>> argument_declared_data_type(data_types, 'v:Vector.<String>', taglist)
     >>> print(pformat(data_types))
@@ -619,17 +619,17 @@ def may_import(taglist, text, definition, to):
     if 'compilation_unit' == definition:
         import_statements = [
             ('using System.Collections.Generic;\n', [
-                'generic_collection', 
+                'generic_collection',
                 'STRING_HASH_TABLE',
                 'NEW_HASH_TABLE',
-            ]), 
+            ]),
             ('using System.Collections;\n', [
-                'collection', 
-                'NEW_ARRAY_LIST', 
-                'ARRAY_LIST', 
+                'collection',
+                'NEW_ARRAY_LIST',
+                'ARRAY_LIST',
             ]),
             ('using System;\n', [
-                'ERROR', 
+                'ERROR',
             ]),
             ('using UnityEngine;\n', [
                 'unity_address',

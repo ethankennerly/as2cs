@@ -355,7 +355,68 @@ ActionScript to JavaScript
 * Integer type cast:
 
     int(x)
+
     Math.floor(x)
+
+* Declare typed variable:
+
+    var i:uint = 0;
+    var i/*<:uint>*/ = 0;
+
+    var svar:String = "";
+    var svar/*<:String>*/ = "";
+
+* Console log.
+    console.log
+
+Not supported: ActionScript to JavaScript
+=========================================
+
+* Declare untyped variable.
+
+    var varj = cameras.length;
+    var varj = cameras.length;
+
+* Define int as Math.floor in global scope.
+
+    var int = Math.floor
+    ...
+    int(x)
+
+* Default argument.
+
+    index:int = -1
+    index/*<int>*/
+    ...
+    if (undefined === index)
+    {
+        index = -1;
+    }
+* Extract static classes from object declaration if statics are all grouped first.
+
+    class C{static function f(){} function g(){}}
+    
+    var C = {g: function(){}};
+    C.f = function(){};
+
+* Extract static classes from object declaration in any order.
+
+    class C{function f(){} static function g(){}}
+    
+    var C = {f: function(){}};
+    C.g = function(){};
+
+* Cocos2D log.  Or monkey patch console.log to Cocos2D in header.
+    console.log = cc.log
+* Define ActionScript syntax as extension of JavaScript, or vice versa.
+
+* Source conversion.  as3js has demos of that.  as3js test I ran depended on some runtimes of AS3JS.
+
+<http://as3js.org/>
+
+
+* ActionScript to ES6
+* ES6 to JavaScript (ES5)
 
 Not supported
 =============

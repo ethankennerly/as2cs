@@ -36,9 +36,14 @@ DELEGATE := "/*<delegate>*/"
 swap_type := MARKUP_START, cs_type, MARKUP_END, as_type
 variable_declaration := ts?, VARIABLE, whitespace, argument_declaration
 constant_declaration := ts?, CONSTANT, whitespace, argument_declaration
-argument_declared := identifier, (ts?, COLON, data_type)?
-argument_initialized := identifier, (ts?, COLON, data_type)?, argument_initializer
+argument_data_type := ts?, MARKUP_START, COLON, data_type, MARKUP_END
+argument_declared := identifier, 
+    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?
+argument_initialized := identifier, 
+    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?,
+    argument_initializer
 collection_prefix := LIST, ts?, DOT
+new_generic_collection := ARRAY_LIST, MARKUP_START, generic_collection, MARKUP_END
 ARRAY_LIST := "Array"
 LIST := "Vector"
 STRING_HASH_TABLE := "Object"
@@ -99,7 +104,7 @@ ASSERT_EQUALS := "assertEquals"
 
 PARSE_INT := "parseInt"
 PARSE_FLOAT := "parseFloat"
-DEBUG_LOG := "trace"
+DEBUG_LOG := "console.log"
 
 RANDOM := "Math.random()"
 MATH := "Math"
@@ -123,6 +128,8 @@ SQRT := "sqrt"
 TAN := "tan"
 
 cast_expression := ts?, reserved_data_type, ts?, LPAREN, ts?, expression, ts?, RPAREN
+nullable_cast_expression := ts?, left_hand_side_expression, ts, MARKUP_START, AS, ts, data_type, MARKUP_END
+IS := "instanceof"
 
 float_format := float
 
@@ -133,7 +140,7 @@ SCENE_NODE := "DisplayObjectContainer"
 CONCRETE_SCENE_NODE := "Sprite"
 ANIMATED_SCENE_NODE := "MovieClip"
 TEXT_NODE := "TextField"
-INTEGER := "Math.floor"
+INTEGER := "int"
 STRING := "String"
 BOOLEAN := "Boolean"
 FLOAT := "Number"

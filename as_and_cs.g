@@ -130,6 +130,7 @@ as_type := data_type
 cs_type := data_type
 collection_type := collection / STRING_HASH_TABLE / generic_collection 
 generic_collection := collection_prefix, template_type
+new_generic_collection := generic_collection
 template_type := ts?, LT, ts?, data_type, ts?, GT
 collection := ARRAY_LIST / HASH_TABLE
 array_literal := array_literal_prefix, ts?, expression_list?, ts?, array_literal_suffix
@@ -163,7 +164,8 @@ expression :=
     / relational_expression
     / left_hand_side_expression
 
-new_expression := NEW, ts?, data_type, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
+new_data_type := new_generic_collection / data_type
+new_expression := NEW, ts, new_data_type, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 NEW := "new"
 expression_list := ts?, conditional_expression / expression, (ts?, COMMA, ts?, conditional_expression / expression)*
 
