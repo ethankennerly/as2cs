@@ -23,7 +23,7 @@ namespace_declaration := ts?, NAMESPACE, ts,
     namespace_address
     , ts?
 import_definition_place := import_definition*
-import_definition := import_flash / (ts?, IMPORT, ts, import_address, EOL?)
+import_definition := import_flash / (ts?, IMPORT, ts, !, import_address, EOL?)
 import_address := (import_address_replaced, SEMICOLON) /
     ( namespace_sector_prefix?, 
     namespace_identifier, (import_class_clause / import_subaddress)+)
@@ -52,7 +52,8 @@ interface_identifier := interface_prefix, identifier?
 I := "I"
 
 member_expression := function_definition / member_declaration
-member_declaration := ts?, namespace_modifiers_place, data_declaration, ts?, !, SEMICOLON
+member_declaration := ts?, namespace_modifiers_place, member_data_declaration, ts?, !, SEMICOLON
+member_data_declaration := delegate_declaration / constant_declaration / member_variable_declaration
 data_declaration := delegate_declaration / constant_declaration / variable_declaration
 delegate_declaration := delegate_argument_declaration / delegate_no_argument_declaration
 CONSTANT := "const"
@@ -77,7 +78,9 @@ STATIC := "static"
 
 argument_list := argument_declaration, (ts?, COMMA, whitespace, argument_declaration)*
 argument_declaration := argument_initialized / argument_declared
+member_argument_declaration := member_argument_initialized / member_argument_declared
 argument_initializer := ts?, ASSIGN, ts?, !, assignment_value
+member_argument_initializer := ts?, ASSIGN, ts?, !, assignment_value
 assignment_value := conditional_expression / expression
 variable_assignment := address, ts?, assignment_operator, ts?, assignment_value
 address := (new_expression / replaced_address / identifier), address_tail*

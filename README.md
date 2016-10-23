@@ -366,38 +366,44 @@ ActionScript to JavaScript
     var svar:String = "";
     var svar/*<:String>*/ = "";
 
-* Console log.
-    console.log
+* Cocos2D log.
+    cc.log
+
+* Member variable.
 
 Not supported: ActionScript to JavaScript
 =========================================
 
-* Declare untyped variable.
-
-    var varj = cameras.length;
-    var varj = cameras.length;
-
-* Define int as Math.floor in global scope.
-
-    var int = Math.floor
-    ...
-    int(x)
-
-* Default argument.
-
-    index:int = -1
-    index/*<int>*/
-    ...
-    if (undefined === index)
-    {
-        index = -1;
-    }
+* Method.
+* Class.
+* Static variable.
+* Static function.
 * Extract static classes from object declaration if statics are all grouped first.
 
     class C{static function f(){} function g(){}}
     
     var C = {g: function(){}};
     C.f = function(){};
+
+* Define int as Math.floor in global scope.
+
+    var int = Math.floor;
+    ...
+    int(x)
+
+* Scope members.
+
+    f(x){y = x;}
+    f(x){this.y = x;}
+
+* Default argument.
+
+    function f(x:Number, i:int = -1){}
+
+    f: function(x/*<:Number>*/, i/*<:int>*/){
+        if (undefined === i) {i = -1;}
+    }
+
 
 * Extract static classes from object declaration in any order.
 
@@ -406,10 +412,21 @@ Not supported: ActionScript to JavaScript
     var C = {f: function(){}};
     C.g = function(){};
 
-* Cocos2D log.  Or monkey patch console.log to Cocos2D in header.
-    console.log = cc.log
-* Define ActionScript syntax as extension of JavaScript, or vice versa.
+* Imports to requires.
+* Unit test.
 
+* Cocos2D super.
+    var a; super(a); super.f(1);
+    var a; this._super(a); super.f(1);
+
+* Console log.
+* Define ActionScript syntax as extension of JavaScript, or vice versa.
+* Extend class.
+* Declare untyped variable.  You can use:
+
+    var varj:* = cameras.length;
+    var varj/*<:*>*/ = cameras.length;
+* Constant keyword.
 * Source conversion.  as3js has demos of that.  as3js test I ran depended on some runtimes of AS3JS.
 
 <http://as3js.org/>

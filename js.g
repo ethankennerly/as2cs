@@ -35,6 +35,19 @@ delegate_no_argument_declaration := VARIABLE, whitespace, DELEGATE, whitespace, 
 DELEGATE := "/*<delegate>*/"
 swap_type := MARKUP_START, cs_type, MARKUP_END, as_type
 variable_declaration := ts?, VARIABLE, whitespace, argument_declaration
+
+member_variable_declaration := ts?, member_argument_declaration
+member_argument_declaration := member_argument_declared / member_argument_initialized
+member_declaration := ts?, namespace_modifiers_place, member_data_declaration
+member_argument_initializer := ts?, COLON, ts?, !, assignment_value
+member_argument_initialized := identifier, 
+    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?,
+    member_argument_initializer
+member_argument_declared := identifier, 
+    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?,
+    ts?, COLON, ts, !, UNDEFINED
+
+
 constant_declaration := ts?, CONSTANT, whitespace, argument_declaration
 argument_data_type := ts?, MARKUP_START, COLON, data_type, MARKUP_END
 argument_declared := identifier, 
@@ -104,7 +117,7 @@ ASSERT_EQUALS := "assertEquals"
 
 PARSE_INT := "parseInt"
 PARSE_FLOAT := "parseFloat"
-DEBUG_LOG := "console.log"
+DEBUG_LOG := "cc.log"
 
 RANDOM := "Math.random()"
 MATH := "Math"
