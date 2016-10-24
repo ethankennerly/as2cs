@@ -1,4 +1,4 @@
-class C{
+export class C{
   constructor(){
     this.a = true;
   }
@@ -7,9 +7,8 @@ class C{
   }
   x:int;
   a:Boolean;
-  v:Array<int>;
+  v0:Array<number> = new Array();
+  v1:Array<Array<int>> = new Array();
   instance:String = "i";
   static g(){}
 }
-
-exports.C = C;

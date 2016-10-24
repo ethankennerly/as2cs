@@ -53,7 +53,7 @@ I := "I"
 
 member_expression := function_definition / member_declaration
 member_declaration := instance_declaration / static_declaration
-static_declaration := ts?, static_modifiers_place?, member_data_declaration, ts?, !, SEMICOLON
+static_declaration := ts?, static_modifiers_place, member_data_declaration, ts?, !, SEMICOLON
 member_data_declaration := delegate_declaration / constant_declaration / member_variable_declaration
 data_declaration := delegate_declaration / constant_declaration / variable_declaration
 delegate_declaration := delegate_argument_declaration / delegate_no_argument_declaration
@@ -65,8 +65,8 @@ namespace_modifier := scope / STATIC / FINAL / OVERRIDE
 instance_modifier := scope / FINAL / OVERRIDE
 static_modifier := scope / STATIC / FINAL / OVERRIDE
 function_body := ts?, LBRACE, !, statement_place, ts?, RBRACE
-function_declaration := test_function / function_modified / constructor / function_default
-constructor := ts?, namespace_modifiers_place, function_signature
+function_declaration := test_function / function_modified / function_default / constructor
+constructor := ts?, namespace_modifiers_place?, function_signature
 function_identifier := identifier
 function_definition := function_declaration, function_body
 function_parameters := ts?, LPAREN, whitespace?, argument_list?, ts?, RPAREN
@@ -131,13 +131,16 @@ identifier := alphaunder, alphanumunder*
 alphanumunder := digit / alphaunder
 alphaunder := letter / UNDERSCORE
 reserved_data_type := SCENE_NODE / VECTOR2 / COLLIDER2D / CONCRETE_SCENE_NODE / ANIMATED_SCENE_NODE / TEXT_NODE
-	/ INTEGER / STRING / BOOLEAN / FLOAT / collection_type / DYNAMIC_TYPE / OBJECT
-data_type := swap_type / reserved_data_type / address
+	/ INTEGER / STRING / BOOLEAN / FLOAT / DYNAMIC_TYPE / OBJECT
+data_type := swap_type / collection_type / reserved_data_type / address
+sub_data_type := collection / STRING_HASH_TABLE / sub_generic_collection / reserved_data_type / address
+collection_type := collection / STRING_HASH_TABLE / generic_collection 
 return_type := data_type / VOID
 as_type := data_type
 cs_type := data_type
 collection_type := collection / STRING_HASH_TABLE / generic_collection 
-generic_collection := collection_prefix, template_type
+generic_collection := collection_prefix, ts?, LT, ts?, sub_data_type, ts?, GT
+sub_generic_collection := collection_prefix, ts?, LT, ts?, sub_data_type, ts?, GT
 new_generic_collection := generic_collection
 template_type := ts?, LT, ts?, data_type, ts?, GT
 collection := ARRAY_LIST / HASH_TABLE
@@ -172,8 +175,7 @@ expression :=
     / relational_expression
     / left_hand_side_expression
 
-new_data_type := new_generic_collection / data_type
-new_expression := NEW, ts, new_data_type, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
+new_expression := NEW, ts, data_type, ts?, LPAREN, ts?, expression_list?, ts?, RPAREN
 NEW := "new"
 expression_list := ts?, conditional_expression / expression, (ts?, COMMA, ts?, conditional_expression / expression)*
 

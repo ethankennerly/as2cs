@@ -38,26 +38,19 @@ variable_declaration := ts?, VARIABLE, whitespace, argument_declaration
 
 member_variable_declaration := ts?, member_argument_declaration
 member_argument_declaration := member_argument_declared / member_argument_initialized
-instance_declaration := ts?, instance_modifiers_place, member_data_declaration, ts
+instance_declaration := ts?, instance_modifiers_place?, member_data_declaration, ts?, SEMICOLON
 instance_modifiers_place := MARKUP_START, instance_modifier, (ts, instance_modifier)*, MARKUP_END, whitespace
-member_argument_initializer := ts?, COLON, ts?, !, assignment_value
-member_argument_initialized := identifier, 
-    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?,
-    member_argument_initializer
-member_argument_declared := identifier, 
-    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?,
-    ts?, COLON, ts, !, UNDEFINED
-
+# member_argument_initializer := ts?, COLON, ts?, !, assignment_value
+member_argument_initialized := identifier, (ts?, COLON, data_type)?, member_argument_initializer
+member_argument_declared := identifier, (ts?, COLON, data_type)?
 
 constant_declaration := ts?, CONSTANT, whitespace, argument_declaration
-argument_data_type := ts?, MARKUP_START, COLON, data_type, MARKUP_END
-argument_declared := identifier, 
-    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?
-argument_initialized := identifier, 
-    (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?,
-    argument_initializer
+argument_declared := identifier, (ts?, COLON, data_type)?
+argument_initialized := identifier, (ts?, COLON, data_type)?, argument_initializer
 collection_prefix := LIST, ts?, DOT
-new_generic_collection := ARRAY_LIST, MARKUP_START, generic_collection, MARKUP_END
+generic_collection := ARRAY_LIST, MARKUP_START, 
+    collection_prefix, ts?, LT, ts?, sub_data_type, ts?, GT,
+    MARKUP_END
 ARRAY_LIST := "Array"
 LIST := "Vector"
 STRING_HASH_TABLE := "Object"
@@ -118,7 +111,7 @@ ASSERT_EQUALS := "assertEquals"
 
 PARSE_INT := "parseInt"
 PARSE_FLOAT := "parseFloat"
-DEBUG_LOG := "cc.log"
+DEBUG_LOG := "console.log"
 
 RANDOM := "Math.random()"
 MATH := "Math"
@@ -159,6 +152,6 @@ STRING := "String"
 BOOLEAN := "Boolean"
 FLOAT := "Number"
 VARIABLE := "var"
-DYNAMIC_TYPE := "*"
+DYNAMIC_TYPE := "any"
 FINAL := "final"
 IS_CONTAINED_IN := "in"
