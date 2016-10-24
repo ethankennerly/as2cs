@@ -1,10 +1,15 @@
 class C{
   constructor(){
-    this.a = 10;
+    this.a = true;
   }
-  f(x, y=1){
-    this.a = y;
+  f(x, y:int=1){
+    this.x = y;
   }
-  instance = 5;
+  x:int;
+  a:Boolean;
+  v:Array<int>;
+  instance:String = "i";
   static g(){}
 }
+
+exports.C = C;

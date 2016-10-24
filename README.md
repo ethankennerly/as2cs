@@ -374,39 +374,46 @@ ActionScript to JavaScript
 Not supported: ActionScript to JavaScript
 =========================================
 
-* ActionScript to ES7 experimental stage 2.
+* ActionScript 3 data types to EcmaScript react flow data types:
+ boolean
+ number
+ int
+ string
+ any
+ Array<number>
+ GenericObject<number>
+
+<https://flowtype.org/docs/five-simple-examples.html#adding-type-annotations>
+<https://flowtype.org/docs/builtins.html>
+
+* ActionScript to ES7 experimental stage 2 class properties.
  ES7 stage 2 syntax approaches a lot of ActionScript syntax (fork of ES4).
  There is no namespace.
  Member variables have no var keyword.
  Yet this syntax is a lot closer to ActionScript than ES5 JavaScript pseudo classes.
- Example of ES7:
+ Example of testing ES7 react stage 2:
 
-    class C{
-      constructor(){
-        this.a = 10;
-      }
-      f(x, y=1){
-        this.a = y;
-      }
-      instance = 5;
-      static g(){}
-    }
+    $ babel test_as2js/es7.js > test_as2js/es5.js && mocha test_as2js/test_es5.js
+
+<https://flowtype.org/docs/classes.html>
 
 <https://babeljs.io/repl/#?babili=false&evaluate=true&lineWrap=false&presets=es2015%2Creact%2Cstage-2&code=class%20C%7B%0A%20%20constructor()%7B%0A%20%20%20%20this.a%20%3D%2010%3B%0A%20%20%7D%0A%7D%0A%0Avar%20c%20%3D%20new%20C()%3B%0Aconsole.log(c.a.toString())%3B>
 
 <https://babeljs.io/docs/learn-es2015/>
 
-* Compile ES7 stage-2 to JavaScript (ES3).  Run babel from command line.
+* Compile ES2017 react, stage-2 to JavaScript (ES3).  Run babel from command line.
 
  Install babel to local project.
 
     $ npm install --save-dev babel-cli babel-preset-es2015 babel-preset-es2017 babel-preset-stage-2
-    $ echo '{ presets: ["es2015", "es2017", "stage-2"]}' > .babelrc
+    $ echo '{ presets: ["es2015", "es2017", "react", "stage-2"]}' > .babelrc
     $ babel test_as2js/es7.js > test_as2js/es5.js
     $ node test_as2js/es5.js
 
+<https://babeljs.io/docs/plugins/preset-es2015/>
 <https://babeljs.io/docs/plugins/preset-es2017/>
 <http://babeljs.io/docs/plugins/preset-stage-2/>
+<http://babeljs.io/docs/plugins/preset-react/>
 
 * Method.
 * Class.

@@ -8,9 +8,9 @@ var C = function () {
   function C() {
     _classCallCheck(this, C);
 
-    this.instance = 5;
+    this.instance = "i";
 
-    this.a = 10;
+    this.a = true;
   }
 
   _createClass(C, [{
@@ -18,7 +18,7 @@ var C = function () {
     value: function f(x) {
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
-      this.a = y;
+      this.x = y;
     }
   }], [{
     key: "g",
@@ -27,4 +27,6 @@ var C = function () {
 
   return C;
 }();
+
+exports.C = C;
 
