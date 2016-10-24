@@ -35,6 +35,7 @@ argument_declared := data_type, ts, identifier
 member_argument_declared := data_type, ts, identifier
 argument_initialized := data_type, ts, identifier, argument_initializer
 member_argument_initialized := data_type, ts, identifier, member_argument_initializer
+instance_declaration := ts?, instance_modifiers_place?, member_data_declaration, ts?, !, SEMICOLON
 collection_prefix := LIST
 ARRAY_LIST := "ArrayList"
 array_literal_prefix := NEW_ARRAY_LIST, ts?, LBRACE

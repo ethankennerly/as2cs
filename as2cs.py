@@ -351,6 +351,12 @@ def tags_to_reorder(a_grammar, b_grammar):
     >>> cs_grammar = 'container_identifier := CONTAINS, alphaunder, alphanumunder*'
     >>> tags_to_reorder(as_grammar, cs_grammar)
     {'container_identifier': ['CONTAINS', 'alphaunder']}
+
+    Include truncated version.
+    >>> longer = 'a := b, c'
+    >>> shorter = 'a := c, b'
+    >>> reorder_tags = tags_to_reorder(longer, shorter)
+    {'a': ['b']}
     """
     def reorder_declaration(reorders, original_tags, grammar_text):
         taglist = ebnf_parser.parse(grammar_text)

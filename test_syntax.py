@@ -16,6 +16,7 @@ from as2cs import cfg, convert, compare_files, \
 from pretty_print_code.pretty_print_code import format_difference
 
 is_debug_fail = False
+taglist_head = 4000 # 500
 
 debug_definitions = [
     # 'data_type'
@@ -27,7 +28,7 @@ debug_definitions = [
 ]
 
 debug_source = [
-    # 'cs'
+    # 'as'
 ]
 
 debug_indexes = [
@@ -211,12 +212,13 @@ definitions = [
         ['var a:int;',
          'int a;',
          'a/*<:int>*/: undefined'],
+        ['private var index:int=16;',
+         'private int index=16;',
+         '/*<private >*/ index/*<:int>*/:16;'],
         [' private static var index:int = 16;',
          ' private static int index = 16;'],
         [' static var path:String = "as.g";',
          ' static string path = "as.g";'],
-        ['    private var index:int = 16;',
-         '    private int index = 16;'],
      ]),
      ('conditional_expression', [
         ['path is Boolean',
@@ -977,7 +979,7 @@ def print_expected(expected, got, input, definition, index, err):
         got = err.message
     tag_text = ''
     try:
-        tag_text = format_taglist(input, definition)[:500]
+        tag_text = format_taglist(input, definition)[:taglist_head]
     except:
         tag_text = 'Failed formatting.'
     message = (''

@@ -38,7 +38,8 @@ variable_declaration := ts?, VARIABLE, whitespace, argument_declaration
 
 member_variable_declaration := ts?, member_argument_declaration
 member_argument_declaration := member_argument_declared / member_argument_initialized
-member_declaration := ts?, namespace_modifiers_place, member_data_declaration
+instance_declaration := ts?, instance_modifiers_place, member_data_declaration, ts
+instance_modifiers_place := MARKUP_START, instance_modifier, (ts, instance_modifier)*, MARKUP_END, whitespace
 member_argument_initializer := ts?, COLON, ts?, !, assignment_value
 member_argument_initialized := identifier, 
     (ts?, MARKUP_START, COLON, data_type, MARKUP_END)?,
